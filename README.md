@@ -7,6 +7,8 @@ API Repo: https://github.com/dartmouth-cs98/21f-macro-meals-api
 
 Classifier Repo: https://github.com/dartmouth-cs98/21f-macro-meals-classifier 
 
+Images Repo: https://github.com/dartmouth-cs98/21f-macro-meals-images
+
 TODO: short project description, some sample screenshots or mockups
 
 ## Architecture
