@@ -3,7 +3,7 @@
 ![Team Photo](Insert a Team Photo URL here)
 [*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
 
-Backend Repo: https://github.com/dartmouth-cs98/21f-macro-meals-backend
+API Repo: https://github.com/dartmouth-cs98/21f-macro-meals-api 
 
 TODO: short project description, some sample screenshots or mockups
 
