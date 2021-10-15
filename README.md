@@ -15,6 +15,10 @@ TODO: short project description, some sample screenshots or mockups
 
 TODO:  descriptions of code organization and tools and libraries used
 
+* Front-end: React Native 
+* For Deep learning/ML: Flask 
+* Database: SQL 
+
 ## Setup
 
 TODO: how to get the project dev environment up and running, npm install etc
@@ -25,6 +29,9 @@ TODO: how to deploy the project
 
 ## Authors
 
-TODO: list of authors
+* Quinn Spraut 
+* Anand Mittal 
+* Alex Wong 
+* Brandon Feng
 
 ## Acknowledgments
