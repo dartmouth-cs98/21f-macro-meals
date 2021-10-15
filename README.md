@@ -1,15 +1,18 @@
-# Project Name
+# Macro Meal
 
-![Team Photo](Insert a Team Photo URL here)
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
+![Team Photo](https://imgur.com/a/qCq94Gy)
 
-API Repo: https://github.com/dartmouth-cs98/21f-macro-meals-api 
+- [API Repo](https://github.com/dartmouth-cs98/21f-macro-meals-api) 
 
-Classifier Repo: https://github.com/dartmouth-cs98/21f-macro-meals-classifier 
+- [Classifier Repo](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) 
 
-Images Repo: https://github.com/dartmouth-cs98/21f-macro-meals-images
+- [Images Repo](https://github.com/dartmouth-cs98/21f-macro-meals-images)
 
-TODO: short project description, some sample screenshots or mockups
+- [Figma Board](https://www.figma.com/file/x0tpjcBSMKuImg4e0EvhlY/Initial-Sketches?node-id=0%3A1)
+
+A food recognition app that uses machine learning to process and return nutritional values to users for a variety of foods and dishes. 
+![Initial sketches](https://imgur.com/a/AAC5E6G)
+
 
 ## Architecture
 
