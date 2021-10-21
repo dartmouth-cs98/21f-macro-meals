@@ -1,21 +1,90 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// React Native Axios – To Make HTTP API call in React Native
+// https://aboutreact.com/react-native-axios/
 
-export default function App() {
+import React from 'react';
+import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import axios from 'axios';
+
+const App = () => {
+  const getApi = () => {
+    axios
+      .get('https://macro-cs98.herokuapp.com/api')
+      .then(function (response) {
+        alert(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
+  };
+
+  const getFood = () => {
+    axios
+      .get('https://macro-cs98.herokuapp.com/api/food')
+      .then(function (response) {
+        alert(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
+  };
+
+  const addRice = () => {
+    axios
+      .post('https://macro-cs98.herokuapp.com/api/food', {
+        name: 'Sticky Rice',
+        servingSize: 1,
+        servingUnit: 'cup',
+        calories: 169,
+        protein: 4,
+        carb: 37,
+        fat: 0
+      })
+      .then(function (response) {
+        alert(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Hello World! FE Scaffolding Works!</Text>
-      <StatusBar style="auto" />
+      <Text style={{fontSize: 30, textAlign: 'center'}}>
+        Example of Axios Networking in React Native
+      </Text>
+      {/*Running GET Request*/}
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={getApi}>
+        <Text>Get API</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={getFood}>
+        <Text>Get Food</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={addRice}>
+        <Text>Add Rice</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+    padding: 16,
+  },
+  buttonStyle: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+    width: '100%',
+    marginTop: 16,
   },
 });
+
+export default App;
