@@ -39,6 +39,7 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 * The [server](https://macro-cs98.herokuapp.com/api) is automatically deployed via Heroku
 * The [database](https://cloud.mongodb.com/v2/5f301a43938f013d0af499bc#clusters/detail/Macro) is hosted by MangoDB
 * The [flask server](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) in charge of classification will be deployed on a Heroku webserver
+* The [images database](https://s3.console.aws.amazon.com/s3/buckets/macro-meals-images?region=us-east-1&tab=objects) is stored on Amazon S3 
 
 ## Deployment
 
@@ -49,17 +50,3 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 * Clone the [main repo](https://github.com/dartmouth-cs98/21f-macro-meals) to your local machine
 * Navigate to the `macro-frontend` directory
 * Run `yarn deploy`
-
-### Back End
-
-* The [server](https://macro-cs98.herokuapp.com/api) is automatically deployed via Heroku
-* The [database](https://cloud.mongodb.com/v2/5f301a43938f013d0af499bc#clusters/detail/Macro) is hosted by MangoDB
-
-## Authors
-
-* Quinn Spraut 
-* Anand Mittal 
-* Alex Wong 
-* Brandon Feng
-
-## Acknowledgments
