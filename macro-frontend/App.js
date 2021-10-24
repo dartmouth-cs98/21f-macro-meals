@@ -4,6 +4,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import axios from 'axios';
+import uploadImage from './s3'
 
 const App = () => {
   const getApi = () => {
@@ -47,15 +48,14 @@ const App = () => {
       });
   };
 
-  // dummy test for adding image
-  const addImage = () => {
-    // const file = event.target.files[0];
-    // // Handle null file
-    // // Get url of the file and set it to the src of preview
-    // if (file) {
-    //   this.setState({ preview: window.URL.createObjectURL(file), file });
-    // }
-  };
+  const onImageUp = (event) => {
+    const file = event.target.files[0];
+    uploadImage(file).then((url) => {
+      console.log(url);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -78,11 +78,7 @@ const App = () => {
         onPress={addRice}>
         <Text>Add Rice</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={addImage}>
-        <Text>Add Image</Text>
-      </TouchableOpacity>
+      <input type="file" name = "uploadFoodImage" onChange={this.onImageUpload}
     </View>
   );
 };
