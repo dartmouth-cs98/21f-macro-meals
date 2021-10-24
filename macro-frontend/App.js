@@ -6,7 +6,7 @@ import {
   StyleSheet, View, TouchableOpacity, Text,
 } from 'react-native';
 import axios from 'axios';
-import uploadImage from './s3'
+import {uploadImage} from './s3'
 
 const App = () => {
   const getApi = () => {
@@ -50,7 +50,7 @@ const App = () => {
       });
   };
 
-  const onImageUp = (event) => {
+  const onImageUpload = (event) => {
     const file = event.target.files[0];
     uploadImage(file).then((url) => {
       console.log(url);
@@ -86,7 +86,7 @@ const App = () => {
       >
         <Text>Add Rice</Text>
       </TouchableOpacity>
-      <input type="file" name = "uploadFoodImage" onChange={this.onImageUpload}
+      <input type="file" name="uploadFoodImage" onChange={onImageUpload}/>
     </View>
   );
 };
