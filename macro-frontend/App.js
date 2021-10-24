@@ -2,17 +2,21 @@
 // https://aboutreact.com/react-native-axios/
 
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {
+  StyleSheet, View, TouchableOpacity, Text,
+} from 'react-native';
 import axios from 'axios';
+import FoodBar from './components/food-breakdown/food-bar';
+import FoodBreakDown from './components/food-breakdown/food-breakdown';
 
 const App = () => {
   const getApi = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api')
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -20,10 +24,10 @@ const App = () => {
   const getFood = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api/food')
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -37,35 +41,41 @@ const App = () => {
         calories: 169,
         protein: 4,
         carb: 37,
-        fat: 0
+        fat: 0,
       })
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 30, textAlign: 'center'}}>
+
+      <FoodBreakDown />
+
+      <Text style={{ fontSize: 30, textAlign: 'center' }}>
         Example of Axios Networking in React Native
       </Text>
-      {/*Running GET Request*/}
+      {/* Running GET Request */}
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={getApi}>
+        onPress={getApi}
+      >
         <Text>Get API</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={getFood}>
+        onPress={getFood}
+      >
         <Text>Get Food</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={addRice}>
+        onPress={addRice}
+      >
         <Text>Add Rice</Text>
       </TouchableOpacity>
     </View>
@@ -84,6 +94,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '100%',
     marginTop: 16,
+    fontSize: 50,
   },
 });
 
