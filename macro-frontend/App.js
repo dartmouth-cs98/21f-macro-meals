@@ -19,6 +19,17 @@ export default function App() {
       });
   };
 
+  const getFlask = () => {
+    axios
+      .get('https://macro-cs98.herokuapp.com/api/flask')
+      .then(function (response) {
+        alert(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        alert(error.message);
+      });
+  };
+
   const getFood = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api/food')
@@ -78,13 +89,17 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={{fontSize: 30, textAlign: 'center'}}>
-        Example of Axios Networking in React Native
+        Connections
       </Text>
-      {/*Running GET Request*/}
       <TouchableOpacity
         style={styles.buttonStyle}
         onPress={getApi}>
         <Text>Get API</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={getFlask}>
+        <Text>Get Flask Server</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
