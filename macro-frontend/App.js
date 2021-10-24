@@ -24,10 +24,10 @@ export default function App() {
   const getFlask = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api/flask')
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -90,19 +90,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-<<<<<<< HEAD
-
-      <FoodBreakDown />
-
       <Text style={{ fontSize: 30, textAlign: 'center' }}>
-        Example of Axios Networking in React Native
-      </Text>
-      {/* Running GET Request */}
-=======
-      <Text style={{fontSize: 30, textAlign: 'center'}}>
         Connections
       </Text>
->>>>>>> 9ea26f6 (adding flask integration:)
       <TouchableOpacity
         style={styles.buttonStyle}
         onPress={getApi}
@@ -111,17 +101,14 @@ export default function App() {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-<<<<<<< HEAD
-        onPress={getFood}
+        onPress={getFlask}
       >
-=======
-        onPress={getFlask}>
         <Text>Get Flask Server</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={getFood}>
->>>>>>> 9ea26f6 (adding flask integration:)
+        onPress={getFood}
+      >
         <Text>Get Food</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -163,6 +150,5 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '100%',
     marginTop: 16,
-    fontSize: 50,
   },
 });
