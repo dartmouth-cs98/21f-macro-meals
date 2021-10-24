@@ -17,7 +17,8 @@ function uploadFileToS3(signedRequest, file, url) {
   console.log(file);
   console.log(url);
   return new Promise((fulfill, reject) => {
-    axios.put(signedRequest, file, { headers: { 'Content-Type': file.type } }).then((response) => {
+    axios.put(signedRequest, file, { headers: { 'Content-Type': file.type, 'Access-Control-Allow-Origin': 'http://localhost:19006/' } }).then((response) => {
+      console.log(response);
       fulfill(url);
     }).catch((error) => {
       reject(error);

@@ -1,14 +1,15 @@
 // React Native Axios – To Make HTTP API call in React Native
 // https://aboutreact.com/react-native-axios/
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet, View, TouchableOpacity, Text,
 } from 'react-native';
 import axios from 'axios';
-import {uploadImage} from './s3'
+import { Camera } from 'expo-camera';
+import { uploadImage } from './s3';
 
-const App = () => {
+export default function App() {
   const getApi = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api')
@@ -57,6 +58,23 @@ const App = () => {
     }).catch((error) => {
       console.log(error);
     });
+  };
+
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
   }
 
   return (
@@ -86,10 +104,26 @@ const App = () => {
       >
         <Text>Add Rice</Text>
       </TouchableOpacity>
-      <input type="file" name="uploadFoodImage" onChange={onImageUpload}/>
+      <input type="file" name="uploadFoodImage" onChange={onImageUpload} />
+      <Camera style={styles.camera} type={type}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back,
+              );
+            }}
+          >
+            <Text style={styles.text}> Flip </Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -106,5 +140,3 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
 });
-
-export default App;
