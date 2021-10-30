@@ -3,6 +3,7 @@
 
 /*
  * Alex Wong
+ * CS 98
  * renders pie chart to show break down of items from meal
  * accepts an array of objects with a label and amount values
  * based on two tutorials from devto
