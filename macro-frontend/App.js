@@ -1,20 +1,24 @@
 // React Native Axios – To Make HTTP API call in React Native
 // https://aboutreact.com/react-native-axios/
 
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet, View, TouchableOpacity, Text,
+} from 'react-native';
 import axios from 'axios';
-import {uploadImage} from './s3';
 import { Camera } from 'expo-camera';
+import { uploadImage } from './s3';
+
+import MacroPieChart from './components/macro-breakdown/macro-individuals'
 
 export default function App() {
   const getApi = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api')
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -22,10 +26,10 @@ export default function App() {
   const getFlask = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api/flask')
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -33,10 +37,10 @@ export default function App() {
   const getFood = () => {
     axios
       .get('https://macro-cs98.herokuapp.com/api/food')
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -50,12 +54,12 @@ export default function App() {
         calories: 169,
         protein: 4,
         carb: 37,
-        fat: 0
+        fat: 0,
       })
-      .then(function (response) {
+      .then((response) => {
         alert(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch((error) => {
         alert(error.message);
       });
   };
@@ -67,7 +71,7 @@ export default function App() {
     }).catch((error) => {
       console.log(error);
     });
-  }
+  };
 
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -88,30 +92,37 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 30, textAlign: 'center'}}>
+
+      <MacroPieChart/>
+      <Text style={{ fontSize: 30, textAlign: 'center' }}>
         Connections
       </Text>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={getApi}>
+        onPress={getApi}
+      >
         <Text>Get API</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={getFlask}>
+        onPress={getFlask}
+      >
         <Text>Get Flask Server</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={getFood}>
+        onPress={getFood}
+      >
         <Text>Get Food</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={addRice}>
+        onPress={addRice}
+      >
         <Text>Add Rice</Text>
       </TouchableOpacity>
-      <input type="file" name="uploadFoodImage" onChange={onImageUpload}/>
+      {/*
+      <input type="file" name="uploadFoodImage" onChange={onImageUpload} />
       <Camera style={styles.camera} type={type}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -120,16 +131,17 @@ export default function App() {
               setType(
                 type === Camera.Constants.Type.back
                   ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
+                  : Camera.Constants.Type.back,
               );
-            }}>
+            }}
+          >
             <Text style={styles.text}> Flip </Text>
           </TouchableOpacity>
         </View>
-      </Camera>
+          </Camera> */}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
