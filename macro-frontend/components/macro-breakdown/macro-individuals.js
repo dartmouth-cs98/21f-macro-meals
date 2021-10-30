@@ -1,106 +1,153 @@
 // Adapted from https://dev.to/franciscomendes10866/how-to-create-a-donut-pie-chart-using-react-native-svg-3om3
+// Also from https://dev.to/franciscomendes10866/how-to-create-a-dynamic-donut-pie-chart-using-react-native-svg-1j70
 
-import React from 'react';
-import {View, Text, StyleSheet} from "react-native";
-import Svg, {G, Circle} from "react-native-svg";
+/*
+ * Alex Wong
+ * renders pie chart to show break down of items from meal
+ * accepts an array of objects with a label and amount values
+ * based on two tutorials from devto
+ *
+ * BUGS
+ * need to use previous item's angle to calc new positiion
+ */
 
+import React, { Component } from 'react';
+import {
+  View, Text, StyleSheet,
+} from 'react-native';
+import Svg, { G, Circle } from 'react-native-svg';
 
-const MacroPieChart = () => {
-    const radius = 70;
-    const circleCircumference = 2 * Math.PI * radius;
+class MacroPieChart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // eslint-disable-next-line react/no-unused-state
+      selected: null,
+      // eslint-disable-next-line react/no-unused-state
+      renderAll: true,
+      macroDisplay: [],
+      cirCircumference: 2 * Math.PI * 70,
+      prevAngle: 0,
 
-    const grocerires = 241;
-    const bills = 372;
-    const regular = 188;
-    const total = grocerires + bills + regular;
+      // dummy data
+      allMacros: [
+        {
+          label: 'protein',
+          amount: 10,
+          color: '#A3F4D7',
+        },
+        {
+          label: 'carbs',
+          amount: 10,
+          color: '#EAED1C',
+        },
+        {
+          label: 'carbs',
+          amount: 10,
+          color: '#D37260',
+        },
+      ],
+    };
 
-    const groceriesPercentage = (grocerires / total) * 100;
-    const billPerceentage = (bills / total) * 100;
-    const regularPercentage = (regular / total) * 100;
+    this.componentDidMount = () => {
+      this.calcCircle();
+    };
+  }
 
-    const groceriesStrokeDashoffset = circleCircumference - (circleCircumference * groceriesPercentage) / 100;
-    const billsStrokeDashoffset = circleCircumference - (circleCircumference * billPerceentage) / 100;
-    const regularStrokeDashoffset = circleCircumference - (circleCircumference * regularPercentage) / 100;
+    // making the calculations to render the circle
+    calcCircle = () => {
+      // settiing up basic figures
+      let total = 0;
+      // eslint-disable-next-line no-unused-vars
+      let itemNum = 0;
+      const { allMacros } = this.state;
+      allMacros.map((element) => {
+        if (element.amount > 0) {
+          itemNum++;
+          total += element.amount;
+        } return allMacros;
+      });
 
-    const groceriesAngle = (grocerires / total) * 360;
-    const billsAngle = (bills / total) * 360;
-    const regularAngle = groceriesAngle + billsAngle;
+      console.log(total);
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.graphWrapper}>
-                <Svg height="160" width="160" viewBox="0 0 180 180">
-                    <G rotation={-90} originX="90" originY="90">
-                    <>
-                    <Circle
+      // going through Macros and processing needed calc for angles
+      // eslint-disable-next-line array-callback-return
+      allMacros.map((element, index) => {
+        const { cirCircumference } = this.state;
+        const percent = (element.amount / total) * 100;
+        const strokeDashoffset = cirCircumference - (cirCircumference * percent) / 100;
+        const angle = (element.amount / total) * 360;
+
+        this.setState((prevState) => ({
+          macroDisplay: [...prevState.macroDisplay, {
+            key: index,
+            label: element.label,
+            percent,
+            strokeDashoffset,
+            angle,
+            prevAngle: prevState.prevAngle,
+            sliceSpacing: itemNum,
+            color: element.color,
+          }],
+        }));
+        this.setState({ prevAngle: angle });
+        console.log(element.key);
+      });
+    }
+
+    render() {
+      return (
+        <View style={styles.graphWrapper}>
+          <Svg height="160" width="160" viewBox="0 0 180 180">
+            <G rotation={-90} originX="90" originY="90">
+              {
+              // eslint-disable-next-line react/destructuring-assignment
+              this.state.macroDisplay.map((element, index) => (
+                <Circle
+                // eslint-disable-next-line react/no-array-index-key
+                  key={index}
                   cx="50%"
                   cy="50%"
-                  r={radius}
-                  stroke="#F05454"
+                  r="70"
+                  stroke={element.color}
                   fill="transparent"
                   strokeWidth="40"
-                  strokeDasharray={circleCircumference}
-                  strokeDashoffset={groceriesStrokeDashoffset}
-                  rotation={0}
+                  // eslint-disable-next-line react/destructuring-assignment
+                  strokeDasharray={this.state.cirCircumference}
+                  strokeDashoffset={element.strokeDashoffset}
+                  rotation={element.prevAngle * element.key}
                   originX="90"
                   originY="90"
-                  strokeLinecap="round"
-                 />
-                 <Circle
-                  cx="50%"
-                  cy="50%"
-                  r={radius}
-                  stroke="#30475E"
-                  fill="transparent"
-                  strokeWidth="40"
-                  strokeDasharray={circleCircumference}
-                  strokeDashoffset={billsStrokeDashoffset}
-                  rotation={groceriesAngle}
-                  originX="90"
-                  originY="90"
-                  strokeLinecap="round"
-                 />
-                 <Circle
-                  cx="50%"
-                  cy="50%"
-                  r={radius}
-                  stroke="#222831"
-                  fill="transparent"
-                  strokeWidth="40"
-                  strokeDasharray={circleCircumference}
-                  strokeDashoffset={regularStrokeDashoffset}
-                  rotation={regularAngle}
-                  originX="90"
-                  originY="90"
-                  strokeLinecap="round"
                 />
-                 </>
-                    </G>
-                </Svg>
-                <Text style={styles.label}>{total}</Text>
-            </View>
+              ))
+                }
+            </G>
+          </Svg>
+          <Text style={styles.label}>hello</Text>
         </View>
-    )
+      );
+    }
 }
 
 export default MacroPieChart;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
-    graphWrapper: {
-        alignItems: "center",
-        justifyContent: "center"
-    },
+  graphWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    label: {
-        position: "absolute",
-        textAlign: "center",
-        fontWeight: "700",
-        fontSize: 24,
-      },
-})
+  label: {
+    position: 'absolute',
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 24,
+    color: '#082032',
+  },
+});
