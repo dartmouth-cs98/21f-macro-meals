@@ -51,6 +51,16 @@ const App = () => {
       });
   };
 
+  // dummy test for adding image
+  const addImage = () => {
+    // const file = event.target.files[0];
+    // // Handle null file
+    // // Get url of the file and set it to the src of preview
+    // if (file) {
+    //   this.setState({ preview: window.URL.createObjectURL(file), file });
+    // }
+  };
+
   return (
     <View style={styles.container}>
 
@@ -77,6 +87,11 @@ const App = () => {
         onPress={addRice}
       >
         <Text>Add Rice</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={addImage}>
+        <Text>Add Image</Text>
       </TouchableOpacity>
     </View>
   );
