@@ -97,6 +97,17 @@ function MainScreen({ navigation }) {
         alert(error.message);
       });
   };
+  const getRice = () => {
+    axios
+      .get('https://macro-cs98.herokuapp.com/api/food/61770d63cfcdd246b56af251')
+      .then((response) => {
+        alert(JSON.stringify(response.data));
+        addItem(response.data);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -105,12 +116,6 @@ function MainScreen({ navigation }) {
       <Text style={{ fontSize: 30, textAlign: 'center' }}>
         Connections
       </Text>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={getChicken}
-      >
-        <Text>Get Chicken</Text>
-      </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
         onPress={getFlask}
@@ -122,6 +127,18 @@ function MainScreen({ navigation }) {
         onPress={getFood}
       >
         <Text>Get Food</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={getChicken}
+      >
+        <Text>Add Chicken To Breakdown</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={getRice}
+      >
+        <Text>Add Rice To Breakdown</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('Breakdown')}
