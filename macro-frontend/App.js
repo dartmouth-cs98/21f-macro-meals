@@ -1,11 +1,12 @@
-// React Native Axios – To Make HTTP API call in React Native
-// https://aboutreact.com/react-native-axios/
-
 import React from 'react';
+import { Provider as StateProvider } from 'react-redux';
+import store from './src/redux/store';
 import MainStackNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
   return (
-    <MainStackNavigator />
+    <StateProvider store={store}>
+      <MainStackNavigator />
+    </StateProvider>
   );
 }

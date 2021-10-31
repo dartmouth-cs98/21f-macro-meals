@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 function BreakdownScreen() {
+  const foodItems = useSelector((state) => state.itemList);
   return (
     <View style={styles.container}>
       <Text>Breakdown Screen</Text>
