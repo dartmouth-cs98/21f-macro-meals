@@ -2,21 +2,12 @@ import React from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 // import { Camera } from 'expo-camera';
 // import { uploadImage } from '../../s3';
 import MacroPieChart from '../../components/macro-breakdown/macro-individuals';
-
-const getChicken = () => {
-  axios
-    .get('https://macro-cs98.herokuapp.com/api/food/617ee2b5ebd992f144f45fa6')
-    .then((response) => {
-      alert(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
+import { addFood } from '../redux/reducer';
 
 const getFlask = () => {
   axios
@@ -90,6 +81,23 @@ if (hasPermission === false) {
 */
 
 function MainScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const addItem = (value) => {
+    dispatch(addFood(value));
+  };
+
+  const getChicken = () => {
+    axios
+      .get('https://macro-cs98.herokuapp.com/api/food/617ee2b5ebd992f144f45fa6')
+      .then((response) => {
+        alert(JSON.stringify(response.data));
+        addItem(response.data);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   return (
     <View style={styles.container}>
 
