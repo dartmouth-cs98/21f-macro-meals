@@ -116,10 +116,10 @@ function MainScreen({ navigation }) {
         <Text>Get Food</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Modal')}
-        style={styles.fabButton}
+        onPress={() => navigation.navigate('Breakdown')}
+        style={styles.buttonStyle}
       >
-        Go To Breakdown Screen
+        <Text>Go To Breakdown Screen</Text>
       </TouchableOpacity>
       {/*
       <input type="file" name="uploadFoodImage" onChange={onImageUpload} />
