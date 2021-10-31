@@ -9,12 +9,12 @@ import axios from 'axios';
 import { Camera } from 'expo-camera';
 import { uploadImage } from './s3';
 
-import MacroPieChart from './components/macro-breakdown/macro-individuals'
+import MacroPieChart from './components/macro-breakdown/macro-individuals';
 
 export default function App() {
-  const getApi = () => {
+  const getChicken = () => {
     axios
-      .get('https://macro-cs98.herokuapp.com/api')
+      .get('https://macro-cs98.herokuapp.com/api/food/617ee2b5ebd992f144f45fa6')
       .then((response) => {
         alert(JSON.stringify(response.data));
       })
@@ -93,15 +93,15 @@ export default function App() {
   return (
     <View style={styles.container}>
 
-      <MacroPieChart/>
+      <MacroPieChart />
       <Text style={{ fontSize: 30, textAlign: 'center' }}>
         Connections
       </Text>
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={getApi}
+        onPress={getChicken}
       >
-        <Text>Get API</Text>
+        <Text>Get Chicken</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonStyle}
