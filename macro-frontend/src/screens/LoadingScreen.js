@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const handleClick = (isUserLoggedIn, navigation) => (
   isUserLoggedIn
-    ? navigation.navigate('App')
+    ? navigation.navigate('Main')
     : navigation.navigate('Login')
 );
 

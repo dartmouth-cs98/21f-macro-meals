@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFood } from '../redux/reducer';
+import { removeFood } from '../redux/reducers/foodReducer';
 
 function BreakdownView() {
   const foodItems = useSelector((state) => state.foodList);

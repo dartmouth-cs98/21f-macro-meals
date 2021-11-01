@@ -7,7 +7,7 @@ import axios from 'axios';
 // import { Camera } from 'expo-camera';
 // import { uploadImage } from '../../s3';
 import MacroPieChart from '../../components/macro-breakdown/macro-individuals';
-import { addFood } from '../redux/reducer';
+import { addFood } from '../redux/reducers/foodReducer';
 
 const getFlask = () => {
   axios

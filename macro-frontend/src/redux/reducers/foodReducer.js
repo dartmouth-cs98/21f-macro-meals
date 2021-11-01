@@ -11,7 +11,7 @@ export const removeFood = (id) => ({
 const initialState = {
   foodList: [],
 };
-const rootReducer = (state = initialState, action) => {
+const foodReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_FOOD:
       return {
@@ -34,4 +34,4 @@ const rootReducer = (state = initialState, action) => {
       return state;
   }
 };
-export default rootReducer;
+export default foodReducer;
