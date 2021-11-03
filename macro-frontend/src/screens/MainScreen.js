@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
+import { Camera } from 'expo-camera';
+// import { uploadImage } from '../../s3';
 import MacroPieChart from '../../components/macro-breakdown/macro-individuals';
 import { addFood } from '../redux/actions/foodActions';
 import { userLogout } from '../redux/actions/userActions';
@@ -30,27 +32,6 @@ const getFood = () => {
 };
 
 /*
-const addRice = () => {
-  axios
-    .post('https://macro-cs98.herokuapp.com/api/food', {
-      name: 'Sticky Rice',
-      servingSize: 1,
-      servingUnit: 'cup',
-      calories: 169,
-      protein: 4,
-      carb: 37,
-      fat: 0,
-    })
-    .then((response) => {
-      alert(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
-*/
-
-/*
 const onImageUpload = (event) => {
   const file = event.target.files[0];
   uploadImage(file).then((url) => {
@@ -59,23 +40,17 @@ const onImageUpload = (event) => {
     console.log(error);
   });
 };
-const [hasPermission, setHasPermission] = useState(null);
-const [type, setType] = useState(Camera.Constants.Type.back);
-useEffect(() => {
-  (async () => {
-    const { status } = await Camera.requestPermissionsAsync();
-    setHasPermission(status === 'granted');
-  })();
-}, []);
-if (hasPermission === null) {
-  return <View />;
-}
-if (hasPermission === false) {
-  return <Text>No access to camera</Text>;
-}
 */
 
 function MainScreen({ navigation, storedUserName }) {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
   const dispatch = useDispatch();
   const addItem = (value) => {
     dispatch(addFood(value));
@@ -169,8 +144,8 @@ function MainScreen({ navigation, storedUserName }) {
       >
         <Text>Logout</Text>
       </TouchableOpacity>
-      {/*
-      <input type="file" name="uploadFoodImage" onChange={onImageUpload} />
+      {hasPermission
+      && (
       <Camera style={styles.camera} type={type}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -186,7 +161,14 @@ function MainScreen({ navigation, storedUserName }) {
             <Text style={styles.text}> Flip </Text>
           </TouchableOpacity>
         </View>
-          </Camera> */}
+      </Camera>
+      )}
+      {!hasPermission
+      && (
+        <View>
+          <Text>No Camera Permission</Text>
+        </View>
+      )}
     </View>
   );
 }
