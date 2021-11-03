@@ -22,7 +22,7 @@ const SceneLogin = ({
       : '...');
     if (isUserLoggedIn) {
       setTimeout(() => {
-        navigation.navigate('App');
+        navigation.navigate('Main');
       }, 3000);
     }
   }, [isUserLoggedIn, storedUserName]);

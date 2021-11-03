@@ -1,13 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet, Text, View, TouchableOpacity,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
-// import { Camera } from 'expo-camera';
-// import { uploadImage } from '../../s3';
+import { Text, View, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect, useDispatch } from 'react-redux';
 import MacroPieChart from '../../components/macro-breakdown/macro-individuals';
 import { addFood } from '../redux/actions/foodActions';
+import { userLogout } from '../redux/actions/userActions';
 
 const getFlask = () => {
   axios
@@ -61,17 +59,14 @@ const onImageUpload = (event) => {
     console.log(error);
   });
 };
-
 const [hasPermission, setHasPermission] = useState(null);
 const [type, setType] = useState(Camera.Constants.Type.back);
-
 useEffect(() => {
   (async () => {
     const { status } = await Camera.requestPermissionsAsync();
     setHasPermission(status === 'granted');
   })();
 }, []);
-
 if (hasPermission === null) {
   return <View />;
 }
@@ -80,7 +75,7 @@ if (hasPermission === false) {
 }
 */
 
-function MainScreen({ navigation }) {
+function MainScreen({ navigation, storedUserName }) {
   const dispatch = useDispatch();
   const addItem = (value) => {
     dispatch(addFood(value));
@@ -109,12 +104,34 @@ function MainScreen({ navigation }) {
       });
   };
 
+  const handleLogout = () => {
+    console.log('logout');
+    dispatch(userLogout());
+    navigation.navigate('Logout');
+  };
+
+  const styles = {
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    buttonStyle: {
+      alignItems: 'center',
+      backgroundColor: '#DDDDDD',
+      padding: 10,
+      width: '100%',
+      marginTop: 16,
+    },
+  };
+
   return (
     <View style={styles.container}>
 
       <MacroPieChart />
       <Text style={{ fontSize: 30, textAlign: 'center' }}>
-        Connections
+        {`Hey, ${storedUserName}!`}
       </Text>
       <TouchableOpacity
         style={styles.buttonStyle}
@@ -146,6 +163,12 @@ function MainScreen({ navigation }) {
       >
         <Text>Go To Breakdown Screen</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={handleLogout}
+        style={styles.buttonStyle}
+      >
+        <Text>Logout</Text>
+      </TouchableOpacity>
       {/*
       <input type="file" name="uploadFoodImage" onChange={onImageUpload} />
       <Camera style={styles.camera} type={type}>
@@ -167,19 +190,13 @@ function MainScreen({ navigation }) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonStyle: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
-    width: '100%',
-    marginTop: 16,
-  },
+
+const mapStateToProps = (state) => ({
+  storedUserName: state.user.name,
 });
-export default MainScreen;
+
+MainScreen.propTypes = {
+  storedUserName: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps)(MainScreen);
