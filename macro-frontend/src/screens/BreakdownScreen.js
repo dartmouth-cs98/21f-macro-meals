@@ -7,72 +7,66 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeFood } from '../redux/reducer';
+import { useDispatch, connect } from 'react-redux';
+import { removeFood } from '../redux/actions/foodActions';
 
-function BreakdownView() {
-  const foodItems = useSelector((state) => state.foodList);
-  console.log({ foodItems });
+function BreakdownScreen({ navigation, foodList }) {
   const dispatch = useDispatch();
-  return (
-    <View
-      style={{
-        backgroundColor: 'white',
-        flex: 1,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        paddingHorizontal: 20,
-        paddingVertical: 20,
-      }}
-    >
-      {foodItems.length !== 0 ? (
-        <FlatList
-          data={foodItems}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.listItemContainer}>
-              <Text style={styles.itemTitle} numberOfLines={1}>
-                {item.name}
-              </Text>
-              <Text style={styles.itemTitle} numberOfLines={1}>
-                {item.calories}
-              </Text>
-              <Text style={styles.itemTitle} numberOfLines={1}>
-                {item.protein}
-              </Text>
-              <Text style={styles.itemTitle} numberOfLines={1}>
-                {item.carb}
-              </Text>
-              <Text style={styles.itemTitle} numberOfLines={1}>
-                {item.fat}
-              </Text>
-              <TouchableOpacity
-                onPress={() => dispatch(removeFood(item.id))}
-                style={styles.button}
-              >
-                <Text>Delete Food</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      ) : (
-        <Text style={{ fontSize: 30 }}>No Food</Text>
-      )}
-    </View>
-  );
-}
-function BreakdownScreen({ navigation }) {
+  console.log({ foodList });
   return (
     <>
       <StatusBar barStyle="light-content" />
       <View style={styles.container}>
-        <BreakdownView />
+        <View
+          style={{
+            backgroundColor: 'white',
+            flex: 1,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+          }}
+        >
+          {foodList.length !== 0 ? (
+            <FlatList
+              data={foodList}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <View style={styles.listItemContainer}>
+                  <Text style={styles.itemTitle} numberOfLines={1}>
+                    {item.name}
+                  </Text>
+                  <Text style={styles.itemTitle} numberOfLines={1}>
+                    {item.calories}
+                  </Text>
+                  <Text style={styles.itemTitle} numberOfLines={1}>
+                    {item.protein}
+                  </Text>
+                  <Text style={styles.itemTitle} numberOfLines={1}>
+                    {item.carb}
+                  </Text>
+                  <Text style={styles.itemTitle} numberOfLines={1}>
+                    {item.fat}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => dispatch(removeFood(item.id))}
+                    style={styles.button}
+                  >
+                    <Text>Delete Food</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+          ) : (
+            <Text style={{ fontSize: 30 }}>No Food</Text>
+          )}
+        </View>
         <View style={styles.fabContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Main')}
             style={styles.fabButton}
           >
-            <Text>Go To Main Screen</Text>
+            <Text>Back</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -119,4 +113,8 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
-export default BreakdownScreen;
+const mapStateToProps = (state) => ({
+  foodList: state.food.foodList,
+});
+
+export default connect(mapStateToProps)(BreakdownScreen);
