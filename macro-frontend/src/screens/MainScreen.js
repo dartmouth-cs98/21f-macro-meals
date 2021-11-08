@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Camera } from 'expo-camera';
 import { uploadImage } from '../../s3';
 import { userLogout } from '../redux/actions/userActions';
+import styles from '../styles';
 
 const uploadImageToS3 = (file) => {
   console.log(file);
@@ -37,28 +38,11 @@ function MainScreen({ navigation, storedUserName }) {
     navigation.navigate('Logout');
   };
 
-  const styles = {
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    buttonStyle: {
-      alignItems: 'center',
-      backgroundColor: '#DDDDDD',
-      padding: 10,
-      width: '100%',
-      marginTop: 16,
-    },
-  };
-
   async function onPictureSaved(photo) {
     console.log(photo);
     const response = await fetch(photo.uri);
     const blob = await response.blob();
     uploadImageToS3(blob);
-    // uploadImageToS3(asset);
   }
 
   const takePicture = () => {
@@ -90,19 +74,7 @@ function MainScreen({ navigation, storedUserName }) {
         }}
         >
           <TouchableOpacity
-            style={{
-              position: 'absolute',
-              top: '4vw',
-              right: '4vw',
-              backgroundColor: '#339DFF',
-              width: '10vw',
-              height: '10vw',
-              border: '3px solid white',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: '1000px',
-            }}
+            style={styles.navTertBtn}
             onPress={() => {
               setType(
                 type === Camera.Constants.Type.back
@@ -123,35 +95,14 @@ function MainScreen({ navigation, storedUserName }) {
             width: '100%',
           }}
           >
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#339DFF',
-                width: '16vw',
-                height: '16vw',
-                border: '3px solid white',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '12px',
-              }}
-            >
+            <TouchableOpacity style={styles.navSecBtn}>
               <Text>
                 <Icon name="user" color="white" style={{ fontSize: '8vw' }} />
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={takePicture}
-              style={{
-                backgroundColor: '#339DFF',
-                width: '28vw',
-                height: '28vw',
-                border: '4px solid white',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '1000px',
-                margin: '4vw',
-              }}
+              style={styles.navPrimBtn}
             >
               <Text>
                 <Icon name="camera" color="white" style={{ fontSize: '10vw' }} />
@@ -159,16 +110,7 @@ function MainScreen({ navigation, storedUserName }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => { navigation.navigate('Breakdown'); }}
-              style={{
-                backgroundColor: '#339DFF',
-                width: '16vw',
-                height: '16vw',
-                border: '3px solid white',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '12px',
-              }}
+              style={styles.navSecBtn}
             >
               <Text>
                 <Icon name="pie-chart" color="white" style={{ fontSize: '8vw' }} />

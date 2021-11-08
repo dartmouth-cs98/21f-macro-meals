@@ -6,6 +6,13 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   fullScreen: {
 
   },
@@ -17,6 +24,44 @@ const styles = StyleSheet.create({
   cards: {
 
   },
+
+  navPrimBtn: {
+    backgroundColor: '#339DFF',
+    width: '28vw',
+    height: '28vw',
+    border: '4px solid white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '1000px',
+    margin: '4vw',
+  },
+
+  navSecBtn: {
+    backgroundColor: '#339DFF',
+    width: '16vw',
+    height: '16vw',
+    border: '3px solid white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '12px',
+  },
+
+  navTertBtn: {
+    position: 'absolute',
+    top: '4vw',
+    right: '4vw',
+    backgroundColor: '#339DFF',
+    width: '10vw',
+    height: '10vw',
+    border: '3px solid white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '1000px',
+  },
+
 });
 
-module.exports = styles;
+export default styles;
