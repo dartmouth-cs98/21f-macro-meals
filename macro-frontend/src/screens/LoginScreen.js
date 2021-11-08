@@ -18,12 +18,12 @@ const SceneLogin = ({
 
   useEffect(() => {
     setStatus(isUserLoggedIn
-      ? `Successfully logged in as ${storedUserName}`
+      ? `Welcome, ${storedUserName}!`
       : '...');
     if (isUserLoggedIn) {
       setTimeout(() => {
         navigation.navigate('Main');
-      }, 3000);
+      }, 1500);
     }
   }, [isUserLoggedIn, storedUserName]);
 

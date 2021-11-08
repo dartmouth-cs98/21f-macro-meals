@@ -1,109 +1,36 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
 import { Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
-import MacroPieChart from '../../components/macro-breakdown/macro-individuals';
-import { addFood } from '../redux/actions/foodActions';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Camera } from 'expo-camera';
+import { uploadImage } from '../../s3';
 import { userLogout } from '../redux/actions/userActions';
 
-const getFlask = () => {
-  axios
-    .get('https://macro-cs98.herokuapp.com/api/flask')
-    .then((response) => {
-      alert(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
-
-const getFood = () => {
-  axios
-    .get('https://macro-cs98.herokuapp.com/api/food')
-    .then((response) => {
-      alert(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
-
-/*
-const addRice = () => {
-  axios
-    .post('https://macro-cs98.herokuapp.com/api/food', {
-      name: 'Sticky Rice',
-      servingSize: 1,
-      servingUnit: 'cup',
-      calories: 169,
-      protein: 4,
-      carb: 37,
-      fat: 0,
-    })
-    .then((response) => {
-      alert(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-};
-*/
-
-/*
-const onImageUpload = (event) => {
-  const file = event.target.files[0];
+const uploadImageToS3 = (file) => {
+  console.log(file);
   uploadImage(file).then((url) => {
-    console.log(url);
+    alert(url);
   }).catch((error) => {
-    console.log(error);
+    alert(error);
   });
 };
-const [hasPermission, setHasPermission] = useState(null);
-const [type, setType] = useState(Camera.Constants.Type.back);
-useEffect(() => {
-  (async () => {
-    const { status } = await Camera.requestPermissionsAsync();
-    setHasPermission(status === 'granted');
-  })();
-}, []);
-if (hasPermission === null) {
-  return <View />;
-}
-if (hasPermission === false) {
-  return <Text>No access to camera</Text>;
-}
-*/
 
 function MainScreen({ navigation, storedUserName }) {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [cameraRef, setCameraRef] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
   const dispatch = useDispatch();
-  const addItem = (value) => {
-    dispatch(addFood(value));
-  };
 
-  const getChicken = () => {
-    axios
-      .get('https://macro-cs98.herokuapp.com/api/food/617ee2b5ebd992f144f45fa6')
-      .then((response) => {
-        alert(JSON.stringify(response.data));
-        addItem(response.data);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
-  const getRice = () => {
-    axios
-      .get('https://macro-cs98.herokuapp.com/api/food/61770d63cfcdd246b56af251')
-      .then((response) => {
-        alert(JSON.stringify(response.data));
-        addItem(response.data);
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
-
+  // eslint-disable-next-line no-unused-vars
   const handleLogout = () => {
     console.log('logout');
     dispatch(userLogout());
@@ -126,55 +53,56 @@ function MainScreen({ navigation, storedUserName }) {
     },
   };
 
+  async function onPictureSaved(photo) {
+    console.log(photo);
+    const response = await fetch(photo.uri);
+    const blob = await response.blob();
+    uploadImageToS3(blob);
+    // uploadImageToS3(asset);
+  }
+
+  const takePicture = () => {
+    console.log('taking picture');
+    console.log(cameraRef);
+    if (cameraRef) {
+      cameraRef.takePictureAsync({ onPictureSaved });
+    }
+  };
+
   return (
     <View style={styles.container}>
-
-      <MacroPieChart />
-      <Text style={{ fontSize: 30, textAlign: 'center' }}>
-        {`Hey, ${storedUserName}!`}
-      </Text>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={getFlask}
+      {hasPermission
+      && (
+      <Camera style={{
+        width: '100%', height: '100%', display: 'flex', justifyContent: 'center',
+      }}
+        type={type}
+        ref={(ref) => { setCameraRef(ref); }}
       >
-        <Text>Get Flask Server</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={getFood}
-      >
-        <Text>Get Food</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={getChicken}
-      >
-        <Text>Add Chicken To Breakdown</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={getRice}
-      >
-        <Text>Add Rice To Breakdown</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Breakdown')}
-        style={styles.buttonStyle}
-      >
-        <Text>Go To Breakdown Screen</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handleLogout}
-        style={styles.buttonStyle}
-      >
-        <Text>Logout</Text>
-      </TouchableOpacity>
-      {/*
-      <input type="file" name="uploadFoodImage" onChange={onImageUpload} />
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
+        <View style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+          position: 'relative',
+          paddingBottom: '5vw',
+        }}
+        >
           <TouchableOpacity
-            style={styles.button}
+            style={{
+              position: 'absolute',
+              top: '4vw',
+              right: '4vw',
+              backgroundColor: '#339DFF',
+              width: '10vw',
+              height: '10vw',
+              border: '3px solid white',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: '1000px',
+            }}
             onPress={() => {
               setType(
                 type === Camera.Constants.Type.back
@@ -183,10 +111,79 @@ function MainScreen({ navigation, storedUserName }) {
               );
             }}
           >
-            <Text style={styles.text}> Flip </Text>
+            <Text>
+              <Icon name="rotate-left" color="white" style={{ fontSize: '5vw' }} />
+            </Text>
           </TouchableOpacity>
+          <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#339DFF',
+                width: '16vw',
+                height: '16vw',
+                border: '3px solid white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '12px',
+              }}
+            >
+              <Text>
+                <Icon name="user" color="white" style={{ fontSize: '8vw' }} />
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={takePicture}
+              style={{
+                backgroundColor: '#339DFF',
+                width: '28vw',
+                height: '28vw',
+                border: '4px solid white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '1000px',
+                margin: '4vw',
+              }}
+            >
+              <Text>
+                <Icon name="camera" color="white" style={{ fontSize: '10vw' }} />
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => { navigation.navigate('Breakdown'); }}
+              style={{
+                backgroundColor: '#339DFF',
+                width: '16vw',
+                height: '16vw',
+                border: '3px solid white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '12px',
+              }}
+            >
+              <Text>
+                <Icon name="pie-chart" color="white" style={{ fontSize: '8vw' }} />
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-          </Camera> */}
+      </Camera>
+      )}
+      {!hasPermission
+      && (
+        <View>
+          <Text>No Camera Permission</Text>
+        </View>
+      )}
     </View>
   );
 }
