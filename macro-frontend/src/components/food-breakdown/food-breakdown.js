@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { TouchableHighlightBase, View } from 'react-native';
 import FoodBar from './food-bar';
 
 class FoodBreakDown extends Component {
@@ -15,13 +15,29 @@ class FoodBreakDown extends Component {
     this.state = {
       // eslint-disable-next-line react/no-unused-state
       selected: 'protein',
+      totalCal: 0,
     };
+  }
+
+  componentDidMount = () => {
+    this.calcPercent();
+  }
+
+  calcPercent = () => {
+    let count = 0;
+    this.props.allFoods.map((foodItem) => {
+      count += foodItem.calories;
+      return count;
+    });
+
+    this.setState({ totalCal: count });
   }
 
   allFoods = () => {
     return this.props.allFoods.map((foodItem) => {
+      const foodPercent = (this.state.totalCal / foodItem.calories) * 100;
       return (
-        <FoodBar key={foodItem.id} allMacros={foodItem} />
+        <FoodBar key={foodItem.id} foodType={foodItem.name} percent={foodPercent} />
       );
     });
   }

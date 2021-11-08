@@ -25,7 +25,7 @@ const FoodBar = (props) => {
 
 const styles = (props) => StyleSheet.create({
   progressBar: {
-    width: props.percent,
+    width: `${props.percent}%`,
     backgroundColor: '#C2E1FF',
   },
   backgroundBar: {
