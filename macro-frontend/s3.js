@@ -1,9 +1,13 @@
 import axios from 'axios';
 
 async function getSignedRequest(file) {
-  const fileName = encodeURIComponent(file.name);
   // hit our own server to get a signed s3 url
-  let result = await axios.get(`https://macro-cs98.herokuapp.com/api/sign-s3?file-name=${fileName}&file-type=${file.type}`);
+  // const result = await axios.get(`https://macro-cs98.herokuapp.com/api/sign-s3?file-name=${fileName}&file-type=${file.type}`);
+  const today = new Date();
+  const date = `${today.getFullYear()}${today.getMonth() + 1}${today.getDate()}`;
+  const time = `${today.getHours()}${today.getMinutes()}${today.getSeconds()}`;
+  const dateTime = `${date}T${time}`;
+  const result = await axios.get(`https://macro-cs98.herokuapp.com/api/sign-s3?file-name=${dateTime}&file-type=image/jpeg`);
   console.log('PINGING API');
   console.log(result);
   return result;
@@ -17,7 +21,7 @@ function uploadFileToS3(signedRequest, file, url) {
   console.log(file);
   console.log(url);
   return new Promise((fulfill, reject) => {
-    axios.put(signedRequest, file, { headers: { 'Content-Type': file.type, 'Access-Control-Allow-Origin': 'http://localhost:19006/' } }).then((response) => {
+    axios.put(signedRequest, file, { headers: { 'Content-Type': 'image/jpeg', 'Access-Control-Allow-Origin': 'http://localhost:19006/' } }).then((response) => {
       console.log(response);
       fulfill(url);
     }).catch((error) => {
@@ -26,6 +30,7 @@ function uploadFileToS3(signedRequest, file, url) {
   });
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export function uploadImage(file) {
   // returns a promise so you can handle error and completion in your component
   return getSignedRequest(file).then((response) => {
