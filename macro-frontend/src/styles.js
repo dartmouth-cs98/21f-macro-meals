@@ -3,12 +3,15 @@
  * central style sheet for elements
  */
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#339DFF',
+    color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -27,39 +30,42 @@ const styles = StyleSheet.create({
 
   navPrimBtn: {
     backgroundColor: '#339DFF',
-    width: '28vw',
-    height: '28vw',
-    border: '4px solid white',
+    width: 0.28 * windowWidth,
+    height: 0.28 * windowWidth,
+    borderColor: 'white',
+    borderWidth: 4,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '1000px',
-    margin: '4vw',
+    borderRadius: 1000,
+    margin: 0.04 * windowWidth,
   },
 
   navSecBtn: {
     backgroundColor: '#339DFF',
-    width: '16vw',
-    height: '16vw',
-    border: '3px solid white',
+    width: 0.16 * windowWidth,
+    height: 0.16 * windowWidth,
+    borderColor: 'white',
+    borderWidth: 3,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '12px',
+    borderRadius: 12,
   },
 
   navTertBtn: {
     position: 'absolute',
-    top: '4vw',
-    right: '4vw',
+    top: 0.08 * windowWidth,
+    right: 0.04 * windowWidth,
     backgroundColor: '#339DFF',
-    width: '10vw',
-    height: '10vw',
-    border: '3px solid white',
+    width: 0.1 * windowWidth,
+    height: 0.1 * windowWidth,
+    borderColor: 'white',
+    borderWidth: 3,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '1000px',
+    borderRadius: 1000,
   },
 
 });
