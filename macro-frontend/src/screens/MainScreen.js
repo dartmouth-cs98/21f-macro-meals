@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Text, View, TouchableOpacity } from 'react-native';
+import {
+  Text, View, TouchableOpacity, Dimensions,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,6 +10,8 @@ import { Camera } from 'expo-camera';
 import { uploadImage } from '../../s3';
 import { userLogout } from '../redux/actions/userActions';
 import styles from '../styles';
+
+const windowWidth = Dimensions.get('window').width;
 
 const uploadImageToS3 = (file) => {
   console.log(file);
@@ -82,7 +86,7 @@ function MainScreen({ navigation, storedUserName }) {
           flexDirection: 'row',
           alignItems: 'flex-end',
           position: 'relative',
-          paddingBottom: '5vw',
+          paddingBottom: 0.05 * windowWidth,
         }}
         >
           <TouchableOpacity
@@ -96,7 +100,7 @@ function MainScreen({ navigation, storedUserName }) {
             }}
           >
             <Text>
-              <Icon name="rotate-left" color="white" style={{ fontSize: '5vw' }} />
+              <Icon name="rotate-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
             </Text>
           </TouchableOpacity>
           <View style={{
@@ -109,7 +113,7 @@ function MainScreen({ navigation, storedUserName }) {
           >
             <TouchableOpacity style={styles.navSecBtn}>
               <Text>
-                <Icon name="user" color="white" style={{ fontSize: '8vw' }} />
+                <Icon name="user" color="white" style={{ fontSize: 0.08 * windowWidth }} />
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -117,7 +121,7 @@ function MainScreen({ navigation, storedUserName }) {
               style={styles.navPrimBtn}
             >
               <Text>
-                <Icon name="camera" color="white" style={{ fontSize: '10vw' }} />
+                <Icon name="camera" color="white" style={{ fontSize: 0.1 * windowWidth }} />
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -125,7 +129,7 @@ function MainScreen({ navigation, storedUserName }) {
               style={styles.navSecBtn}
             >
               <Text>
-                <Icon name="pie-chart" color="white" style={{ fontSize: '8vw' }} />
+                <Icon name="pie-chart" color="white" style={{ fontSize: 0.08 * windowWidth }} />
               </Text>
             </TouchableOpacity>
           </View>
@@ -135,7 +139,7 @@ function MainScreen({ navigation, storedUserName }) {
       {!hasPermission
       && (
         <View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: '4vw' }}>macro needs camera permission!</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>macro needs camera permission!</Text>
         </View>
       )}
     </View>

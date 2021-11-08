@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Animated } from 'react-native';
+import {
+  Text, View, Animated, Dimensions,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button, CheckBox, Input } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -7,6 +9,8 @@ import { connect } from 'react-redux';
 import { userLogin } from '../redux/actions/userActions';
 import Panel from '../components/panel';
 import styles from '../styles';
+
+const windowWidth = Dimensions.get('window').width;
 
 const fadeAnimation = new Animated.Value(0);
 const SceneLogin = ({
@@ -34,6 +38,7 @@ const SceneLogin = ({
     Animated.timing(fadeAnimation, {
       toValue: 1,
       duration: 500,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -84,12 +89,12 @@ const SceneLogin = ({
               <Button
                 title="login"
                 onPress={() => login(userName || 'Anon')}
-                style={{ width: '25vw' }}
+                style={{ width: 0.25 * windowWidth }}
               />
               <Button
                 title="register"
                 onPress={() => navigation.navigate('Register')}
-                style={{ width: '25vw' }}
+                style={{ width: 0.25 * windowWidth }}
               />
             </View>
             <Text>{status}</Text>

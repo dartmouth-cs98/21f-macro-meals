@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-  Image, View, Animated,
+  Image, View, Animated, Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styles from '../styles';
 
 const macroLogo = require('../../assets/macroLogo.png');
+
+const windowWidth = Dimensions.get('window').width;
 
 const handleLoad = (isUserLoggedIn, navigation) => (
   isUserLoggedIn
@@ -21,6 +23,7 @@ const AppLoadingScreen = ({ navigation, isUserLoggedIn }) => {
     Animated.timing(fadeAnimation, {
       toValue: 1,
       duration: 500,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -28,6 +31,7 @@ const AppLoadingScreen = ({ navigation, isUserLoggedIn }) => {
     Animated.timing(fadeAnimation, {
       toValue: 0,
       duration: 500,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -55,7 +59,7 @@ const AppLoadingScreen = ({ navigation, isUserLoggedIn }) => {
       >
         <Image source={macroLogo}
           style={{
-            width: '70vw', height: '35vw',
+            width: 0.7 * windowWidth, height: 0.35 * windowWidth,
           }}
         />
       </Animated.View>
