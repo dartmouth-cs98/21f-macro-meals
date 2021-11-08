@@ -12,11 +12,23 @@ import styles from '../styles';
 const uploadImageToS3 = (file) => {
   console.log(file);
   uploadImage(file).then((url) => {
-    alert(url);
+    classifyImage(url);
   }).catch((error) => {
     alert(error);
   });
 };
+
+const classifyImage = (url) => {
+  axios.post('https://macro-cs98.herokuapp.com/api/classifyImage', {
+    url: url
+  })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    })
+}
 
 function MainScreen({ navigation, storedUserName }) {
   const [hasPermission, setHasPermission] = useState(null);
