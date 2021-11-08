@@ -35,7 +35,7 @@ class FoodBreakDown extends Component {
 
   allFoods = () => {
     return this.props.allFoods.map((foodItem) => {
-      const foodPercent = (this.state.totalCal / foodItem.calories) * 100;
+      const foodPercent = (foodItem.calories / this.state.totalCal) * 100;
       return (
         <FoodBar key={foodItem.id} foodType={foodItem.name} percent={foodPercent} />
       );
