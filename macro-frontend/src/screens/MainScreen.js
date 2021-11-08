@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import { Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
@@ -20,15 +20,15 @@ const uploadImageToS3 = (file) => {
 
 const classifyImage = (url) => {
   axios.post('https://macro-cs98.herokuapp.com/api/classifyImage', {
-    url: url
+    url,
   })
     .then((response) => {
       console.log(response.data);
     })
     .catch((error) => {
       console.log(error.message);
-    })
-}
+    });
+};
 
 function MainScreen({ navigation, storedUserName }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -135,7 +135,7 @@ function MainScreen({ navigation, storedUserName }) {
       {!hasPermission
       && (
         <View>
-          <Text>No Camera Permission</Text>
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: '4vw' }}>macro needs camera permission!</Text>
         </View>
       )}
     </View>

@@ -15,7 +15,6 @@
     "buffer": "^6.0.3",
     "expo": "~42.0.1",
     "expo-camera": "~11.2.2",
-    "expo-media-library": "^13.0.3",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
