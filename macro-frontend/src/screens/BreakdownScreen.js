@@ -9,12 +9,18 @@ import {
 } from 'react-native';
 import { useDispatch, connect } from 'react-redux';
 import { removeFood } from '../redux/actions/foodActions';
+import FoodBreakDown from '../components/food-breakdown/food-breakdown';
+import MacroPieChart from '../components/macro-breakdown/macro-individuals';
 
 function BreakdownScreen({ navigation, foodList }) {
   const dispatch = useDispatch();
   console.log({ foodList });
   return (
     <>
+      <MacroPieChart allMacros={foodList} />
+      <FoodBreakDown allFoods={foodList} />
+
+      {/*
       <StatusBar barStyle="light-content" />
       <View style={styles.container}>
         <View
@@ -70,6 +76,7 @@ function BreakdownScreen({ navigation, foodList }) {
           </TouchableOpacity>
         </View>
       </View>
+          */}
     </>
   );
 }
