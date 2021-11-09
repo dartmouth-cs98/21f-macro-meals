@@ -16,6 +16,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  centerMe: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+
+  pt1: {
+    paddingTop: 10,
+  },
+
   fullScreen: {
 
   },
@@ -66,6 +77,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 1000,
+  },
+
+  authSecBtn: {
+    backgroundColor: '#339DFF',
+    color: 'white',
+    padding: 4,
+    borderRadius: 2,
   },
 
 });

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Text, View, Animated, Dimensions,
+  Text, View, Animated, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button, CheckBox, Input } from 'react-native-elements';
@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 import { userLogin } from '../redux/actions/userActions';
 import Panel from '../components/panel';
 import styles from '../styles';
-
-const windowWidth = Dimensions.get('window').width;
 
 const fadeAnimation = new Animated.Value(0);
 const SceneLogin = ({
@@ -139,13 +137,16 @@ const SceneLogin = ({
               <Button
                 title="login"
                 onPress={() => { validateLogin(); }}
-                style={{ width: 0.25 * windowWidth }}
               />
-              <Button
-                title="register"
-                onPress={() => navigation.navigate('Register')}
-                style={{ width: 0.25 * windowWidth }}
-              />
+            </View>
+            <View style={[styles.centerMe, styles.pt1]}>
+              <Text>
+                new to macro?
+                {' '}
+                <TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.authSecBtn}>
+                  <Text>register here</Text>
+                </TouchableOpacity>
+              </Text>
             </View>
             <View>
               {messages.map((msg) => <Text key={msg}>{msg}</Text>)}
