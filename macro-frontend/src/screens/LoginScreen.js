@@ -39,6 +39,7 @@ const SceneLogin = ({
   const validateLogin = () => {
     const loginStatus = User.userLogin(userName, passWord);
     console.log(loginStatus);
+    login(userName);
   };
 
   const fadeIn = () => {

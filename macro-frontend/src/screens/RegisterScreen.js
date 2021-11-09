@@ -3,36 +3,37 @@ import axios from 'axios';
 import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { userLogin } from '../redux/actions/userActions';
 import Panel from '../components/panel';
 import styles from '../styles';
 
-const SceneRegister = () => {
+const SceneRegister = ({ navigation, login }) => {
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
   const [passWordConfirm, setPassWordConfirm] = useState('');
   const [usernameStatus, setUsernameStatus] = useState('okay');
   const [passwordStatus, setPasswordStatus] = useState('okay');
-  const [errorMessages, setErrorMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const validateRegister = () => {
     let status = 'valid';
-    setErrorMessages([]);
-    const intErrorMessages = [];
+    const intMessages = [];
 
     if (userName === '') {
       setUsernameStatus('error');
       status = 'failed';
-      intErrorMessages.push('Please enter a username.');
+      intMessages.push('Please enter a username.');
     }
     if (passWord === '') {
       setPasswordStatus('error');
       status = 'failed';
-      intErrorMessages.push('Please enter a password.');
+      intMessages.push('Please enter a password.');
     }
     if (passWord !== passWordConfirm) { // ensure passwords match
       setPasswordStatus('error');
       status = 'failed';
-      intErrorMessages.push('Your passwords do not match.');
+      intMessages.push('Your passwords do not match.');
     }
     if (status === 'valid') {
       // creating the account
@@ -49,21 +50,27 @@ const SceneRegister = () => {
               })
               .then((registerResult) => {
                 console.log(registerResult);
+                intMessages.push('Account registered! Logging you in...');
+                setMessages(intMessages);
+                login(userName);
+                setTimeout(() => {
+                  navigation.navigate('Main');
+                }, 1500);
               })
               .catch((error) => {
                 alert(error);
               });
           } else { // username is taken, alert user
             setUsernameStatus('error');
-            intErrorMessages.push('That username is taken.');
-            setErrorMessages(intErrorMessages);
+            intMessages.push('That username is taken.');
+            setMessages(intMessages);
           }
         })
         .catch((error) => {
           alert(error);
         });
     } else {
-      setErrorMessages(intErrorMessages);
+      setMessages(intMessages);
     }
   };
 
@@ -127,11 +134,15 @@ const SceneRegister = () => {
           />
         </View>
         <View>
-          {errorMessages.map((msg) => <Text key={msg}>{msg}</Text>)}
+          {messages.map((msg) => <Text key={msg}>{msg}</Text>)}
         </View>
       </Panel>
     </View>
   );
 };
 
-export default SceneRegister;
+const mapDispatchToProps = (dispatch) => ({
+  login: (name) => dispatch(userLogin({ name })),
+});
+
+export default connect(null, mapDispatchToProps)(SceneRegister);
