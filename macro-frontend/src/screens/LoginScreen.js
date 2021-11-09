@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
-  Text, View, Animated, Dimensions,
+  Text, View, Animated, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button, CheckBox, Input } from 'react-native-elements';
@@ -10,8 +11,6 @@ import { userLogin } from '../redux/actions/userActions';
 import Panel from '../components/panel';
 import styles from '../styles';
 
-const windowWidth = Dimensions.get('window').width;
-
 const fadeAnimation = new Animated.Value(0);
 const SceneLogin = ({
   login,
@@ -20,13 +19,13 @@ const SceneLogin = ({
   navigation,
 }) => {
   const [userName, setUserName] = useState('');
-  const [status, setStatus] = useState('');
+  const [passWord, setPassWord] = useState('');
+  const [usernameStatus, setUsernameStatus] = useState('okay');
+  const [passwordStatus, setPasswordStatus] = useState('okay');
+  const [messages, setMessages] = useState([]);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
 
   useEffect(() => {
-    setStatus(isUserLoggedIn
-      ? `Welcome, ${storedUserName}!`
-      : '');
     if (isUserLoggedIn) {
       setTimeout(() => {
         navigation.navigate('Main');
@@ -44,6 +43,47 @@ const SceneLogin = ({
 
   fadeIn();
 
+  const validateLogin = () => {
+    let formStatus = 'valid';
+    const intMessages = [];
+
+    if (userName === '') {
+      setUsernameStatus('error');
+      formStatus = 'failed';
+      intMessages.push('Please enter a username.');
+    }
+    if (passWord === '') {
+      setPasswordStatus('error');
+      formStatus = 'failed';
+      intMessages.push('Please enter a password.');
+    }
+    if (formStatus === 'valid') {
+      // signing in the account
+      axios
+        .post('https://macro-cs98.herokuapp.com/api/user/login', {
+          username: userName,
+          password: passWord,
+        })
+        .then((result) => {
+          if (result.data.length > 0) { // login success
+            intMessages.push(`Welcome, ${userName}!`);
+            setMessages(intMessages);
+            login(userName);
+          } else { // login failed
+            setUsernameStatus('error');
+            setPasswordStatus('error');
+            intMessages.push('Username or password is incorrect.');
+            setMessages(intMessages);
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      setMessages(intMessages);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Animated.View
@@ -58,24 +98,32 @@ const SceneLogin = ({
           <View>
             <Input
               placeholder="username"
-              onChangeText={(text) => setUserName(text)}
+              onChangeText={(text) => {
+                setUserName(text);
+                setUsernameStatus('okay');
+              }}
               value={userName}
               leftIcon={(
                 <Icon
                   name="user"
                   size={24}
-                  color="black"
+                  color={usernameStatus === 'okay' ? 'black' : 'red'}
                 />
                         )}
             />
 
             <Input
               placeholder="password"
+              onChangeText={(text) => {
+                setPassWord(text);
+                setPasswordStatus('okay');
+              }}
+              value={passWord}
               leftIcon={(
                 <Icon
                   name="lock"
                   size={24}
-                  color="black"
+                  color={passwordStatus === 'okay' ? 'black' : 'red'}
                 />
                         )}
             />
@@ -88,16 +136,21 @@ const SceneLogin = ({
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <Button
                 title="login"
-                onPress={() => login(userName || 'Anon')}
-                style={{ width: 0.25 * windowWidth }}
-              />
-              <Button
-                title="register"
-                onPress={() => navigation.navigate('Register')}
-                style={{ width: 0.25 * windowWidth }}
+                onPress={() => { validateLogin(); }}
               />
             </View>
-            <Text>{status}</Text>
+            <View style={[styles.centerMe, styles.pt1]}>
+              <Text>
+                new to macro?
+                {' '}
+                <TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.authSecBtn}>
+                  <Text>register here</Text>
+                </TouchableOpacity>
+              </Text>
+            </View>
+            <View>
+              {messages.map((msg) => <Text key={msg}>{msg}</Text>)}
+            </View>
           </View>
         </Panel>
       </Animated.View>
