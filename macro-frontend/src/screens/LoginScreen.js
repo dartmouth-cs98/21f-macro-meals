@@ -7,6 +7,7 @@ import { Button, CheckBox, Input } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userLogin } from '../redux/actions/userActions';
+import * as User from '../connections/userConnections';
 import Panel from '../components/panel';
 import styles from '../styles';
 
@@ -20,6 +21,7 @@ const SceneLogin = ({
   navigation,
 }) => {
   const [userName, setUserName] = useState('');
+  const [passWord, setPassWord] = useState('');
   const [status, setStatus] = useState('');
   const [keepSignedIn, setKeepSignedIn] = useState(false);
 
@@ -33,6 +35,11 @@ const SceneLogin = ({
       }, 1500);
     }
   }, [isUserLoggedIn, storedUserName]);
+
+  const validateLogin = () => {
+    const loginStatus = User.userLogin(userName, passWord);
+    console.log(loginStatus);
+  };
 
   const fadeIn = () => {
     Animated.timing(fadeAnimation, {
@@ -71,6 +78,8 @@ const SceneLogin = ({
 
             <Input
               placeholder="password"
+              onChangeText={(text) => setPassWord(text)}
+              value={passWord}
               leftIcon={(
                 <Icon
                   name="lock"
@@ -88,7 +97,7 @@ const SceneLogin = ({
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <Button
                 title="login"
-                onPress={() => login(userName || 'Anon')}
+                onPress={() => { validateLogin(); }}
                 style={{ width: 0.25 * windowWidth }}
               />
               <Button
