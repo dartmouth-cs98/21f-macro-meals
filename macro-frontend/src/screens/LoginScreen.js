@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Text, View, Animated, Dimensions,
 } from 'react-native';
@@ -7,7 +8,6 @@ import { Button, CheckBox, Input } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userLogin } from '../redux/actions/userActions';
-import * as User from '../connections/userConnections';
 import Panel from '../components/panel';
 import styles from '../styles';
 
@@ -22,25 +22,18 @@ const SceneLogin = ({
 }) => {
   const [userName, setUserName] = useState('');
   const [passWord, setPassWord] = useState('');
-  const [status, setStatus] = useState('');
+  const [usernameStatus, setUsernameStatus] = useState('okay');
+  const [passwordStatus, setPasswordStatus] = useState('okay');
+  const [messages, setMessages] = useState([]);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
 
   useEffect(() => {
-    setStatus(isUserLoggedIn
-      ? `Welcome, ${storedUserName}!`
-      : '');
     if (isUserLoggedIn) {
       setTimeout(() => {
         navigation.navigate('Main');
       }, 1500);
     }
   }, [isUserLoggedIn, storedUserName]);
-
-  const validateLogin = () => {
-    const loginStatus = User.userLogin(userName, passWord);
-    console.log(loginStatus);
-    login(userName);
-  };
 
   const fadeIn = () => {
     Animated.timing(fadeAnimation, {
@@ -51,6 +44,47 @@ const SceneLogin = ({
   };
 
   fadeIn();
+
+  const validateLogin = () => {
+    let formStatus = 'valid';
+    const intMessages = [];
+
+    if (userName === '') {
+      setUsernameStatus('error');
+      formStatus = 'failed';
+      intMessages.push('Please enter a username.');
+    }
+    if (passWord === '') {
+      setPasswordStatus('error');
+      formStatus = 'failed';
+      intMessages.push('Please enter a password.');
+    }
+    if (formStatus === 'valid') {
+      // signing in the account
+      axios
+        .post('https://macro-cs98.herokuapp.com/api/user/login', {
+          username: userName,
+          password: passWord,
+        })
+        .then((result) => {
+          if (result.data.length > 0) { // login success
+            intMessages.push(`Welcome, ${userName}!`);
+            setMessages(intMessages);
+            login(userName);
+          } else { // login failed
+            setUsernameStatus('error');
+            setPasswordStatus('error');
+            intMessages.push('Username or password is incorrect.');
+            setMessages(intMessages);
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      setMessages(intMessages);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -66,26 +100,32 @@ const SceneLogin = ({
           <View>
             <Input
               placeholder="username"
-              onChangeText={(text) => setUserName(text)}
+              onChangeText={(text) => {
+                setUserName(text);
+                setUsernameStatus('okay');
+              }}
               value={userName}
               leftIcon={(
                 <Icon
                   name="user"
                   size={24}
-                  color="black"
+                  color={usernameStatus === 'okay' ? 'black' : 'red'}
                 />
                         )}
             />
 
             <Input
               placeholder="password"
-              onChangeText={(text) => setPassWord(text)}
+              onChangeText={(text) => {
+                setPassWord(text);
+                setPasswordStatus('okay');
+              }}
               value={passWord}
               leftIcon={(
                 <Icon
                   name="lock"
                   size={24}
-                  color="black"
+                  color={passwordStatus === 'okay' ? 'black' : 'red'}
                 />
                         )}
             />
@@ -107,7 +147,9 @@ const SceneLogin = ({
                 style={{ width: 0.25 * windowWidth }}
               />
             </View>
-            <Text>{status}</Text>
+            <View>
+              {messages.map((msg) => <Text key={msg}>{msg}</Text>)}
+            </View>
           </View>
         </Panel>
       </Animated.View>
