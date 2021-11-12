@@ -14,9 +14,11 @@ const FoodBar = (props) => {
 
     <View style={styles(props).backgroundBar}>
       <View style={styles(props).progressBar}>
-        <Text>
-          {foodType}
-        </Text>
+        <View style={styles(props).foodLabel}>
+          <Text style={styles(props).foodText}>
+            {foodType}
+          </Text>
+        </View>
       </View>
     </View>
 
@@ -27,11 +29,25 @@ const styles = (props) => StyleSheet.create({
   progressBar: {
     width: `${props.percent}%`,
     backgroundColor: '#C2E1FF',
+    borderRadius: 10,
   },
   backgroundBar: {
-    width: '100%',
+    width: '75%',
     backgroundColor: '#339DFF',
     padding: 10,
+    borderRadius: 10,
+    marginRight: 5,
+    marginLeft: 5,
+    marginBottom: 10,
+  },
+  foodLabel: {
+    width: '100%',
+    margin: 10,
+    color: '#ffffff',
+  },
+  foodText: {
+    color: '#339DFF',
+    fontWeight: '500',
   },
 });
 

@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from 'react';
-import { TouchableHighlightBase, View } from 'react-native';
+import { TouchableHighlightBase, StyleSheet, View } from 'react-native';
 import FoodBar from './food-bar';
 
 class FoodBreakDown extends Component {
@@ -43,8 +43,18 @@ class FoodBreakDown extends Component {
   }
 
   render() {
-    return <View>{this.allFoods()}</View>;
+    return <View style={styles.barContainer}>{this.allFoods()}</View>;
   }
 }
 
 export default FoodBreakDown;
+
+const styles = StyleSheet.create({
+  barContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    height: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
