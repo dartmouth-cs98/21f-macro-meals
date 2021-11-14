@@ -9,8 +9,13 @@ const foodReducer = (state = initialState, action) => {
       return {
         ...state,
         foodList: state.foodList.concat({
-          id: action.payload.id,
-          name: action.payload.name,
+          id: action.payload._id,
+          key: action.payload._id,
+          customName: action.payload.customName,
+          mealTime: action.payload.mealTime,
+          mood: action.payload.mood,
+          imageUrl: action.payload.imageUrl,
+          classification: action.payload.classification,
           calories: action.payload.calories,
           protein: action.payload.protein,
           carb: action.payload.carb,

@@ -67,7 +67,7 @@ class MacroPieChart extends Component {
         if (element.calories > 0) {
           itemNum++;
           total += element.calories;
-          tFat += element.protein;
+          tFat += element.fat;
           tCarbs += element.carb;
           tProtein += element.protein;
         } return total;
