@@ -85,7 +85,7 @@ function MainScreen({ navigation, storedUserName }) {
 
   const submitForm = () => {
     console.log('form submit');
-    axios.post('https://macro-cs98.herokuapp.com/api/saveFood', {
+    axios.post('https://macro-cs98.herokuapp.com/api/food', {
       username: storedUserName,
       customName,
       mealTime,
