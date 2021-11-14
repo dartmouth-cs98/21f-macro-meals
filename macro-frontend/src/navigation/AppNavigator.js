@@ -7,6 +7,7 @@ import LoginScreen from '../screens/LoginScreen';
 import LogoutScreen from '../screens/LogoutScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import LoadingScreen from '../screens/LoadingScreen';
+import MealOverviewScreen from '../screens/MealOverviewScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -24,6 +25,7 @@ const AppStack = createStackNavigator(
   {
     Main: MainScreen,
     Breakdown: BreakdownScreen,
+    Overview: MealOverviewScreen,
   },
   {
     headerMode: 'none',
