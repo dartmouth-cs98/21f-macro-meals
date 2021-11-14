@@ -86,6 +86,27 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
 
+  mainFormElement: {
+    backgroundColor: '#339DFF',
+    color: 'white',
+    padding: 5,
+    borderRadius: 5,
+    borderColor: 'white',
+    borderWidth: 3,
+    width: 0.7 * windowWidth,
+    fontSize: 16,
+    marginBottom: 20,
+  },
+
+  mainFormBtn: {
+    backgroundColor: '#339DFF',
+    color: 'white',
+    padding: 5,
+    borderRadius: 5,
+    borderColor: 'white',
+    borderWidth: 3,
+  },
+
 });
 
 export default styles;
