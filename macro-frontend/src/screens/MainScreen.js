@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Camera } from 'expo-camera';
 import { uploadImage } from '../../s3';
 import { userLogout } from '../redux/actions/userActions';
+import { addFood } from '../redux/actions/foodActions';
 import styles from '../styles';
 
 const windowWidth = Dimensions.get('window').width;
@@ -33,13 +34,17 @@ function MainScreen({ navigation, storedUserName }) {
   const [carb, setCarb] = useState(0);
   const [fat, setFat] = useState(0);
 
+  const dispatch = useDispatch();
+  const addItem = (value) => {
+    dispatch(addFood(value));
+  };
+
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
-  const dispatch = useDispatch();
 
   // eslint-disable-next-line no-unused-vars
   const handleLogout = () => {
@@ -89,24 +94,28 @@ function MainScreen({ navigation, storedUserName }) {
 
   const submitForm = () => {
     console.log('form submit');
-    axios.post('https://macro-cs98.herokuapp.com/api/food', {
-      username: storedUserName,
-      customName,
-      mealTime,
-      mood,
-      imageUrl,
-      classification,
-      calories,
-      protein,
-      carb,
-      fat,
-    })
-      .then((response) => {
-        console.log(response.data);
+    if (classification !== '') {
+      axios.post('https://macro-cs98.herokuapp.com/api/food', {
+        username: storedUserName,
+        customName,
+        mealTime,
+        mood,
+        imageUrl,
+        classification,
+        calories,
+        protein,
+        carb,
+        fat,
       })
-      .catch((error) => {
-        console.log(error.message);
-      });
+        .then((response) => {
+          console.log(response.data);
+          addItem(response.data);
+          navigation.navigate('Breakdown');
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
   }
 
   return (
