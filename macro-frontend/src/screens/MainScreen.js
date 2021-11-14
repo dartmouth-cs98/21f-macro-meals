@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Text, View, TouchableOpacity, Dimensions, TextInput, Picker
+  Text, View, TouchableOpacity, Dimensions, TextInput, Picker, Image
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
@@ -13,6 +13,10 @@ import styles from '../styles';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
+const positiveMood = require('../img/positiveMood.png');
+const neutralMood = require('../img/neutralMood.png');
+const negativeMood = require('../img/negativeMood.png');
 
 function MainScreen({ navigation, storedUserName }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -61,8 +65,8 @@ function MainScreen({ navigation, storedUserName }) {
         setClassification(response.data.classification);
         setCalories(response.data.calories);
         setProtein(response.data.protein);
-        setCarb(response.data.carb);
-        setFat(response.data.fat);
+        setCarb(response.data.carbs);
+        setFat(response.data.fats);
       })
       .catch((error) => {
         console.log(error.message);
@@ -183,16 +187,17 @@ function MainScreen({ navigation, storedUserName }) {
           alignItems: 'center',
           position: 'relative',
           paddingTop: 0.25 * windowHeight,
-          paddingBottom: 0.25 * windowHeight,
         }}
         >
           <TextInput
-          style={styles.textInput}
+          style={styles.mainFormElement}
           onChangeText={setCustomName}
           value={customName}
           placeholder="custom name (ie. chicken breast)"
+          placeholderTextColor="white"
           />
           <Picker
+            style={styles.mainFormElement}
             selectedValue={mealTime}
             onValueChange={(itemValue, itemIndex) => setMealTime(itemValue)}
           >
@@ -201,22 +206,44 @@ function MainScreen({ navigation, storedUserName }) {
             <Picker.Item label="dinner" value="dinner" />
             <Picker.Item label="snack" value="snack" />
           </Picker>
-          <View>
-            <Text>current mood</Text>
-            <View>
-              <TouchableOpacity onPress={() => { setMood('positive'); }}>
-                <Text style={{ color: mood === 'positive' ? 'black' : 'red' }}>positive</Text>
+          <View style={styles.mainFormElement}>
+            <Text style={{ color: 'white', fontSize: 16 }}>current mood</Text>
+            <View style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-evenly',
+              marginTop: 10,
+              marginBottom: 10,
+            }}>
+              <TouchableOpacity onPress={() => { setMood('positive'); }} style={{ 
+                borderWidth: mood === 'positive' ? 2 : 0,
+                borderColor: 'white',
+                padding: 3,
+                borderRadius: 999,
+              }}>
+                <Image source={positiveMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { setMood('neutral') }}>
-                <Text style={{ color: mood === 'neutral' ? 'black' : 'red' }}>neutral</Text>
+              <TouchableOpacity onPress={() => { setMood('neutral'); }} style={{ 
+                borderWidth: mood === 'neutral' ? 2 : 0,
+                borderColor: 'white',
+                padding: 3,
+                borderRadius: 999,
+              }}>
+                <Image source={neutralMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { setMood('negative') }}>
-                <Text style={{ color: mood === 'negative' ? 'black' : 'red' }}>negative</Text>
+              <TouchableOpacity onPress={() => { setMood('negative'); }} style={{ 
+                borderWidth: mood === 'negative' ? 2 : 0,
+                borderColor: 'white',
+                padding: 3,
+                borderRadius: 999,
+              }}>
+                <Image source={negativeMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={submitForm}>
-            <Text>submit</Text>
+          <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
+            <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
           </TouchableOpacity>
         </View>
         )}
