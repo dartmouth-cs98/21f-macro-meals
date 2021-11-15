@@ -8,7 +8,6 @@ import { connect, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Camera } from 'expo-camera';
 import { uploadImage } from '../../s3';
-import { userLogout } from '../redux/actions/userActions';
 import { addFood } from '../redux/actions/foodActions';
 import styles from '../styles';
 
@@ -45,12 +44,6 @@ function MainScreen({ navigation, storedUserName }) {
       setHasPermission(status === 'granted');
     })();
   }, []);
-
-  // eslint-disable-next-line no-unused-vars
-  const handleLogout = () => {
-    dispatch(userLogout());
-    navigation.navigate('Logout');
-  };
 
   const uploadImageToS3 = (file) => {
     uploadImage(file).then((url) => {
@@ -110,6 +103,9 @@ function MainScreen({ navigation, storedUserName }) {
         .then((response) => {
           console.log(response.data);
           addItem(response.data);
+          cameraRef.resumePreview();
+          setShowForm(false);
+          setCustomName('');
           navigation.navigate('Breakdown');
         })
         .catch((error) => {
@@ -162,7 +158,10 @@ function MainScreen({ navigation, storedUserName }) {
             width: '100%',
           }}
           >
-            <TouchableOpacity style={styles.navSecBtn}>
+            <TouchableOpacity 
+              onPress={() => { navigation.navigate('User'); }}
+              style={styles.navSecBtn}
+            >
               <Text>
                 <Icon name="user" color="white" style={{ fontSize: 0.08 * windowWidth }} />
               </Text>

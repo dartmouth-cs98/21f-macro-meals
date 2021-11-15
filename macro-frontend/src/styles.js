@@ -40,6 +40,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  centerMeEvenly: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+
   pt1: {
     paddingTop: 10,
   },
@@ -145,6 +152,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 20,
+  },
+
+  subHeaderText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  
+  subSubHeaderText: {
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+
+  boldWhiteText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 
 });
