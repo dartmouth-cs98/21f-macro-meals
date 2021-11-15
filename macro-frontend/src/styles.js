@@ -6,6 +6,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -14,6 +15,22 @@ const styles = StyleSheet.create({
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  historyContainer: {
+    flex: 1,
+    backgroundColor: '#339DFF',
+    color: 'white',
+    alignItems: 'center',
+    width: windowWidth,
+    height: windowHeight,
+    position: 'relative',
+  },
+
+  scrollContainer: {
+    flex: 1,
+    width: 0.8 * windowWidth,
+    height: 0.8 * windowHeight,
   },
 
   centerMe: {
@@ -79,6 +96,21 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
   },
 
+  backBtn: {
+    position: 'absolute',
+    top: 0.04 * windowWidth,
+    left: 0.04 * windowWidth,
+    backgroundColor: '#339DFF',
+    width: 0.1 * windowWidth,
+    height: 0.1 * windowWidth,
+    borderColor: 'white',
+    borderWidth: 3,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 1000,
+  },
+
   authSecBtn: {
     backgroundColor: '#339DFF',
     color: 'white',
@@ -105,6 +137,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: 'white',
     borderWidth: 3,
+  },
+
+  headerText: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 20,
   },
 
 });

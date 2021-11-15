@@ -176,7 +176,7 @@ function MainScreen({ navigation, storedUserName }) {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => { navigation.navigate('Breakdown'); }}
+              onPress={() => { navigation.navigate('Overview'); }}
               style={styles.navSecBtn}
             >
               <Text>
