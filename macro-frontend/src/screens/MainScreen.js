@@ -23,6 +23,7 @@ function MainScreen({ navigation, storedUserName }) {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [cameraRef, setCameraRef] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [customName, setCustomName] = useState('');
   const [mealTime, setMealTime] = useState('breakfast');
   const [mood, setMood] = useState('positive');
@@ -60,11 +61,16 @@ function MainScreen({ navigation, storedUserName }) {
     })
       .then((response) => {
         console.log(response.data);
-        setClassification(response.data.classification);
-        setCalories(response.data.calories);
-        setProtein(response.data.protein);
-        setCarb(response.data.carbs);
-        setFat(response.data.fats);
+        if (response.data.classification) {
+          setClassification(response.data.classification);
+          setCalories(response.data.calories);
+          setProtein(response.data.protein);
+          setCarb(response.data.carbs);
+          setFat(response.data.fats);
+        } else {
+          setClassification('failed')
+        }
+        
       })
       .catch((error) => {
         console.log(error.message);
@@ -87,7 +93,7 @@ function MainScreen({ navigation, storedUserName }) {
 
   const submitForm = () => {
     console.log('form submit');
-    if (classification !== '') {
+    if (classification !== '' && classification !== 'failed') {
       axios.post('https://macro-cs98.herokuapp.com/api/food', {
         username: storedUserName,
         customName,
@@ -111,6 +117,15 @@ function MainScreen({ navigation, storedUserName }) {
         .catch((error) => {
           console.log(error.message);
         });
+    }
+    else if (classification === 'failed') {
+      setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000);
+      cameraRef.resumePreview();
+      setShowForm(false);
+      setCustomName('');
     }
   }
 
@@ -253,6 +268,23 @@ function MainScreen({ navigation, storedUserName }) {
           <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
             <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
           </TouchableOpacity>
+        </View>
+        )}
+        {showError
+        && (
+        <View style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          justifyContent: 'center',
+        }}
+        >
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>classification failed, please try again</Text>
         </View>
         )}
       </Camera>
