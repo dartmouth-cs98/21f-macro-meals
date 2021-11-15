@@ -50,6 +50,7 @@ function MealOverviewScreen({ navigation, storedUserName }) {
               protein={element.protein}
               carb={element.carb}
               fat={element.fat}
+              mood={element.mood}
             />
           ))
         )}

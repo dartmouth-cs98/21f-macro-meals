@@ -6,10 +6,20 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const windowWidth = Dimensions.get('window').width;
 
+const positiveMood = require('../../img/positiveMood.png');
+const neutralMood = require('../../img/neutralMood.png');
+const negativeMood = require('../../img/negativeMood.png');
+
 const MealCard = (props) => {
   const {
-    mealName, time, totalCal, foodImg, classification, protein, fat, carb
+    mealName, time, totalCal, foodImg, classification, protein, fat, carb, mood
   } = props;
+
+  console.log(mood);
+  let moodImage = null;
+  if (mood === 'positive') { moodImage = positiveMood; }
+  else if (mood === 'neutral') { moodImage = neutralMood; }
+  else { moodImage = negativeMood; }
 
   const [expand, setExpand] = useState(false);
   // const dateString = moment(new Date(time.substring(0,4),time.substring(5,7),time.substring(8,10))).format('MMMM D, Y');
@@ -17,6 +27,10 @@ const MealCard = (props) => {
   return (
     <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.6 * windowWidth : 0.3 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
       <Icon name={expand ? 'compress' : 'expand'} color="white" style={{ fontSize: 0.04 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
+      { expand
+      && (
+        <Image source={moodImage} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth, position: 'absolute', bottom: 8, right: 8 }} />
+      )}
       <View style={styles.container}>
         <Image
           style={styles.foodImage}
