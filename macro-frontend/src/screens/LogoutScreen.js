@@ -5,19 +5,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userLogout } from '../redux/actions/userActions';
 import Panel from '../components/panel';
+import styles from '../styles';
 
 const SceneLogOut = ({ navigation, logout }) => {
   useEffect(() => { logout(); }, [logout]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Panel>
         <View>
-          <Text>LOGGED OUT!</Text>
+          <Text style={{ marginBottom: 10 }}>logged out!</Text>
         </View>
         <View>
           <Button
-            title="SIGN ME IN AGAIN"
+            title="sign in"
             onPress={() => navigation.navigate('Login')}
           />
         </View>

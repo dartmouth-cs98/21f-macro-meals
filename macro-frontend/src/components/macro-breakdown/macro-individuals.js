@@ -148,6 +148,7 @@ class MacroPieChart extends Component {
               this.state.macroDisplay.map((element, index) => (
                 <Circle
                     // eslint-disable-next-line react/no-array-index-key
+                  key={element.key}
                   cx="50%"
                   cy="50%"
                   r="140"
@@ -192,6 +193,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
     fontSize: 24,
-    color: '#082032',
+    color: 'white',
   },
 });

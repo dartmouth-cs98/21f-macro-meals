@@ -6,19 +6,41 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import { useDispatch, connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { removeFood } from '../redux/actions/foodActions';
-import FoodBreakDown from '../components/food-breakdown/food-breakdown';
+// import FoodBreakDown from '../components/food-breakdown/food-breakdown';
 import MacroPieChart from '../components/macro-breakdown/macro-individuals';
+import styles from '../styles';
+
+const windowWidth = Dimensions.get('window').width;
 
 function BreakdownScreen({ navigation, foodList }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   console.log({ foodList });
+  const food = foodList[0];
   return (
     <>
-      <MacroPieChart allMacros={foodList} />
-      <FoodBreakDown allFoods={foodList} />
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => { navigation.navigate('Main'); }}>
+          <Icon name="arrow-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>breakdown</Text>
+        <MacroPieChart allMacros={foodList} />
+        <Text style={styles.subHeaderText}>{food.customName}</Text>
+        <Text style={styles.subSubHeaderText}><b>Classification:</b> {food.classification}</Text>
+        <View style={styles.centerMeEvenly}>
+          <Text style={styles.boldWhiteText}>Protein: {food.protein}g</Text>
+          <Text style={styles.boldWhiteText}>Carbs: {food.carb}g</Text>
+          <Text style={styles.boldWhiteText}>Fats: {food.fat}g</Text>
+        </View>
+      </View>
+      
+      
+      
+      {/*<FoodBreakDown allFoods={foodList} />*/}
 
       {/*
       <StatusBar barStyle="light-content" />
@@ -80,6 +102,8 @@ function BreakdownScreen({ navigation, foodList }) {
     </>
   );
 }
+
+/*
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -120,6 +144,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
+*/
 const mapStateToProps = (state) => ({
   foodList: state.food.foodList,
 });

@@ -43,6 +43,10 @@ function MealOverviewScreen({ navigation, storedUserName }) {
             <MealCard key={element.id} mealName={element.customName} time={element.createdAt} totalCal={element.calories} foodImg={element.imageUrl} classification={element.classification} />
           ))
         )}
+        {history !== null && history.length === 0 && 
+        (
+          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>your previous meals will show up here!</Text>
+        )}
         { history === null 
         && (
           <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>loading your history...</Text>
