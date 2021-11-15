@@ -40,7 +40,18 @@ function MealOverviewScreen({ navigation, storedUserName }) {
         { history !== null &&
         (
           history.map((element, index) => (
-            <MealCard key={element.id} mealName={element.customName} time={element.createdAt} totalCal={element.calories} foodImg={element.imageUrl} classification={element.classification} />
+            <MealCard 
+              key={element.id} 
+              mealName={element.customName} 
+              time={element.createdAt} 
+              totalCal={element.calories} 
+              foodImg={element.imageUrl} 
+              classification={element.classification}
+              protein={element.protein}
+              carb={element.carb}
+              fat={element.fat}
+              mood={element.mood}
+            />
           ))
         )}
         {history !== null && history.length === 0 && 
