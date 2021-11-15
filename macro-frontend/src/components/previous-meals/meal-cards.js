@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet, Text, Image, View, Dimensions,
+  StyleSheet, Text, Image, View, Dimensions, TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const windowWidth = Dimensions.get('window').width;
 
 const MealCard = (props) => {
   const {
-    mealName, time, totalCal, foodImg, classification,
+    mealName, time, totalCal, foodImg, classification, protein, fat, carb
   } = props;
 
+  const [expand, setExpand] = useState(false);
   // const dateString = moment(new Date(time.substring(0,4),time.substring(5,7),time.substring(8,10))).format('MMMM D, Y');
-
+  
   return (
-    <View style={styles.overallContainer}>
+    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.6 * windowWidth : 0.3 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
+      <Icon name={expand ? 'compress' : 'expand'} color="white" style={{ fontSize: 0.04 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
       <View style={styles.container}>
         <Image
           style={styles.foodImage}
@@ -31,9 +34,17 @@ const MealCard = (props) => {
               cal
             </Text>
           </View>
+          { expand
+          && (
+            <View style={[styles.mealColumn, { marginTop: 20 }]}>
+              <Text style={{ color: 'white' }}><b>Protein:</b> {protein}g</Text>
+              <Text style={{ color: 'white' }}><b>Carbs:</b> {carb}g</Text>
+              <Text style={{ color: 'white' }}><b>Fats:</b> {fat}g</Text>
+            </View>
+          )}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -47,9 +58,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: '#FFFAF0s',
     borderRadius: 10,
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: '#DC95FE',
     padding: 10,
+    position: 'relative',
 
     flexDirection: 'row',
     justifyContent: 'space-around',
