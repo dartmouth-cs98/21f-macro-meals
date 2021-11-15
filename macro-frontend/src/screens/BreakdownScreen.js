@@ -20,7 +20,7 @@ const windowWidth = Dimensions.get('window').width;
 function BreakdownScreen({ navigation, foodList }) {
   // const dispatch = useDispatch();
   console.log({ foodList });
-  const food = foodList[0];
+  const food = foodList[foodList.length - 1];
   return (
     <>
       <View style={styles.container}>
