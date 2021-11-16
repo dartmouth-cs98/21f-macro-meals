@@ -15,6 +15,8 @@ const MealCard = (props) => {
     mealName, time, totalCal, foodImg, classification, protein, fat, carb, mood
   } = props;
 
+  const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
   console.log(mood);
   let moodImage = null;
   if (mood === 'positive') { moodImage = positiveMood; }
@@ -38,19 +40,14 @@ const MealCard = (props) => {
         />
       </View>
       <View style={styles.mealText}>
-        <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{mealName}</Text></View>
+        <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
         <View style={styles.mealColumn}>
-          <Text style={{ color: 'white' }}>{time.substring(0,10)}</Text>
-          <View style={styles.mealInformation}>
-            <Text style={{ color: 'white' }}>{classification}</Text>
-            <Text style={{ color: 'white' }}>
-              {totalCal}
-              cal
-            </Text>
-          </View>
+          <Text style={{ color: 'white' }}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
+          <Text style={{ color: 'white' }}><b>Classification:</b> {classification}</Text>
           { expand
           && (
             <View style={[styles.mealColumn, { marginTop: 20 }]}>
+              <Text style={{ color: 'white' }}><b>Calories:</b> {totalCal}</Text>
               <Text style={{ color: 'white' }}><b>Protein:</b> {protein}g</Text>
               <Text style={{ color: 'white' }}><b>Carbs:</b> {carb}g</Text>
               <Text style={{ color: 'white' }}><b>Fats:</b> {fat}g</Text>
@@ -67,7 +64,7 @@ export default MealCard;
 const styles = StyleSheet.create({
 
   overallContainer: {
-    width: 0.8 * windowWidth,
+    width: 0.85 * windowWidth,
     height: 0.3 * windowWidth,
     marginBottom: 20,
     backgroundColor: '#FFFAF0s',

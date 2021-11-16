@@ -93,6 +93,7 @@ function MainScreen({ navigation, storedUserName }) {
 
   const submitForm = () => {
     console.log('form submit');
+    console.log(classification);
     if (classification !== '' && classification !== 'failed') {
       axios.post('https://macro-cs98.herokuapp.com/api/food', {
         username: storedUserName,
