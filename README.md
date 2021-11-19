@@ -36,7 +36,7 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 
 ### Back End
 
-**NOTE:** the flask server takes a bit of time to boot up for the first call! If you would like to ensure that the server is up and running before you start the app, just visit (this URL)[https://macroclassifier.herokuapp.com/]!
+**NOTE:** the flask server takes a bit of time to boot up for the first call! If you would like to ensure that the server is up and running before you start the app, just visit [this URL](https://macroclassifier.herokuapp.com/)!
 
 * The [server](https://macro-cs98.herokuapp.com/api) is automatically deployed via Heroku
 * The [database](https://cloud.mongodb.com/v2/5f301a43938f013d0af499bc#clusters/detail/Macro) is hosted by MangoDB
