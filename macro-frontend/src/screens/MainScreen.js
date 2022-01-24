@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import base64 from 'react-native-base64';
 import axios from 'axios';
 import {
   Text, View, TouchableOpacity, Dimensions, TextInput, Picker, Image
@@ -78,16 +79,35 @@ function MainScreen({ navigation, storedUserName }) {
   };
 
   async function onPictureSaved(photo) {
-    cameraRef.pausePreview();
-    const response = await fetch(photo.uri);
+    let data = photo.base64;
+
+    if (data.substring(0,4) == 'data') {
+      data = data.split(',')[1];
+    }
+    console.log(data);
+    const buff = base64.decode(data);
+    console.log(buff);
+    /*
+    const response = await fetch(base64);
+    console.log(base64);
+    console.log('base64 fetch result:');
+    console.log(response);
     const blob = await response.blob();
+    console.log('Type of blob:');
+    console.log(typeof(blob));
+    console.log('Here is the blob:');
+    console.log(blob);
+    console.log('That was the blob!');
+    */
+
     setShowForm(true);
-    uploadImageToS3(blob);
+    uploadImageToS3(buff);
   }
 
   const takePicture = () => {
     if (cameraRef) {
-      cameraRef.takePictureAsync({ onPictureSaved });
+      cameraRef.pausePreview();
+      cameraRef.takePictureAsync({ base64:true, onPictureSaved });
     }
   };
 

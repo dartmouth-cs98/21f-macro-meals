@@ -3,11 +3,16 @@ import axios from 'axios';
 async function getSignedRequest(file) {
   // hit our own server to get a signed s3 url
   // const result = await axios.get(`https://macro-cs98.herokuapp.com/api/sign-s3?file-name=${fileName}&file-type=${file.type}`);
-  const today = new Date();
-  const date = `${today.getFullYear()}${today.getMonth() + 1}${today.getDate()}`;
-  const time = `${today.getHours()}${today.getMinutes()}${today.getSeconds()}`;
-  const dateTime = `${date}T${time}`;
-  const result = await axios.get(`https://macro-cs98.herokuapp.com/api/sign-s3?file-name=${dateTime}&file-type=image/jpeg`);
+  let filename = '';
+  if (file.name) {
+    filename = file.name;
+  } else {
+    const today = new Date();
+    const date = `${today.getFullYear()}${today.getMonth() + 1}${today.getDate()}`;
+    const time = `${today.getHours()}${today.getMinutes()}${today.getSeconds()}`;
+    filename = `${date}T${time}`;
+  }
+  const result = await axios.get(`https://macro-cs98.herokuapp.com/api/sign-s3?file-name=${filename}&file-type=image/jpeg`);
   console.log('PINGING API');
   console.log(result);
   return result;
@@ -33,7 +38,11 @@ function uploadFileToS3(signedRequest, file, url) {
 // eslint-disable-next-line import/prefer-default-export
 export function uploadImage(file) {
   // returns a promise so you can handle error and completion in your component
-  return getSignedRequest(file).then((response) => {
-    return uploadFileToS3(response.data.signedRequest, file, response.data.url);
+  let photo = file;
+  if (file._data) {
+    photo = file._data;
+  }
+  return getSignedRequest(photo).then((response) => {
+    return uploadFileToS3(response.data.signedRequest, photo, response.data.url);
   });
 }
