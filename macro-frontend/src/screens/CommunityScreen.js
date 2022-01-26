@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MealCard from '../components/previous-meals/meal-cards';
 import styles from '../styles';
 
 const windowWidth = Dimensions.get('window').width;
@@ -10,6 +12,29 @@ const macroLogo = require('../../assets/macroLogo.png');
 
 function CommunityScreen({ navigation, storedUserName }) {
   const [currTab, setCurrTab] = useState('top');
+  const [recent, setRecent] = useState(null);
+  const [top, setTop] = useState(null);
+  const [favorite, setFavorite] = useState(null);
+
+  const getCommunityAll = () => {
+    console.log(storedUserName);
+    axios.post('https://macro-cs98.herokuapp.com/api/community/all', {
+      username: storedUserName,
+    })
+      .then((response) => {
+        console.log(response.data);
+        setRecent(response.data.recent);
+        setTop(response.data.top);
+        setFavorite(response.data.favorite);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+  if (recent === null) {
+    getCommunityAll();
+  }
+
   return (
     <View style={styles.verticalContainer}>
       <TouchableOpacity
@@ -44,7 +69,93 @@ function CommunityScreen({ navigation, storedUserName }) {
         </TouchableOpacity>
       </View>
       <View style={styles.communityBody}>
-        <Text>This should be the body!</Text>
+        {currTab === 'recent' &&
+          <ScrollView styles={styles.scrollContainer}>
+          { recent !== null &&
+          (
+            recent.map((element, index) => (
+              <MealCard 
+                key={element.id} 
+                mealName={element.customName} 
+                time={element.createdAt} 
+                totalCal={element.calories} 
+                foodImg={element.imageUrl} 
+                classification={element.classification}
+                protein={element.protein}
+                carb={element.carb}
+                fat={element.fat}
+                mood={element.mood}
+              />
+            ))
+          )}
+          {recent !== null && recent.length === 0 && 
+          (
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>an error occurred...</Text>
+          )}
+          { recent === null 
+          && (
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>loading recents...</Text>
+          )}
+        </ScrollView>
+        }
+        {currTab === 'top' &&
+          <ScrollView styles={styles.scrollContainer}>
+          { top !== null &&
+          (
+            top.map((element, index) => (
+              <MealCard 
+                key={element.id} 
+                mealName={element.customName} 
+                time={element.createdAt} 
+                totalCal={element.calories} 
+                foodImg={element.imageUrl} 
+                classification={element.classification}
+                protein={element.protein}
+                carb={element.carb}
+                fat={element.fat}
+                mood={element.mood}
+              />
+            ))
+          )}
+          {top !== null && top.length === 0 && 
+          (
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>an error occurred...</Text>
+          )}
+          { top === null 
+          && (
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>loading top rated...</Text>
+          )}
+        </ScrollView>
+        }
+        {currTab === 'favorite' &&
+          <ScrollView styles={styles.scrollContainer}>
+          { favorite !== null &&
+          (
+            favorite.map((element, index) => (
+              <MealCard 
+                key={element.id} 
+                mealName={element.customName} 
+                time={element.createdAt} 
+                totalCal={element.calories} 
+                foodImg={element.imageUrl} 
+                classification={element.classification}
+                protein={element.protein}
+                carb={element.carb}
+                fat={element.fat}
+                mood={element.mood}
+              />
+            ))
+          )}
+          {favorite !== null && favorite.length === 0 && 
+          (
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>you don't seem to have any favorites!</Text>
+          )}
+          { favorite === null 
+          && (
+            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>loading your favorites...</Text>
+          )}
+        </ScrollView>
+        }
       </View>
         
     </View>

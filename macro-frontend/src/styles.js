@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     width: '30%',
     marginLeft: '5px',
     marginRight: '5px',
+    marginBottom: '10px',
     borderBottomRightRadius: '8px',
     borderBottomLeftRadius: '8px',
     padding: 8,
