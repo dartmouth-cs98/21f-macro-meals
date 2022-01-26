@@ -166,6 +166,14 @@ function MainScreen({ navigation, storedUserName }) {
               <Icon name="rotate-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navTertBtnLeft}
+            onPress={() => { navigation.navigate('User'); }}
+          >
+            <Text>
+              <Icon name="gears" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+            </Text>
+          </TouchableOpacity>
           <View style={{
             display: 'flex',
             flexDirection: 'row',
@@ -175,7 +183,7 @@ function MainScreen({ navigation, storedUserName }) {
           }}
           >
             <TouchableOpacity 
-              onPress={() => { navigation.navigate('User'); }}
+              onPress={() => { navigation.navigate('Community'); }}
               style={styles.navSecBtn}
             >
               <Text>

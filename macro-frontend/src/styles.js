@@ -17,6 +17,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  verticalContainer: {
+    display: 'flex',
+    fledDirection: 'column',
+    backgroundColor: '#339DFF',
+    color: 'white',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+
+  header: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '#339DFF',
+    color: 'white',
+    padding: '10px',
+  },
+
+  communityBody: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    color: 'black',
+    padding: '10px',
+  },
+
   historyContainer: {
     flex: 1,
     backgroundColor: '#339DFF',
@@ -92,6 +121,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0.08 * windowWidth,
     right: 0.04 * windowWidth,
+    backgroundColor: '#339DFF',
+    width: 0.1 * windowWidth,
+    height: 0.1 * windowWidth,
+    borderColor: 'white',
+    borderWidth: 3,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 1000,
+    zIndex: 2,
+  },
+  navTertBtnLeft: {
+    position: 'absolute',
+    top: 0.08 * windowWidth,
+    left: 0.04 * windowWidth,
     backgroundColor: '#339DFF',
     width: 0.1 * windowWidth,
     height: 0.1 * windowWidth,
