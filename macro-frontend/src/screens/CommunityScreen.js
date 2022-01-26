@@ -9,6 +9,7 @@ const windowWidth = Dimensions.get('window').width;
 const macroLogo = require('../../assets/macroLogo.png');
 
 function CommunityScreen({ navigation, storedUserName }) {
+  const [currTab, setCurrTab] = useState('top');
   return (
     <View style={styles.verticalContainer}>
       <TouchableOpacity
@@ -16,11 +17,31 @@ function CommunityScreen({ navigation, storedUserName }) {
         onPress={() => { navigation.navigate('Main'); }}
       >
         <Text>
-          <Icon name="arrow-right" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+          <Icon name="camera" color="white" style={{ fontSize: 0.05 * windowWidth }} />
         </Text>
       </TouchableOpacity>
       <View style={styles.header}>
-        <Text>Community</Text>
+        <Text style={styles.headerText}>Community</Text>
+      </View>
+      <View style={styles.communityTabs}>
+        <TouchableOpacity 
+          style={[styles.communityTab, {backgroundColor: currTab == 'recent' ? '#339DFF' : '#8bc6fd'}]}
+          onPress={() => {setCurrTab('recent')}}
+        >
+          <Text style={styles.cTabText}>Recent</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.communityTab, {backgroundColor: currTab == 'top' ? '#339DFF' : '#8bc6fd'}]}
+          onPress={() => {setCurrTab('top')}}
+        >
+          <Text style={styles.cTabText}>Top Rated</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.communityTab, {backgroundColor: currTab == 'favorite' ? '#339DFF' : '#8bc6fd'}]}
+          onPress={() => {setCurrTab('favorite')}}
+        >
+          <Text style={styles.cTabText}>Favorite</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.communityBody}>
         <Text>This should be the body!</Text>

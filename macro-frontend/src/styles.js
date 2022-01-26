@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
   verticalContainer: {
     display: 'flex',
     fledDirection: 'column',
-    backgroundColor: '#339DFF',
-    color: 'white',
+    backgroundColor: 'white',
+    color: 'black',
     alignItems: 'center',
     width: '100%',
     height: '100%',
@@ -34,6 +34,45 @@ const styles = StyleSheet.create({
     backgroundColor: '#339DFF',
     color: 'white',
     padding: '10px',
+  },
+
+  headerText: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 20,
+  },
+
+  communityTabs: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  communityTab: {
+    width: '30%',
+    marginLeft: '5px',
+    marginRight: '5px',
+    borderBottomRightRadius: '8px',
+    borderBottomLeftRadius: '8px',
+    padding: 8,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  cTabText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
   },
 
   communityBody: {
@@ -190,13 +229,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
 
-  headerText: {
-    color: 'white',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    marginTop: 20,
-  },
 
   subHeaderText: {
     color: 'white',

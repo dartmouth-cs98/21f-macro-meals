@@ -187,7 +187,7 @@ function MainScreen({ navigation, storedUserName }) {
               style={styles.navSecBtn}
             >
               <Text>
-                <Icon name="user" color="white" style={{ fontSize: 0.08 * windowWidth }} />
+                <Icon name="users" color="white" style={{ fontSize: 0.08 * windowWidth }} />
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
