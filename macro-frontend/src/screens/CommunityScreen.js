@@ -16,9 +16,9 @@ function CommunityScreen({ navigation, storedUserName }) {
   const [top, setTop] = useState(null);
   const [favorite, setFavorite] = useState(null);
 
-  const getCommunityAll = () => {
+  const getCommunityFood = () => {
     console.log(storedUserName);
-    axios.post('https://macro-cs98.herokuapp.com/api/community/all', {
+    axios.post('https://macro-cs98.herokuapp.com/api/community/food', {
       username: storedUserName,
     })
       .then((response) => {
@@ -32,7 +32,7 @@ function CommunityScreen({ navigation, storedUserName }) {
       })
   }
   if (recent === null) {
-    getCommunityAll();
+    getCommunityFood();
   }
 
   return (
