@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   verticalContainer: {
     display: 'flex',
     fledDirection: 'column',
-    backgroundColor: 'white',
+    backgroundColor: '#FFFAF0',
     color: 'black',
     alignItems: 'center',
     width: '100%',
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: '#339DFF',
+    backgroundColor: '#F956F2',
     color: 'white',
     padding: '10px',
   },
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: '#FFFAF0',
   },
 
   communityTab: {
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: 'white',
-    color: 'black',
+    backgroundColor: '#FFFAF0',
+    color: '#54595F',
     padding: '10px',
   },
 

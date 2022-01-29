@@ -23,9 +23,7 @@ function CommunityScreen({ navigation, storedUserName }) {
     })
       .then((response) => {
         console.log(response.data);
-        setRecent(response.data.recent);
-        setTop(response.data.top);
-        setFavorite(response.data.favorite);
+        setRecent(response.data);
       })
       .catch((error) => {
         console.log(error.message);
@@ -50,19 +48,19 @@ function CommunityScreen({ navigation, storedUserName }) {
       </View>
       <View style={styles.communityTabs}>
         <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'recent' ? '#339DFF' : '#8bc6fd'}]}
+          style={[styles.communityTab, {backgroundColor: currTab == 'recent' ? '#F956F2' : '#F990F2'}]}
           onPress={() => {setCurrTab('recent')}}
         >
           <Text style={styles.cTabText}>Recent</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'top' ? '#339DFF' : '#8bc6fd'}]}
+          style={[styles.communityTab, {backgroundColor: currTab == 'top' ? '#F956F2' : '#F990F2'}]}
           onPress={() => {setCurrTab('top')}}
         >
           <Text style={styles.cTabText}>Top Rated</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'favorite' ? '#339DFF' : '#8bc6fd'}]}
+          style={[styles.communityTab, {backgroundColor: currTab == 'favorite' ? '#F956F2' : '#F990F2'}]}
           onPress={() => {setCurrTab('favorite')}}
         >
           <Text style={styles.cTabText}>Favorite</Text>
@@ -76,7 +74,9 @@ function CommunityScreen({ navigation, storedUserName }) {
             recent.map((element, index) => (
               <MealCard 
                 key={element.id} 
-                mealName={element.customName} 
+                id={element.id}
+                mealName={element.customName}
+                description={element.description}
                 time={element.createdAt} 
                 totalCal={element.calories} 
                 foodImg={element.imageUrl} 
@@ -85,6 +85,7 @@ function CommunityScreen({ navigation, storedUserName }) {
                 carb={element.carb}
                 fat={element.fat}
                 mood={element.mood}
+                username={storedUserName}
               />
             ))
           )}

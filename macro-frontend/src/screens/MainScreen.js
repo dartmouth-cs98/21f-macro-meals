@@ -117,6 +117,7 @@ function MainScreen({ navigation, storedUserName }) {
           cameraRef.resumePreview();
           setShowForm(false);
           setCustomName('');
+          setDescription('');
           navigation.navigate('Breakdown');
         })
         .catch((error) => {
@@ -131,7 +132,15 @@ function MainScreen({ navigation, storedUserName }) {
       cameraRef.resumePreview();
       setShowForm(false);
       setCustomName('');
+      setDescription('');
     }
+  }
+
+  const resetForm = () => {
+    cameraRef.resumePreview();
+    setShowForm(false);
+    setCustomName('');
+    setDescription('');
   }
 
   return (
@@ -313,9 +322,19 @@ function MainScreen({ navigation, storedUserName }) {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
-            <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
-          </TouchableOpacity>
+          <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: '50%',
+            justifyContent: 'space-evenly',
+          }}>
+            <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         )}
         {showError
