@@ -6,10 +6,19 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { userLogout } from '../redux/actions/userActions';
 import styles from '../styles';
 
+import {fetchRecipe} from '../redux/actions/spoonacularActions';
+
+
 const windowWidth = Dimensions.get('window').width;
 
-function UserScreen({ navigation, storedUserName }) {
+function UserScreen({ navigation, storedUserName, recipe }) {
   const dispatch = useDispatch();
+
+  // Spoonacular API
+  const recipeHandler = () => {
+    dispatch(fetchRecipe("pasta", "chicken"));
+  };
+
   const handleLogout = () => {
     dispatch(userLogout());
     navigation.navigate('Logout');
@@ -22,7 +31,7 @@ function UserScreen({ navigation, storedUserName }) {
       </TouchableOpacity>
       <Text style={{ color: 'white', fontWeight: 'bold' }}>Hi, {storedUserName}!</Text>
       <Text style={{ color: 'white', fontWeight: 'bold' }}>This screen is coming soon!</Text>
-      <TouchableOpacity style={styles.mainFormBtn} onPress={handleLogout}>
+      <TouchableOpacity style={styles.mainFormBtn} onPress={recipeHandler}>
         <Text style={{ color: 'white', fontSize: 16 }}>logout</Text>
       </TouchableOpacity>
     </View>
@@ -31,6 +40,7 @@ function UserScreen({ navigation, storedUserName }) {
 
 const mapStateToProps = (state) => ({
   storedUserName: state.user.name,
+  recipe: state.all,
 });
 
 UserScreen.propTypes = {
