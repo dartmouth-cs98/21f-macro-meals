@@ -16,11 +16,8 @@ function CommunityScreen({ navigation, storedUserName }) {
   const [top, setTop] = useState(null);
   const [favorite, setFavorite] = useState(null);
 
-  const getCommunityFood = () => {
-    console.log(storedUserName);
-    axios.post('https://macro-cs98.herokuapp.com/api/community/food', {
-      username: storedUserName,
-    })
+  const getCommunityRecent = () => {
+    axios.get('https://macro-cs98.herokuapp.com/api/community/recent')
       .then((response) => {
         console.log(response.data);
         setRecent(response.data);
@@ -30,7 +27,62 @@ function CommunityScreen({ navigation, storedUserName }) {
       })
   }
   if (recent === null) {
-    getCommunityFood();
+    getCommunityRecent();
+  }
+  const getCommunityTop = () => {
+    axios.get('https://macro-cs98.herokuapp.com/api/fav/top')
+      .then((response) => {
+        console.log(response.data);
+        let topList = [];
+        for (let i = 0; i < response.data.length; i++) {
+          topList.push(response.data[i]._id);
+        }
+        console.log(topList);
+        axios.post('https://macro-cs98.herokuapp.com/api/community/getFoodList', {
+          list: topList,
+        })
+          .then((response1) => {
+            console.log(response1.data);
+            setTop(response1.data);
+          })
+          .catch((error1) => {
+            console.log(error1.message);
+          })
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+  if (top === null) {
+    getCommunityTop();
+  }
+  const getCommunityFavorite = () => {
+    axios.post('https://macro-cs98.herokuapp.com/api/fav/user', {
+      username: storedUserName,
+    })
+      .then((response) => {
+        console.log(response.data);
+        let favList = [];
+        for (let i = 0; i < response.data.length; i++) {
+          favList.push(response.data[i].foodId);
+        }
+        console.log(favList);
+        axios.post('https://macro-cs98.herokuapp.com/api/community/getFoodList', {
+          list: favList,
+        })
+          .then((response1) => {
+            setFavorite(response1.data);
+          })
+          .catch((error1) => {
+            console.log(error1.message);
+          })
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
+  if (favorite === null) {
+    getCommunityFavorite();
   }
 
   return (
@@ -118,7 +170,7 @@ function CommunityScreen({ navigation, storedUserName }) {
               />
             ))
           )}
-          {top !== null && top.length === 0 && 
+          {top !== null && top.length === 0 &&
           (
             <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>an error occurred...</Text>
           )}
