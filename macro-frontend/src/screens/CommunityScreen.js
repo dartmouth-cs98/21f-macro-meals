@@ -8,7 +8,6 @@ import MealCard from '../components/previous-meals/meal-cards';
 import styles from '../styles';
 
 const windowWidth = Dimensions.get('window').width;
-const macroLogo = require('../../assets/macroLogo.png');
 
 function CommunityScreen({ navigation, storedUserName }) {
   const [currTab, setCurrTab] = useState('top');
@@ -19,67 +18,68 @@ function CommunityScreen({ navigation, storedUserName }) {
   const getCommunityRecent = () => {
     axios.get('https://macro-cs98.herokuapp.com/api/community/recent')
       .then((response) => {
-        console.log(response.data);
         setRecent(response.data);
       })
       .catch((error) => {
+        console.log('Error in getCommunityRecent:');
         console.log(error.message);
       })
   }
-  if (recent === null) {
-    getCommunityRecent();
-  }
+
   const getCommunityTop = () => {
     axios.get('https://macro-cs98.herokuapp.com/api/fav/top')
       .then((response) => {
-        console.log(response.data);
-        let topList = [];
+        let idList = [];
         for (let i = 0; i < response.data.length; i++) {
-          topList.push(response.data[i]._id);
+          idList.push(response.data[i]._id);
         }
-        console.log(topList);
         axios.post('https://macro-cs98.herokuapp.com/api/community/getFoodList', {
-          list: topList,
+          list: idList,
         })
           .then((response1) => {
-            console.log(response1.data);
             setTop(response1.data);
           })
           .catch((error1) => {
+            console.log('Error in getCommunityTop:');
             console.log(error1.message);
           })
       })
       .catch((error) => {
+        console.log('Error in getCommunityTop:');
         console.log(error.message);
       })
-  }
-  if (top === null) {
-    getCommunityTop();
   }
   const getCommunityFavorite = () => {
     axios.post('https://macro-cs98.herokuapp.com/api/fav/user', {
       username: storedUserName,
     })
       .then((response) => {
-        console.log(response.data);
-        let favList = [];
+        let idList = [];
         for (let i = 0; i < response.data.length; i++) {
-          favList.push(response.data[i].foodId);
+          idList.push(response.data[i].foodId);
         }
-        console.log(favList);
         axios.post('https://macro-cs98.herokuapp.com/api/community/getFoodList', {
-          list: favList,
+          list: idList,
         })
           .then((response1) => {
             setFavorite(response1.data);
           })
           .catch((error1) => {
+            console.log('Error in getCommunityFavorite:');
             console.log(error1.message);
           })
       })
       .catch((error) => {
+        console.log('Error in getCommunityFavorite:');
         console.log(error.message);
       })
+  }
+  
+  if (recent === null) {
+    getCommunityRecent();
+  }
+  if (top === null) {
+    getCommunityTop();
   }
   if (favorite === null) {
     getCommunityFavorite();
@@ -158,7 +158,9 @@ function CommunityScreen({ navigation, storedUserName }) {
             top.map((element, index) => (
               <MealCard 
                 key={element.id} 
-                mealName={element.customName} 
+                id={element.id}
+                mealName={element.customName}
+                description={element.description}
                 time={element.createdAt} 
                 totalCal={element.calories} 
                 foodImg={element.imageUrl} 
@@ -167,6 +169,7 @@ function CommunityScreen({ navigation, storedUserName }) {
                 carb={element.carb}
                 fat={element.fat}
                 mood={element.mood}
+                username={storedUserName}
               />
             ))
           )}
@@ -187,7 +190,9 @@ function CommunityScreen({ navigation, storedUserName }) {
             favorite.map((element, index) => (
               <MealCard 
                 key={element.id} 
-                mealName={element.customName} 
+                id={element.id}
+                mealName={element.customName}
+                description={element.description}
                 time={element.createdAt} 
                 totalCal={element.calories} 
                 foodImg={element.imageUrl} 
@@ -196,6 +201,7 @@ function CommunityScreen({ navigation, storedUserName }) {
                 carb={element.carb}
                 fat={element.fat}
                 mood={element.mood}
+                username={storedUserName}
               />
             ))
           )}

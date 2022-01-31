@@ -17,7 +17,6 @@ const MealCard = (props) => {
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  console.log(mood);
   let moodImage = null;
   if (mood === 'positive') { moodImage = positiveMood; }
   else if (mood === 'neutral') { moodImage = neutralMood; }
@@ -37,6 +36,7 @@ const MealCard = (props) => {
           }
         })
         .catch((error) => {
+          console.log('Error in handleFavoritePress:');
           console.log(error.message);
         });
     } else {
@@ -49,6 +49,7 @@ const MealCard = (props) => {
           }
         })
         .catch((error) => {
+          console.log('Error in handleFavoritePress:');
           console.log(error.message);
         });
     }
@@ -76,7 +77,7 @@ const MealCard = (props) => {
   }
 
   return (
-    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 1 * windowWidth : 0.4 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
+    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
       <Icon name={expand ? 'compress' : 'expand'} color="#54595F" style={{ fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
       <TouchableOpacity 
         style={{ position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2 }}
