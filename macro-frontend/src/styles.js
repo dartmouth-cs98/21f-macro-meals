@@ -17,6 +17,76 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  verticalContainer: {
+    display: 'flex',
+    fledDirection: 'column',
+    backgroundColor: '#FFFAF0',
+    color: 'black',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+
+  header: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '#F956F2',
+    color: 'white',
+    padding: '10px',
+  },
+
+  headerText: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 20,
+  },
+
+  communityTabs: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFFAF0',
+  },
+
+  communityTab: {
+    width: '30%',
+    marginLeft: '5px',
+    marginRight: '5px',
+    marginBottom: '10px',
+    borderBottomRightRadius: '8px',
+    borderBottomLeftRadius: '8px',
+    padding: 8,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  cTabText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+  },
+
+  communityBody: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#FFFAF0',
+    color: '#54595F',
+    padding: '10px',
+  },
+
   historyContainer: {
     flex: 1,
     backgroundColor: '#339DFF',
@@ -101,6 +171,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 1000,
+    zIndex: 2,
+  },
+  navTertBtnLeft: {
+    position: 'absolute',
+    top: 0.08 * windowWidth,
+    left: 0.04 * windowWidth,
+    backgroundColor: '#339DFF',
+    width: 0.1 * windowWidth,
+    height: 0.1 * windowWidth,
+    borderColor: 'white',
+    borderWidth: 3,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 1000,
   },
 
   backBtn: {
@@ -146,13 +231,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
 
-  headerText: {
-    color: 'white',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    marginTop: 20,
-  },
 
   subHeaderText: {
     color: 'white',

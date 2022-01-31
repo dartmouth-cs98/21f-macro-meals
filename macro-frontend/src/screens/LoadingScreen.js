@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import styles from '../styles';
 
 const macroLogo = require('../../assets/macroLogo.png');
-
 const windowWidth = Dimensions.get('window').width;
 
 const handleLoad = (isUserLoggedIn, navigation) => (

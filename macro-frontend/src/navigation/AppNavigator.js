@@ -8,6 +8,7 @@ import LogoutScreen from '../screens/LogoutScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import MealOverviewScreen from '../screens/MealOverviewScreen';
+import CommunityScreen from '../screens/CommunityScreen';
 import UserScreen from '../screens/UserScreen';
 
 const AuthStack = createStackNavigator(
@@ -27,6 +28,7 @@ const AppStack = createStackNavigator(
     Main: MainScreen,
     Breakdown: BreakdownScreen,
     Overview: MealOverviewScreen,
+    Community: CommunityScreen,
     User: UserScreen,
   },
   {

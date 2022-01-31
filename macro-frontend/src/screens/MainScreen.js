@@ -25,8 +25,10 @@ function MainScreen({ navigation, storedUserName }) {
   const [showForm, setShowForm] = useState(false);
   const [showError, setShowError] = useState(false);
   const [customName, setCustomName] = useState('');
+  const [description, setDescription] = useState('');
   const [mealTime, setMealTime] = useState('breakfast');
   const [mood, setMood] = useState('positive');
+  const [publicFood, setPublicFood] = useState(1);
   const [imageUrl, setImageUrl] = useState('');
   const [classification, setClassification] = useState('');
   const [calories, setCalories] = useState(0);
@@ -98,8 +100,10 @@ function MainScreen({ navigation, storedUserName }) {
       axios.post('https://macro-cs98.herokuapp.com/api/food', {
         username: storedUserName,
         customName,
+        description,
         mealTime,
         mood,
+        publicFood,
         imageUrl,
         classification,
         calories,
@@ -113,6 +117,7 @@ function MainScreen({ navigation, storedUserName }) {
           cameraRef.resumePreview();
           setShowForm(false);
           setCustomName('');
+          setDescription('');
           navigation.navigate('Breakdown');
         })
         .catch((error) => {
@@ -127,7 +132,15 @@ function MainScreen({ navigation, storedUserName }) {
       cameraRef.resumePreview();
       setShowForm(false);
       setCustomName('');
+      setDescription('');
     }
+  }
+
+  const resetForm = () => {
+    cameraRef.resumePreview();
+    setShowForm(false);
+    setCustomName('');
+    setDescription('');
   }
 
   return (
@@ -166,6 +179,14 @@ function MainScreen({ navigation, storedUserName }) {
               <Icon name="rotate-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navTertBtnLeft}
+            onPress={() => { navigation.navigate('User'); }}
+          >
+            <Text>
+              <Icon name="gears" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+            </Text>
+          </TouchableOpacity>
           <View style={{
             display: 'flex',
             flexDirection: 'row',
@@ -175,11 +196,11 @@ function MainScreen({ navigation, storedUserName }) {
           }}
           >
             <TouchableOpacity 
-              onPress={() => { navigation.navigate('User'); }}
+              onPress={() => { navigation.navigate('Community'); }}
               style={styles.navSecBtn}
             >
               <Text>
-                <Icon name="user" color="white" style={{ fontSize: 0.08 * windowWidth }} />
+                <Icon name="users" color="white" style={{ fontSize: 0.08 * windowWidth }} />
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -210,14 +231,21 @@ function MainScreen({ navigation, storedUserName }) {
           flexDirection: 'column',
           alignItems: 'center',
           position: 'relative',
-          paddingTop: 0.25 * windowHeight,
+          paddingTop: 0.1 * windowHeight,
         }}
         >
           <TextInput
           style={styles.mainFormElement}
           onChangeText={setCustomName}
           value={customName}
-          placeholder="custom name (ie. chicken breast)"
+          placeholder="[optional] custom name"
+          placeholderTextColor="white"
+          />
+          <TextInput
+          style={styles.mainFormElement}
+          onChangeText={setDescription}
+          value={description}
+          placeholder="[optional] description"
           placeholderTextColor="white"
           />
           <Picker
@@ -266,9 +294,47 @@ function MainScreen({ navigation, storedUserName }) {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
-            <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
-          </TouchableOpacity>
+          <View style={styles.mainFormElement}>
+            <Text style={{ color: 'white', fontSize: 16 }}>make public?</Text>
+            <View style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-evenly',
+              marginTop: 10,
+              marginBottom: 10,
+            }}>
+              <TouchableOpacity onPress={() => { setPublicFood(1); }} style={{ 
+                borderWidth: publicFood === 1 ? 2 : 0,
+                borderColor: 'white',
+                padding: 3,
+                borderRadius: 999,
+              }}>
+                <Text style={{ color: 'white', fontSize: 14 }}>yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { setPublicFood(0); }} style={{ 
+                borderWidth: publicFood === 0 ? 2 : 0,
+                borderColor: 'white',
+                padding: 3,
+                borderRadius: 999,
+              }}>
+                <Text style={{ color: 'white', fontSize: 14 }}>no</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: '50%',
+            justifyContent: 'space-evenly',
+          }}>
+            <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         )}
         {showError

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
   StyleSheet, Text, Image, View, Dimensions, TouchableOpacity
 } from 'react-native';
@@ -12,27 +13,81 @@ const negativeMood = require('../../img/negativeMood.png');
 
 const MealCard = (props) => {
   const {
-    mealName, time, totalCal, foodImg, classification, protein, fat, carb, mood
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username
   } = props;
-
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  console.log(mood);
   let moodImage = null;
   if (mood === 'positive') { moodImage = positiveMood; }
   else if (mood === 'neutral') { moodImage = neutralMood; }
   else { moodImage = negativeMood; }
 
   const [expand, setExpand] = useState(false);
-  // const dateString = moment(new Date(time.substring(0,4),time.substring(5,7),time.substring(8,10))).format('MMMM D, Y');
-  
+  const [favorite, setFavorite] = useState(null);
+
+  const handleFavoritePress = () => {
+    if (favorite) { // if is a favorite, need to delete
+      axios.post('https://macro-cs98.herokuapp.com/api/fav/delete', {
+        foodId: id, username: username,
+      })
+        .then((response) => {
+          if (response.data) {
+            setFavorite(false);
+          }
+        })
+        .catch((error) => {
+          console.log('Error in handleFavoritePress:');
+          console.log(error.message);
+        });
+    } else {
+      axios.post('https://macro-cs98.herokuapp.com/api/fav/new', {
+        foodId: id, username: username,
+      })
+        .then((response) => {
+          if (response.data) {
+            setFavorite(true);
+          }
+        })
+        .catch((error) => {
+          console.log('Error in handleFavoritePress:');
+          console.log(error.message);
+        });
+    }
+  }
+
+  const getFavoriteStatus = () => {
+    axios.post('https://macro-cs98.herokuapp.com/api/fav/check', {
+      foodId: id, username: username,
+    })
+      .then((response) => {
+        if (response.data) {
+          setFavorite(true);
+        } else {
+          setFavorite(false);
+        }
+        
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }
+
+  if (favorite === null) {
+    getFavoriteStatus();
+  }
+
   return (
-    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.6 * windowWidth : 0.3 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
-      <Icon name={expand ? 'compress' : 'expand'} color="white" style={{ fontSize: 0.04 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
-      { expand
-      && (
-        <Image source={moodImage} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth, position: 'absolute', bottom: 8, right: 8 }} />
-      )}
+    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
+      <Icon name={expand ? 'compress' : 'expand'} color="#54595F" style={{ fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
+      <TouchableOpacity 
+        style={{ position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2 }}
+        onPress={() => { handleFavoritePress(); }}
+      >
+        <Text style={StyleSheet.absoluteFillObject} />
+        <View>
+          <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.container}>
         <Image
           style={styles.foodImage}
@@ -42,15 +97,21 @@ const MealCard = (props) => {
       <View style={styles.mealText}>
         <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
         <View style={styles.mealColumn}>
-          <Text style={{ color: 'white' }}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
-          <Text style={{ color: 'white' }}><b>Classification:</b> {classification}</Text>
+          <Text style={{ color: '#54595F' }}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
+          <Text style={{ color: '#F956F2' }}><b>Classification: </b><Text style={{ color: '#54595F' }}>{classification}</Text></Text>
           { expand
           && (
             <View style={[styles.mealColumn, { marginTop: 20 }]}>
-              <Text style={{ color: 'white' }}><b>Calories:</b> {totalCal}</Text>
-              <Text style={{ color: 'white' }}><b>Protein:</b> {protein}g</Text>
-              <Text style={{ color: 'white' }}><b>Carbs:</b> {carb}g</Text>
-              <Text style={{ color: 'white' }}><b>Fats:</b> {fat}g</Text>
+              <View style={{ marginBottom: 10 }}>
+                <Text style={{ color: '#F956F2' }}><b>Calories: </b><Text style={{ color: '#54595F' }}>{totalCal}</Text></Text>
+                <Text style={{ color: '#F956F2' }}><b>Protein: </b><Text style={{ color: '#54595F' }}>{protein}g</Text></Text>
+                <Text style={{ color: '#F956F2' }}><b>Carbs: </b><Text style={{ color: '#54595F' }}>{carb}g</Text></Text>
+                <Text style={{ color: '#F956F2' }}><b>Fats: </b><Text style={{ color: '#54595F' }}>{fat}g</Text></Text>
+              </View>
+              <View style={styles.mealColumn}>
+                <Text style={{ color: '#F956F2' }}><b>Description:</b></Text>
+                <Text style={{ color: '#54595F' }}>{description ? description : 'N/A'}</Text>
+              </View>
             </View>
           )}
         </View>
@@ -64,10 +125,9 @@ export default MealCard;
 const styles = StyleSheet.create({
 
   overallContainer: {
-    width: 0.85 * windowWidth,
-    height: 0.3 * windowWidth,
+    width: 0.9 * windowWidth,
     marginBottom: 20,
-    backgroundColor: '#FFFAF0s',
+    backgroundColor: '#FFFAF0',
     borderRadius: 10,
     borderWidth: 3,
     borderColor: '#DC95FE',
@@ -90,7 +150,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   mealText: {
-    width: '50%',
+    width: '60%',
     height: '100%',
 
     justifyContent: 'center',
@@ -101,9 +161,9 @@ const styles = StyleSheet.create({
 
   },
   mealNameText: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#F956F2',
 
   },
   mealInformation: {
