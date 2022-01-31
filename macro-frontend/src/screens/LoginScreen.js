@@ -133,20 +133,15 @@ const SceneLogin = ({
               checked={keepSignedIn}
               onPress={() => { setKeepSignedIn(!keepSignedIn); }}
             />
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-              <Button
-                title="login"
-                onPress={() => { validateLogin(); }}
-              />
+            <View style={styles.centerMe}>
+              <TouchableOpacity onPress={() => { validateLogin(); }} style={styles.authBtn}>
+                <Text style={styles.authBtnFont}>login</Text>
+              </TouchableOpacity>
             </View>
             <View style={[styles.centerMe, styles.pt1]}>
-              <Text>
-                new to macro?
-                {' '}
-                <TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.authSecBtn}>
-                  <Text>register here</Text>
-                </TouchableOpacity>
-              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.authBtn}>
+                <Text style={styles.authBtnFont}>register here</Text>
+              </TouchableOpacity>
             </View>
             <View>
               {messages.map((msg) => <Text key={msg}>{msg}</Text>)}

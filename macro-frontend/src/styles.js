@@ -8,10 +8,13 @@ import { StyleSheet, Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+const primColor = '#F956F2';
+const neutralColor = '#FFFAF0'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
@@ -20,7 +23,7 @@ const styles = StyleSheet.create({
   verticalContainer: {
     display: 'flex',
     fledDirection: 'column',
-    backgroundColor: '#FFFAF0',
+    backgroundColor: neutralColor,
     color: 'black',
     alignItems: 'center',
     width: '100%',
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: '#F956F2',
+    backgroundColor: primColor,
     color: 'white',
     padding: '10px',
   },
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#FFFAF0',
+    backgroundColor: neutralColor,
   },
 
   communityTab: {
@@ -77,24 +80,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  communityBody: {
+  pageBody: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#FFFAF0',
+    backgroundColor: neutralColor,
     color: '#54595F',
     padding: '10px',
-  },
-
-  historyContainer: {
-    flex: 1,
-    backgroundColor: '#339DFF',
-    color: 'white',
-    alignItems: 'center',
-    width: windowWidth,
-    height: windowHeight,
-    position: 'relative',
   },
 
   scrollContainer: {
@@ -121,20 +114,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 
-  fullScreen: {
-
-  },
-
-  foodCard: {
-
-  },
-
-  cards: {
-
-  },
-
   navPrimBtn: {
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     width: 0.28 * windowWidth,
     height: 0.28 * windowWidth,
     borderColor: 'white',
@@ -147,7 +128,7 @@ const styles = StyleSheet.create({
   },
 
   navSecBtn: {
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     width: 0.16 * windowWidth,
     height: 0.16 * windowWidth,
     borderColor: 'white',
@@ -162,7 +143,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0.08 * windowWidth,
     right: 0.04 * windowWidth,
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     width: 0.1 * windowWidth,
     height: 0.1 * windowWidth,
     borderColor: 'white',
@@ -177,7 +158,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0.08 * windowWidth,
     left: 0.04 * windowWidth,
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     width: 0.1 * windowWidth,
     height: 0.1 * windowWidth,
     borderColor: 'white',
@@ -186,13 +167,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 1000,
+    zIndex:2,
   },
 
   backBtn: {
     position: 'absolute',
     top: 0.04 * windowWidth,
     left: 0.04 * windowWidth,
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     width: 0.1 * windowWidth,
     height: 0.1 * windowWidth,
     borderColor: 'white',
@@ -203,15 +185,24 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
   },
 
-  authSecBtn: {
-    backgroundColor: '#339DFF',
-    color: 'white',
-    padding: 4,
+  authBtn: {
+    backgroundColor: primColor,
+    padding: 8,
     borderRadius: 2,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  authBtnFont: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 0.06 * windowWidth,
+    display: 'flex',
+    justifyContent: 'center',
   },
 
   mainFormElement: {
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     color: 'white',
     padding: 5,
     borderRadius: 5,
@@ -223,7 +214,7 @@ const styles = StyleSheet.create({
   },
 
   mainFormBtn: {
-    backgroundColor: '#339DFF',
+    backgroundColor: primColor,
     color: 'white',
     padding: 5,
     borderRadius: 5,
@@ -249,6 +240,76 @@ const styles = StyleSheet.create({
   boldWhiteText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+
+  // FONTS
+
+  primFont: {
+    color: primColor,
+  },
+
+  primFontBold: {
+    color: primColor,
+    fontWeight: 'bold',
+  },
+
+  secFont: {
+    color: '#54595F',
+  },
+
+  secFontBold: {
+    color: '#54595F', 
+    fontWeight: 'bold', 
+  },
+
+  // OLD MEAL-CARDS STYLES
+
+  overallContainer: {
+    width: 0.9 * windowWidth,
+    marginBottom: 20,
+    backgroundColor: neutralColor,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: '#DC95FE',
+    padding: 10,
+    position: 'relative',
+
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  foodImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  mealText: {
+    width: '60%',
+    height: '100%',
+
+    justifyContent: 'center',
+
+  },
+  mealNameContainer: {
+    paddingBottom: 10,
+
+  },
+  mealNameText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: primColor,
+
+  },
+  mealInformation: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  mealColumn: {
+    display: 'flex',
+    flexDirection: 'column',
   },
 
 });

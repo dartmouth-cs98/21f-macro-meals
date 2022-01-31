@@ -88,37 +88,35 @@ function CommunityScreen({ navigation, storedUserName }) {
   return (
     <View style={styles.verticalContainer}>
       <TouchableOpacity
-        style={styles.navTertBtn}
+        style={styles.navTertBtnLeft}
         onPress={() => { navigation.navigate('Main'); }}
       >
-        <Text>
-          <Icon name="camera" color="white" style={{ fontSize: 0.05 * windowWidth }} />
-        </Text>
+        <Icon name="camera" color="white" style={{ fontSize: 0.05 * windowWidth }} />
       </TouchableOpacity>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Community</Text>
+        <Text style={styles.headerText}>community</Text>
       </View>
       <View style={styles.communityTabs}>
         <TouchableOpacity 
           style={[styles.communityTab, {backgroundColor: currTab == 'recent' ? '#F956F2' : '#F990F2'}]}
           onPress={() => {setCurrTab('recent')}}
         >
-          <Text style={styles.cTabText}>Recent</Text>
+          <Text style={styles.cTabText}>recent</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={[styles.communityTab, {backgroundColor: currTab == 'top' ? '#F956F2' : '#F990F2'}]}
           onPress={() => {setCurrTab('top')}}
         >
-          <Text style={styles.cTabText}>Top Rated</Text>
+          <Text style={styles.cTabText}>top rated</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={[styles.communityTab, {backgroundColor: currTab == 'favorite' ? '#F956F2' : '#F990F2'}]}
           onPress={() => {setCurrTab('favorite')}}
         >
-          <Text style={styles.cTabText}>Favorite</Text>
+          <Text style={styles.cTabText}>favorite</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.communityBody}>
+      <View style={styles.pageBody}>
         {currTab === 'recent' &&
           <ScrollView styles={styles.scrollContainer}>
           { recent !== null &&
@@ -143,11 +141,11 @@ function CommunityScreen({ navigation, storedUserName }) {
           )}
           {recent !== null && recent.length === 0 && 
           (
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>an error occurred...</Text>
+            <Text style={styles.secFontBold}>an error occurred...</Text>
           )}
           { recent === null 
           && (
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>loading recents...</Text>
+            <Text style={styles.secFontBold}>loading recents...</Text>
           )}
         </ScrollView>
         }
@@ -175,11 +173,11 @@ function CommunityScreen({ navigation, storedUserName }) {
           )}
           {top !== null && top.length === 0 &&
           (
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>an error occurred...</Text>
+            <Text style={styles.secFontBold}>an error occurred...</Text>
           )}
           { top === null 
           && (
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>loading top rated...</Text>
+            <Text style={styles.secFontBold}>loading top rated...</Text>
           )}
         </ScrollView>
         }
@@ -207,11 +205,11 @@ function CommunityScreen({ navigation, storedUserName }) {
           )}
           {favorite !== null && favorite.length === 0 && 
           (
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>you don't seem to have any favorites!</Text>
+            <Text style={styles.secFontBold}>you don't seem to have any favorites!</Text>
           )}
           { favorite === null 
           && (
-            <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>loading your favorites...</Text>
+            <Text style={styles.secFontBold}>loading your favorites...</Text>
           )}
         </ScrollView>
         }

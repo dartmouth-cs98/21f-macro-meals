@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -17,10 +17,9 @@ const SceneLogOut = ({ navigation, logout }) => {
           <Text style={{ marginBottom: 10 }}>logged out!</Text>
         </View>
         <View>
-          <Button
-            title="sign in"
-            onPress={() => navigation.navigate('Login')}
-          />
+          <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.authBtn}>
+            <Text style={styles.authBtnFont}>sign in</Text>
+          </TouchableOpacity>
         </View>
       </Panel>
     </View>

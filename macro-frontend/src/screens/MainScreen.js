@@ -212,7 +212,7 @@ function MainScreen({ navigation, storedUserName }) {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => { navigation.navigate('Overview'); }}
+              onPress={() => { navigation.navigate('History'); }}
               style={styles.navSecBtn}
             >
               <Text>
