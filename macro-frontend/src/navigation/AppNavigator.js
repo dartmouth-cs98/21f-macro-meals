@@ -9,6 +9,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import MealOverviewScreen from '../screens/MealOverviewScreen';
 import UserScreen from '../screens/UserScreen';
+import TestingScreen from '../screens/TestingScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -28,6 +29,7 @@ const AppStack = createStackNavigator(
     Breakdown: BreakdownScreen,
     Overview: MealOverviewScreen,
     User: UserScreen,
+    Testing: TestingScreen,
   },
   {
     headerMode: 'none',

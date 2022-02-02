@@ -11,6 +11,7 @@ import {
 import { useDispatch, connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { removeFood } from '../redux/actions/foodActions';
+import {fetchRecipe} from '../redux/actions/spoonacularActions'
 // import FoodBreakDown from '../components/food-breakdown/food-breakdown';
 import MacroPieChart from '../components/macro-breakdown/macro-individuals';
 import styles from '../styles';
@@ -19,11 +20,17 @@ const windowWidth = Dimensions.get('window').width;
 
 function BreakdownScreen({ navigation, foodList }) {
   // const dispatch = useDispatch();
-  console.log({ foodList });
+  // console.log({ foodList });
   const food = foodList[foodList.length - 1];
+
+  const handleRecipe = () => {
+    dispatch(fetchRecipe("pasta", "chicken"));
+    console.log(recipe);
+  };
+
   return (
     <>
-      <View style={styles.container}>
+      <View style={styles.container} onPress={handleRecipe}>
         <TouchableOpacity style={styles.backBtn} onPress={() => { navigation.navigate('Main'); }}>
           <Icon name="arrow-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
         </TouchableOpacity>
@@ -147,6 +154,7 @@ const styles = StyleSheet.create({
 */
 const mapStateToProps = (state) => ({
   foodList: state.food.foodList,
+  recipe: state.recipe.post,
 });
 
 export default connect(mapStateToProps)(BreakdownScreen);
