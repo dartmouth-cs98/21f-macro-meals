@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import styles from '../styles';
 
 const macroLogo = require('../../assets/macroLogo.png');
+const macroTagline = require('../../assets/macroTagline.png');
 const windowWidth = Dimensions.get('window').width;
 
 const handleLoad = (isUserLoggedIn, navigation) => (
@@ -48,19 +49,9 @@ const AppLoadingScreen = ({ navigation, isUserLoggedIn }) => {
 
   return (
     <View style={styles.container}>
-      <Animated.View
-        style={[
-          styles.fadingContainer,
-          {
-            opacity: fadeAnimation,
-          },
-        ]}
-      >
-        <Image source={macroLogo}
-          style={{
-            width: 0.7 * windowWidth, height: 0.35 * windowWidth,
-          }}
-        />
+      <Animated.View style={[ styles.centerMeColumn, { opacity: fadeAnimation } ]}>
+        <Image source={macroLogo} style={{ height: 0.1 * windowWidth, width: 0.49 * windowWidth, }} />
+        <Image source={macroTagline} style={{ height: 0.05 * windowWidth, width: 0.45 * windowWidth, }} />
       </Animated.View>
     </View>
   );

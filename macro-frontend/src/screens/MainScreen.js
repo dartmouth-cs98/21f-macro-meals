@@ -351,7 +351,7 @@ function MainScreen({ navigation, storedUserName }) {
           justifyContent: 'center',
         }}
         >
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>classification failed, please try again</Text>
+          <Text style={styles.secFontBold}>classification failed, please try again</Text>
         </View>
         )}
       </Camera>
@@ -359,7 +359,7 @@ function MainScreen({ navigation, storedUserName }) {
       {!hasPermission
       && (
         <View>
-          <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 0.04 * windowWidth }}>macro needs camera permission!</Text>
+          <Text style={styles.secFontBold}>macro needs camera permission!</Text>
         </View>
       )}
     </View>

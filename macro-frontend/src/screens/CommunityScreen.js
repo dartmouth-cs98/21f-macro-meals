@@ -98,19 +98,19 @@ function CommunityScreen({ navigation, storedUserName }) {
       </View>
       <View style={styles.communityTabs}>
         <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'recent' ? '#F956F2' : '#F990F2'}]}
+          style={[styles.communityTab, {backgroundColor: currTab == 'recent' ? '#DC95FE' : '#e7b3ff' }]}
           onPress={() => {setCurrTab('recent')}}
         >
           <Text style={styles.cTabText}>recent</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'top' ? '#F956F2' : '#F990F2'}]}
+          style={[styles.communityTab, {backgroundColor: currTab == 'top' ? '#DC95FE' : '#e7b3ff'}]}
           onPress={() => {setCurrTab('top')}}
         >
           <Text style={styles.cTabText}>top rated</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'favorite' ? '#F956F2' : '#F990F2'}]}
+          style={[styles.communityTab, {backgroundColor: currTab == 'favorite' ? '#DC95FE' : '#e7b3ff'}]}
           onPress={() => {setCurrTab('favorite')}}
         >
           <Text style={styles.cTabText}>favorite</Text>

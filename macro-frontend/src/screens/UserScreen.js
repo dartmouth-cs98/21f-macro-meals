@@ -17,13 +17,11 @@ function UserScreen({ navigation, storedUserName }) {
   
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => { navigation.navigate('Main'); }}>
-        <Icon name="arrow-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+      <TouchableOpacity style={styles.navTertBtnLeft} onPress={() => { navigation.navigate('Main'); }}>
+        <Icon name="camera" color="white" style={{ fontSize: 0.05 * windowWidth }} />
       </TouchableOpacity>
-      <Text style={{ color: 'white', fontWeight: 'bold' }}>Hi, {storedUserName}!</Text>
-      <Text style={{ color: 'white', fontWeight: 'bold' }}>This screen is coming soon!</Text>
-      <TouchableOpacity style={styles.mainFormBtn} onPress={handleLogout}>
-        <Text style={{ color: 'white', fontSize: 16 }}>logout</Text>
+      <TouchableOpacity style={styles.authBtn} onPress={handleLogout}>
+        <Text style={styles.authBtnFont}>logout</Text>
       </TouchableOpacity>
     </View>
   );

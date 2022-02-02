@@ -8,7 +8,6 @@ import { Button, CheckBox, Input } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userLogin } from '../redux/actions/userActions';
-import Panel from '../components/panel';
 import styles from '../styles';
 
 const fadeAnimation = new Animated.Value(0);
@@ -24,6 +23,7 @@ const SceneLogin = ({
   const [passwordStatus, setPasswordStatus] = useState('okay');
   const [messages, setMessages] = useState([]);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
+  const [currDisplay, setCurrDisplay] = useState('login');
 
   useEffect(() => {
     if (isUserLoggedIn) {
@@ -68,6 +68,7 @@ const SceneLogin = ({
           if (result.data.length > 0) { // login success
             intMessages.push(`Welcome, ${userName}!`);
             setMessages(intMessages);
+            setCurrDisplay('message');
             login(userName);
           } else { // login failed
             setUsernameStatus('error');
@@ -94,7 +95,8 @@ const SceneLogin = ({
           },
         ]}
       >
-        <Panel>
+        <View>
+          { currDisplay == 'login' && 
           <View>
             <Input
               placeholder="username"
@@ -107,7 +109,7 @@ const SceneLogin = ({
                 <Icon
                   name="user"
                   size={24}
-                  color={usernameStatus === 'okay' ? 'black' : 'red'}
+                  color={usernameStatus === 'okay' ? '#54595F' : 'red'}
                 />
                         )}
             />
@@ -123,31 +125,34 @@ const SceneLogin = ({
                 <Icon
                   name="lock"
                   size={24}
-                  color={passwordStatus === 'okay' ? 'black' : 'red'}
+                  color={passwordStatus === 'okay' ? '#54595F' : 'red'}
                 />
                         )}
             />
             <CheckBox
-              title="keep me signed in"
-              name="ALWAYS"
+              containerStyle={{ backgroundColor: 'transparent', border: 'none' }}
               checked={keepSignedIn}
+              center
+              title='remember me'
+              checkedColor='#DC95FE'
               onPress={() => { setKeepSignedIn(!keepSignedIn); }}
             />
             <View style={styles.centerMe}>
               <TouchableOpacity onPress={() => { validateLogin(); }} style={styles.authBtn}>
                 <Text style={styles.authBtnFont}>login</Text>
               </TouchableOpacity>
-            </View>
-            <View style={[styles.centerMe, styles.pt1]}>
-              <TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.authBtn}>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')} style={[ styles.authBtn, { marginLeft: 10, } ]}>
                 <Text style={styles.authBtnFont}>register here</Text>
               </TouchableOpacity>
             </View>
-            <View>
-              {messages.map((msg) => <Text key={msg}>{msg}</Text>)}
-            </View>
           </View>
-        </Panel>
+          }
+          { currDisplay == 'message' &&
+          <View>
+            {messages.map((msg) => <Text key={msg} style={styles.secFontBold}>{msg}</Text>)}
+          </View>
+          }
+        </View>
       </Animated.View>
     </View>
   );

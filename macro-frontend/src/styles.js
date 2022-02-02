@@ -8,13 +8,16 @@ import { StyleSheet, Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const primColor = '#F956F2';
-const neutralColor = '#FFFAF0'
+const primColor = '#FFC757';
+const secColor = '#DC95FE';
+const neutralColor = '#FFFAF0';
+const gradientPrimColor = '#F956F2';
+const gradientSecColor = '#FECF56';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: primColor,
+    backgroundColor: neutralColor,
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
 
   verticalContainer: {
     display: 'flex',
-    fledDirection: 'column',
+    flexDirection: 'column',
     backgroundColor: neutralColor,
     color: 'black',
     alignItems: 'center',
@@ -34,7 +37,6 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: primColor,
     color: 'white',
     padding: '10px',
   },
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
-    color: 'white',
+    color: primColor,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
@@ -64,8 +66,7 @@ const styles = StyleSheet.create({
     marginLeft: '5px',
     marginRight: '5px',
     marginBottom: '10px',
-    borderBottomRightRadius: '8px',
-    borderBottomLeftRadius: '8px',
+    borderRadius: 8,
     padding: 8,
     display: 'flex',
     justifyContent: 'center',
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: neutralColor,
     color: '#54595F',
     padding: '10px',
+    flex: 1,
   },
 
   scrollContainer: {
@@ -103,6 +105,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  centerMeColumn: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   centerMeEvenly: {
     display: 'flex',
     width: '100%',
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
   },
 
   navPrimBtn: {
-    backgroundColor: primColor,
+    backgroundColor: secColor,
     width: 0.28 * windowWidth,
     height: 0.28 * windowWidth,
     borderColor: 'white',
@@ -128,7 +138,7 @@ const styles = StyleSheet.create({
   },
 
   navSecBtn: {
-    backgroundColor: primColor,
+    backgroundColor: secColor,
     width: 0.16 * windowWidth,
     height: 0.16 * windowWidth,
     borderColor: 'white',
@@ -143,7 +153,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0.08 * windowWidth,
     right: 0.04 * windowWidth,
-    backgroundColor: primColor,
+    backgroundColor: secColor,
     width: 0.1 * windowWidth,
     height: 0.1 * windowWidth,
     borderColor: 'white',
@@ -158,7 +168,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0.08 * windowWidth,
     left: 0.04 * windowWidth,
-    backgroundColor: primColor,
+    backgroundColor: secColor,
     width: 0.1 * windowWidth,
     height: 0.1 * windowWidth,
     borderColor: 'white',
@@ -174,7 +184,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0.04 * windowWidth,
     left: 0.04 * windowWidth,
-    backgroundColor: primColor,
+    backgroundColor: secColor,
     width: 0.1 * windowWidth,
     height: 0.1 * windowWidth,
     borderColor: 'white',
@@ -186,7 +196,7 @@ const styles = StyleSheet.create({
   },
 
   authBtn: {
-    backgroundColor: primColor,
+    backgroundColor: secColor,
     padding: 8,
     borderRadius: 2,
     display: 'flex',
@@ -196,13 +206,13 @@ const styles = StyleSheet.create({
   authBtnFont: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 0.06 * windowWidth,
+    fontSize: 16,
     display: 'flex',
     justifyContent: 'center',
   },
 
   mainFormElement: {
-    backgroundColor: primColor,
+    backgroundColor: secColor,
     color: 'white',
     padding: 5,
     borderRadius: 5,
@@ -245,11 +255,11 @@ const styles = StyleSheet.create({
   // FONTS
 
   primFont: {
-    color: primColor,
+    color: secColor,
   },
 
   primFontBold: {
-    color: primColor,
+    color: secColor,
     fontWeight: 'bold',
   },
 
@@ -270,7 +280,7 @@ const styles = StyleSheet.create({
     backgroundColor: neutralColor,
     borderRadius: 10,
     borderWidth: 3,
-    borderColor: '#DC95FE',
+    borderColor: secColor,
     padding: 10,
     position: 'relative',
 
@@ -299,7 +309,7 @@ const styles = StyleSheet.create({
   mealNameText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: primColor,
+    color: secColor,
 
   },
   mealInformation: {
