@@ -10,16 +10,10 @@ function TestingScreen({ navigation }) {
   const allRecipes = useSelector((state) => state.recipe);
   const dispatch = useDispatch();
 
-  const getRecipe = () => {
-    console.log(allRecipes);
-  };
-
   return (
     <View style={styles.container}>
       <Text>Hello: Here is the result</Text>
-      <TouchableOpacity style={styles.mainFormBtn} onPress={getRecipe}>
-        <Text style={{ color: 'white', fontSize: 16 }}>see what it is</Text>
-      </TouchableOpacity>
+      {/* mapping through each of the items in allRecipes */}
 
       <TouchableOpacity style={styles.mainFormBtn} onPress={() => dispatch(fetchRecipe('pasta', 'chicken'))}>
         <Text style={{ color: 'white', fontSize: 16 }}>getting the recipe</Text>

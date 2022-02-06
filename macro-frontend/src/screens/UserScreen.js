@@ -8,17 +8,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { userLogout } from '../redux/actions/userActions';
 import styles from '../styles';
 
-import { fetchRecipe } from '../redux/actions/spoonacularActions';
-
 const windowWidth = Dimensions.get('window').width;
 
 function UserScreen({ navigation, storedUserName, recipe }) {
   const dispatch = useDispatch();
-
-  // Spoonacular API
-  const recipeHandler = () => {
-    dispatch(fetchRecipe('pasta', 'chicken'));
-  };
 
   const handleLogout = () => {
     dispatch(userLogout());
@@ -51,7 +44,6 @@ function UserScreen({ navigation, storedUserName, recipe }) {
 
 const mapStateToProps = (state) => ({
   storedUserName: state.user.name,
-  recipe: state.all,
 });
 
 UserScreen.propTypes = {
