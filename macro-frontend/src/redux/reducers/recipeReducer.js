@@ -7,7 +7,7 @@ const initialState = {
 
 const RecipeReducer = (state = initialState, recipe) => {
   switch (recipe.type) {
-    case ActionTypes.FETCH_POST:
+    case ActionTypes.FETCH_RECIPES:
       return {
         all: recipe.payload.data,
       };
