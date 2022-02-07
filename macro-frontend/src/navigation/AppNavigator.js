@@ -7,7 +7,7 @@ import LoginScreen from '../screens/LoginScreen';
 import LogoutScreen from '../screens/LogoutScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import LoadingScreen from '../screens/LoadingScreen';
-import MealOverviewScreen from '../screens/MealOverviewScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import UserScreen from '../screens/UserScreen';
 import TestingScreen from '../screens/TestingScreen';
@@ -28,7 +28,7 @@ const AppStack = createStackNavigator(
   {
     Main: MainScreen,
     Breakdown: BreakdownScreen,
-    Overview: MealOverviewScreen,
+    History: HistoryScreen,
     Community: CommunityScreen,
     User: UserScreen,
     Testing: TestingScreen,

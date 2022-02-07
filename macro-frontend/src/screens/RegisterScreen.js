@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -128,10 +128,9 @@ const SceneRegister = ({ navigation, login }) => {
               />
                     )}
           />
-          <Button
-            title="register"
-            onPress={() => { validateRegister(); }}
-          />
+          <TouchableOpacity onPress={() => { validateRegister(); }} style={styles.authBtn}>
+            <Text style={styles.authBtnFont}>register</Text>
+          </TouchableOpacity>
         </View>
         <View>
           {messages.map((msg) => <Text key={msg}>{msg}</Text>)}

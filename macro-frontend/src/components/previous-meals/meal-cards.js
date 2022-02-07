@@ -4,6 +4,7 @@ import {
   StyleSheet, Text, Image, View, Dimensions, TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import styles from '../../styles';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -88,7 +89,7 @@ const MealCard = (props) => {
           <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
         </View>
       </TouchableOpacity>
-      <View style={styles.container}>
+      <View style={{ width: '30%', height: '80%' }}>
         <Image
           style={styles.foodImage}
           source={{ uri: `${foodImg}` }}
@@ -97,20 +98,20 @@ const MealCard = (props) => {
       <View style={styles.mealText}>
         <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
         <View style={styles.mealColumn}>
-          <Text style={{ color: '#54595F' }}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
-          <Text style={{ color: '#F956F2' }}><b>Classification: </b><Text style={{ color: '#54595F' }}>{classification}</Text></Text>
+          <Text style={styles.secFont}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
+          <Text style={styles.primFont}><b>Classification: </b><Text style={styles.secFont}>{classification}</Text></Text>
           { expand
           && (
             <View style={[styles.mealColumn, { marginTop: 20 }]}>
               <View style={{ marginBottom: 10 }}>
-                <Text style={{ color: '#F956F2' }}><b>Calories: </b><Text style={{ color: '#54595F' }}>{totalCal}</Text></Text>
-                <Text style={{ color: '#F956F2' }}><b>Protein: </b><Text style={{ color: '#54595F' }}>{protein}g</Text></Text>
-                <Text style={{ color: '#F956F2' }}><b>Carbs: </b><Text style={{ color: '#54595F' }}>{carb}g</Text></Text>
-                <Text style={{ color: '#F956F2' }}><b>Fats: </b><Text style={{ color: '#54595F' }}>{fat}g</Text></Text>
+                <Text style={styles.primFont}><b>Calories: </b><Text style={styles.secFont}>{totalCal}</Text></Text>
+                <Text style={styles.primFont}><b>Protein: </b><Text style={styles.secFont}>{protein}g</Text></Text>
+                <Text style={styles.primFont}><b>Carbs: </b><Text style={styles.secFont}>{carb}g</Text></Text>
+                <Text style={styles.primFont}><b>Fats: </b><Text style={styles.secFont}>{fat}g</Text></Text>
               </View>
               <View style={styles.mealColumn}>
-                <Text style={{ color: '#F956F2' }}><b>Description:</b></Text>
-                <Text style={{ color: '#54595F' }}>{description ? description : 'N/A'}</Text>
+                <Text style={styles.primFont}><b>Description:</b></Text>
+                <Text style={styles.secFont}>{description ? description : 'N/A'}</Text>
               </View>
             </View>
           )}
@@ -121,58 +122,3 @@ const MealCard = (props) => {
 };
 
 export default MealCard;
-
-const styles = StyleSheet.create({
-
-  overallContainer: {
-    width: 0.9 * windowWidth,
-    marginBottom: 20,
-    backgroundColor: '#FFFAF0',
-    borderRadius: 10,
-    borderWidth: 3,
-    borderColor: '#DC95FE',
-    padding: 10,
-    position: 'relative',
-
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  container: {
-    width: '30%',
-    height: '80%',
-  },
-  foodImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  mealText: {
-    width: '60%',
-    height: '100%',
-
-    justifyContent: 'center',
-
-  },
-  mealNameContainer: {
-    paddingBottom: 10,
-
-  },
-  mealNameText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#F956F2',
-
-  },
-  mealInformation: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  mealColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-  }
-});
