@@ -195,6 +195,14 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
   },
 
+  dangerBtn: {
+    backgroundColor: 'red',
+    padding: 8,
+    borderRadius: 2,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
   authBtn: {
     backgroundColor: secColor,
     padding: 8,
@@ -297,6 +305,20 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  overallContainerVertical: {
+    width: 0.9 * windowWidth,
+    marginBottom: 20,
+    backgroundColor: neutralColor,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: secColor,
+    padding: 10,
+    position: 'relative',
+
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   foodImage: {
