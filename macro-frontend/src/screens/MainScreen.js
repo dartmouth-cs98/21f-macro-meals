@@ -35,6 +35,7 @@ function MainScreen({ navigation, storedUserName }) {
   const [protein, setProtein] = useState(0);
   const [carb, setCarb] = useState(0);
   const [fat, setFat] = useState(0);
+  const [simple, setSimple] = useState(false);
 
   const dispatch = useDispatch();
   const addItem = (value) => {
@@ -143,6 +144,33 @@ function MainScreen({ navigation, storedUserName }) {
     setDescription('');
   }
 
+  const updateFieldsSimple = (s) => {
+    setSimple(s);
+    if (s) {
+      setPublicFood(0);
+      setMood('neutral');
+      setCustomName('');
+      setDescription('auto-generated entry');
+
+      var today = new Date()
+      var curHr = today.getHours()
+      if (curHr < 11) {
+        setMealTime('breakfast');
+      } else if (curHr < 16) {
+        setMealTime('lunch');
+      } else if (curHr < 21) {
+        setMealTime('dinner');
+      } else {
+        setMealTime('snack');
+      }
+    } else {
+      setPublicFood(1);
+      setMood('positive');
+      setMealTime('breakfast');
+      setDescription('');
+    }
+  }
+
   return (
     <View style={styles.container}>
       {hasPermission
@@ -234,94 +262,117 @@ function MainScreen({ navigation, storedUserName }) {
           paddingTop: 0.1 * windowHeight,
         }}
         >
-          <TextInput
-          style={styles.mainFormElement}
-          onChangeText={setCustomName}
-          value={customName}
-          placeholder="[optional] custom name"
-          placeholderTextColor="white"
-          />
-          <TextInput
-          style={styles.mainFormElement}
-          onChangeText={setDescription}
-          value={description}
-          placeholder="[optional] description"
-          placeholderTextColor="white"
-          />
-          <Picker
+          <View style={styles.formToggle}>
+            <TouchableOpacity 
+              style={{ backgroundColor: simple ? '#DC95FE' : '#e7b3ff' }}
+              onPress={() => { updateFieldsSimple(true); }}
+            >
+              <Text style={{ color: 'white', fontSize: 16, padding: 8 }}>simple</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={{ backgroundColor: simple ? '#e7b3ff' : '#DC95FE' }}
+              onPress={() => { updateFieldsSimple(false); }}
+            >
+              <Text style={{ color: 'white', fontSize: 16, padding: 8 }}>complex</Text>
+            </TouchableOpacity>
+          </View>
+          { simple &&
+          <View style={styles.mainFormElement}>
+            <Text style={{ color: 'white', fontSize: 16 }}>simple entries will autofill all fields for you. choose a complex entry to have more control over your food journal!</Text>
+          </View>
+          }
+          { !simple &&
+          <View>
+            <TextInput
             style={styles.mainFormElement}
-            selectedValue={mealTime}
-            onValueChange={(itemValue, itemIndex) => setMealTime(itemValue)}
-          >
-            <Picker.Item label="breakfast" value="breakfast" />
-            <Picker.Item label="lunch" value="lunch" />
-            <Picker.Item label="dinner" value="dinner" />
-            <Picker.Item label="snack" value="snack" />
-          </Picker>
-          <View style={styles.mainFormElement}>
-            <Text style={{ color: 'white', fontSize: 16 }}>current mood</Text>
-            <View style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '100%',
-              justifyContent: 'space-evenly',
-              marginTop: 10,
-              marginBottom: 10,
-            }}>
-              <TouchableOpacity onPress={() => { setMood('positive'); }} style={{ 
-                borderWidth: mood === 'positive' ? 2 : 0,
-                borderColor: 'white',
-                padding: 3,
-                borderRadius: 999,
+            onChangeText={setCustomName}
+            value={customName}
+            placeholder="[optional] custom name"
+            placeholderTextColor="white"
+            />
+            <TextInput
+            style={styles.mainFormElement}
+            onChangeText={setDescription}
+            value={description}
+            placeholder="[optional] description"
+            placeholderTextColor="white"
+            />
+            <Picker
+              style={styles.mainFormElement}
+              selectedValue={mealTime}
+              onValueChange={(itemValue, itemIndex) => setMealTime(itemValue)}
+            >
+              <Picker.Item label="breakfast" value="breakfast" />
+              <Picker.Item label="lunch" value="lunch" />
+              <Picker.Item label="dinner" value="dinner" />
+              <Picker.Item label="snack" value="snack" />
+            </Picker>
+            <View style={styles.mainFormElement}>
+              <Text style={{ color: 'white', fontSize: 16 }}>current mood</Text>
+              <View style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'space-evenly',
+                marginTop: 10,
+                marginBottom: 10,
               }}>
-                <Image source={positiveMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => { setMood('neutral'); }} style={{ 
-                borderWidth: mood === 'neutral' ? 2 : 0,
-                borderColor: 'white',
-                padding: 3,
-                borderRadius: 999,
+                <TouchableOpacity onPress={() => { setMood('positive'); }} style={{ 
+                  borderWidth: mood === 'positive' ? 2 : 0,
+                  borderColor: 'white',
+                  padding: 3,
+                  borderRadius: 999,
+                }}>
+                  <Image source={positiveMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { setMood('neutral'); }} style={{ 
+                  borderWidth: mood === 'neutral' ? 2 : 0,
+                  borderColor: 'white',
+                  padding: 3,
+                  borderRadius: 999,
+                }}>
+                  <Image source={neutralMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { setMood('negative'); }} style={{ 
+                  borderWidth: mood === 'negative' ? 2 : 0,
+                  borderColor: 'white',
+                  padding: 3,
+                  borderRadius: 999,
+                }}>
+                  <Image source={negativeMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.mainFormElement}>
+              <Text style={{ color: 'white', fontSize: 16 }}>make public?</Text>
+              <View style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'space-evenly',
+                marginTop: 10,
+                marginBottom: 10,
               }}>
-                <Image source={neutralMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => { setMood('negative'); }} style={{ 
-                borderWidth: mood === 'negative' ? 2 : 0,
-                borderColor: 'white',
-                padding: 3,
-                borderRadius: 999,
-              }}>
-                <Image source={negativeMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => { setPublicFood(1); }} style={{ 
+                  borderWidth: publicFood === 1 ? 2 : 0,
+                  borderColor: 'white',
+                  padding: 3,
+                  borderRadius: 999,
+                }}>
+                  <Text style={{ color: 'white', fontSize: 14 }}>yes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { setPublicFood(0); }} style={{ 
+                  borderWidth: publicFood === 0 ? 2 : 0,
+                  borderColor: 'white',
+                  padding: 3,
+                  borderRadius: 999,
+                }}>
+                  <Text style={{ color: 'white', fontSize: 14 }}>no</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-          <View style={styles.mainFormElement}>
-            <Text style={{ color: 'white', fontSize: 16 }}>make public?</Text>
-            <View style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '100%',
-              justifyContent: 'space-evenly',
-              marginTop: 10,
-              marginBottom: 10,
-            }}>
-              <TouchableOpacity onPress={() => { setPublicFood(1); }} style={{ 
-                borderWidth: publicFood === 1 ? 2 : 0,
-                borderColor: 'white',
-                padding: 3,
-                borderRadius: 999,
-              }}>
-                <Text style={{ color: 'white', fontSize: 14 }}>yes</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => { setPublicFood(0); }} style={{ 
-                borderWidth: publicFood === 0 ? 2 : 0,
-                borderColor: 'white',
-                padding: 3,
-                borderRadius: 999,
-              }}>
-                <Text style={{ color: 'white', fontSize: 14 }}>no</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          }
           <View style={{
             display: 'flex',
             flexDirection: 'row',

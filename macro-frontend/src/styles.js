@@ -211,6 +211,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  formToggle: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderColor: 'white',
+    borderWidth: 3,
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginBottom: 12,
+  },
+
+
   mainFormElement: {
     backgroundColor: secColor,
     color: 'white',
@@ -220,7 +231,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     width: 0.7 * windowWidth,
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 12,
   },
 
   mainFormBtn: {
