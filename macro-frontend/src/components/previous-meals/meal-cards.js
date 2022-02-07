@@ -14,7 +14,7 @@ const negativeMood = require('../../img/negativeMood.png');
 
 const MealCard = (props) => {
   const {
-    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -111,6 +111,7 @@ const MealCard = (props) => {
           <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
         </View>
       </TouchableOpacity>
+      { historyPage && 
       <TouchableOpacity 
         style={{ position: 'absolute', bottom: 4, left: 4, padding: 4, zIndex: 2 }}
         onPress={() => { handleDeletePress(); }}
@@ -120,6 +121,7 @@ const MealCard = (props) => {
           <Icon name={'trash-o'} color="#54595F" style={{ fontSize: 0.06 * windowWidth }} />
         </View>
       </TouchableOpacity>
+      }
       <View style={{ width: '30%', height: '80%' }}>
         <Image
           style={styles.foodImage}

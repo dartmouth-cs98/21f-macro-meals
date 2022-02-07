@@ -136,6 +136,7 @@ function CommunityScreen({ navigation, storedUserName }) {
                 fat={element.fat}
                 mood={element.mood}
                 username={storedUserName}
+                historyPage={false}
               />
             ))
           )}
