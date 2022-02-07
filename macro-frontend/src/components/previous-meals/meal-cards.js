@@ -14,7 +14,7 @@ const negativeMood = require('../../img/negativeMood.png');
 
 const MealCard = (props) => {
   const {
-    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -25,6 +25,8 @@ const MealCard = (props) => {
 
   const [expand, setExpand] = useState(false);
   const [favorite, setFavorite] = useState(null);
+  const [confirmScreen, setConfirmScreen] = useState(false); 
+  const [deleted, setDeleted] = useState(false);
 
   const handleFavoritePress = () => {
     if (favorite) { // if is a favorite, need to delete
@@ -56,6 +58,24 @@ const MealCard = (props) => {
     }
   }
 
+  const handleDeletePress = () => {
+    if (!confirmScreen) {
+      setConfirmScreen(true);
+    } else {
+      axios.post(`https://macro-cs98.herokuapp.com/api/food/delete`, {
+        id: id,
+      })
+        .then((response) => {
+          console.log('Deleted Food: ' + id);
+          setDeleted(true);
+        })
+        .catch((error) => {
+          console.log('Error in handleDeletePress:');
+          console.log(error.message);
+        });
+    }
+  }
+
   const getFavoriteStatus = () => {
     axios.post('https://macro-cs98.herokuapp.com/api/fav/check', {
       foodId: id, username: username,
@@ -78,7 +98,9 @@ const MealCard = (props) => {
   }
 
   return (
-    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
+    <View>
+      {!confirmScreen &&
+      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
       <Icon name={expand ? 'compress' : 'expand'} color="#54595F" style={{ fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
       <TouchableOpacity 
         style={{ position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2 }}
@@ -89,6 +111,17 @@ const MealCard = (props) => {
           <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
         </View>
       </TouchableOpacity>
+      { historyPage && 
+      <TouchableOpacity 
+        style={{ position: 'absolute', bottom: 4, left: 4, padding: 4, zIndex: 2 }}
+        onPress={() => { handleDeletePress(); }}
+      >
+        <Text style={StyleSheet.absoluteFillObject} />
+        <View>
+          <Icon name={'trash-o'} color="#54595F" style={{ fontSize: 0.06 * windowWidth }} />
+        </View>
+      </TouchableOpacity>
+      }
       <View style={{ width: '30%', height: '80%' }}>
         <Image
           style={styles.foodImage}
@@ -118,6 +151,31 @@ const MealCard = (props) => {
         </View>
       </View>
     </TouchableOpacity>
+    }
+    { confirmScreen &&
+    <View>
+      { !deleted &&
+      <View style={[styles.overallContainerVertical, { height: 0.4 * windowWidth }]}>
+        <Text>delete this item?</Text>
+        <View style={styles.centerMe}>
+          <TouchableOpacity 
+            style={[styles.dangerBtn, { marginRight: 10 }]}
+            onPress={() => { handleDeletePress(); }}
+          >
+            <Text style={{ color: 'white' }}>delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.authBtn}
+            onPress={() => { setConfirmScreen(false); }}
+          >
+            <Text style={{ color: 'white' }}>cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      }
+    </View>
+    }
+    </View>
   );
 };
 

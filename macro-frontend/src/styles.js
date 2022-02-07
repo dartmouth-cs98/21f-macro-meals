@@ -195,6 +195,14 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
   },
 
+  dangerBtn: {
+    backgroundColor: 'red',
+    padding: 8,
+    borderRadius: 2,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
   authBtn: {
     backgroundColor: secColor,
     padding: 8,
@@ -211,6 +219,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  formToggle: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderColor: 'white',
+    borderWidth: 3,
+    justifyContent: 'center',
+    borderRadius: 5,
+    marginBottom: 12,
+  },
+
+
   mainFormElement: {
     backgroundColor: secColor,
     color: 'white',
@@ -220,7 +239,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     width: 0.7 * windowWidth,
     fontSize: 16,
-    marginBottom: 20,
+    marginBottom: 12,
   },
 
   mainFormBtn: {
@@ -286,6 +305,20 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  overallContainerVertical: {
+    width: 0.9 * windowWidth,
+    marginBottom: 20,
+    backgroundColor: neutralColor,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: secColor,
+    padding: 10,
+    position: 'relative',
+
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   foodImage: {

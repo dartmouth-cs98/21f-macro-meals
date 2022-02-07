@@ -13,12 +13,10 @@ function HistoryScreen({ navigation, storedUserName }) {
   const [history, setHistory] = useState(null);
 
   const getHistory = () => {
-    console.log(storedUserName);
     axios.post('https://macro-cs98.herokuapp.com/api/user/history', {
       username: storedUserName,
     })
       .then((response) => {
-        console.log(response.data);
         setHistory(response.data);
       })
       .catch((error) => {
@@ -60,6 +58,7 @@ function HistoryScreen({ navigation, storedUserName }) {
                 fat={element.fat}
                 mood={element.mood}
                 username={storedUserName}
+                historyPage={true}
               />
             ))
           )}
