@@ -11,6 +11,7 @@ import {
 import { useDispatch, connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { removeFood } from '../redux/actions/foodActions';
+import { fetchRecipe } from '../redux/actions/spoonacularActions';
 // import FoodBreakDown from '../components/food-breakdown/food-breakdown';
 import MacroPieChart from '../components/macro-breakdown/macro-individuals';
 import styles from '../styles';
@@ -19,8 +20,9 @@ const windowWidth = Dimensions.get('window').width;
 
 function BreakdownScreen({ navigation, foodList }) {
   // const dispatch = useDispatch();
-  console.log({ foodList });
+  // console.log({ foodList });
   const food = foodList[foodList.length - 1];
+
   return (
     <>
       <View style={styles.container}>
@@ -30,17 +32,34 @@ function BreakdownScreen({ navigation, foodList }) {
         <Text style={styles.headerText}>breakdown</Text>
         <MacroPieChart allMacros={foodList} />
         <Text style={styles.subHeaderText}>{food.customName}</Text>
-        <Text style={styles.subSubHeaderText}><b>Classification:</b> {food.classification}</Text>
+        <Text style={styles.subSubHeaderText}>
+          <b>Classification:</b>
+          {' '}
+          {food.classification}
+        </Text>
         <View style={styles.centerMeEvenly}>
-          <Text style={styles.boldWhiteText}>Protein: {food.protein}g</Text>
-          <Text style={styles.boldWhiteText}>Carbs: {food.carb}g</Text>
-          <Text style={styles.boldWhiteText}>Fats: {food.fat}g</Text>
+          <Text style={styles.boldWhiteText}>
+            Protein:
+            {' '}
+            {food.protein}
+            g
+          </Text>
+          <Text style={styles.boldWhiteText}>
+            Carbs:
+            {' '}
+            {food.carb}
+            g
+          </Text>
+          <Text style={styles.boldWhiteText}>
+            Fats:
+            {' '}
+            {food.fat}
+            g
+          </Text>
         </View>
       </View>
-      
-      
-      
-      {/*<FoodBreakDown allFoods={foodList} />*/}
+
+      {/* <FoodBreakDown allFoods={foodList} /> */}
 
       {/*
       <StatusBar barStyle="light-content" />

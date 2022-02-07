@@ -10,6 +10,7 @@ import LoadingScreen from '../screens/LoadingScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import UserScreen from '../screens/UserScreen';
+import TestingScreen from '../screens/TestingScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -30,6 +31,7 @@ const AppStack = createStackNavigator(
     History: HistoryScreen,
     Community: CommunityScreen,
     User: UserScreen,
+    Testing: TestingScreen,
   },
   {
     headerMode: 'none',
