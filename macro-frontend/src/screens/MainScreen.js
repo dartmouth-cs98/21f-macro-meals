@@ -24,6 +24,7 @@ function MainScreen({ navigation, storedUserName }) {
   const [cameraRef, setCameraRef] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('classification failed. please try again!');
   const [customName, setCustomName] = useState('');
   const [description, setDescription] = useState('');
   const [mealTime, setMealTime] = useState('breakfast');
@@ -126,14 +127,23 @@ function MainScreen({ navigation, storedUserName }) {
         });
     }
     else if (classification === 'failed') {
+      setErrorMessage('classification failed. please try again!');
       setShowError(true);
       setTimeout(() => {
         setShowError(false);
-      }, 3000);
+      }, 2000);
       cameraRef.resumePreview();
       setShowForm(false);
       setCustomName('');
       setDescription('');
+    } else if (classification === '') {
+      setErrorMessage('still classifying... try again in a moment!');
+      setShowError(true);
+      setShowForm(false);
+      setTimeout(() => {
+        setShowError(false);
+        setShowForm(true);
+      }, 2000);
     }
   }
 
@@ -402,7 +412,7 @@ function MainScreen({ navigation, storedUserName }) {
           justifyContent: 'center',
         }}
         >
-          <Text style={styles.secFontBold}>classification failed, please try again</Text>
+          <Text style={styles.boldWhiteText}>{errorMessage}</Text>
         </View>
         )}
       </Camera>
