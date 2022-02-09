@@ -10,6 +10,16 @@ import { Camera } from 'expo-camera';
 import { uploadImage } from '../../s3';
 import { addFood } from '../redux/actions/foodActions';
 import styles from '../styles';
+import { RNS3 } from 'react-native-aws3';
+
+const options = {
+  keyPrefix: "uploads/",
+  bucket: "macro-meals-images",
+  region: "us-east-1",
+  accessKey: "AKIAXST3R2TTOITGUBFB",
+  secretKey: "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",
+  successActionStatus: 201
+}
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -83,10 +93,24 @@ function MainScreen({ navigation, storedUserName }) {
 
   async function onPictureSaved(photo) {
     cameraRef.pausePreview();
-    const response = await fetch(photo.uri);
-    const blob = await response.blob();
     setShowForm(true);
-    uploadImageToS3(blob);
+    if (photo.uri.substring(0,4) == 'file') {
+      const file = {
+        uri: photo.uri,
+        name: storedUserName + Date.now().toString() + '.jpg',
+        type: 'image/jpeg',
+      }
+  
+      RNS3.put(file, options).then(response => {
+        if (response.status !== 201)
+          throw new Error("Failed to upload image to S3");
+        console.log(response.body.postResponse.location);
+      });
+    } else {
+      const response = await fetch(photo.uri);
+      const blob = await response.blob();
+      uploadImageToS3(blob);
+    }
   }
 
   const takePicture = () => {
