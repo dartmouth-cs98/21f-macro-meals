@@ -93,24 +93,24 @@ function MainScreen({ navigation, storedUserName }) {
 
   async function onPictureSaved(photo) {
     cameraRef.pausePreview();
-    const file = {
-      uri: photo.uri,
-      name: storedUserName + Date.now().toString() + '.jpg',
-      type: 'image/jpeg',
-    }
-
-    RNS3.put(file, options).then(response => {
-      if (response.status !== 201)
-        throw new Error("Failed to upload image to S3");
-      console.log(response.body.postResponse.location);
-    });
-    
-    /*
-    const response = await fetch(photo.uri);
-    const blob = await response.blob();
     setShowForm(true);
-    uploadImageToS3(blob);
-    */
+    if (photo.uri.substring(0,4) == 'file') {
+      const file = {
+        uri: photo.uri,
+        name: storedUserName + Date.now().toString() + '.jpg',
+        type: 'image/jpeg',
+      }
+  
+      RNS3.put(file, options).then(response => {
+        if (response.status !== 201)
+          throw new Error("Failed to upload image to S3");
+        console.log(response.body.postResponse.location);
+      });
+    } else {
+      const response = await fetch(photo.uri);
+      const blob = await response.blob();
+      uploadImageToS3(blob);
+    }
   }
 
   const takePicture = () => {
