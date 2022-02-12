@@ -8,6 +8,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
 =======
 import { useSelector, useDispatch } from 'react-redux';
+import {
+  useFonts,
+  Dosis_400Regular,
+} from '@expo-google-fonts/dev';
 import { fetchRecipe } from '../../redux/actions/spoonacularActions';
 import styles from '../../styles';
 >>>>>>> bcd6ff3 (implementing figma layout)
@@ -19,6 +23,10 @@ const neutralMood = require('../../img/neutralMood.png');
 const negativeMood = require('../../img/negativeMood.png');
 
 const MealCard = (props) => {
+  const [fontsLoaded] = useFonts({
+    Dosis_400Regular,
+  });
+
   const allRecipes = useSelector((state) => state.recipe);
   const dispatch = useDispatch();
 
@@ -266,7 +274,7 @@ const MealCard = (props) => {
               {/* the food information */}
               <View style={stylesLocal.mealInfo}>
 
-                <Text style={stylesLocal.mealHeader}>{(mealName || classification)}</Text>
+                <Text style={{ fontFamily: 'Dosis_400Regular', fontSize: 28 }}>{(mealName || classification)}</Text>
 
                 <View style={stylesLocal.subInfo}>
                   <Text style={stylesLocal.mealSubHeader}>
@@ -410,10 +418,16 @@ const stylesLocal = StyleSheet.create({
   },
 
   individMacroStatConatiner: {
-    width: '20%',
-    height: '10%',
+    width: '30%',
+    height: '50%',
     alignItems: 'center',
     justifyContent: 'space-around',
+    padding: 20,
+
+    borderColor: '#DC95FE',
+    borderRadius: 10,
+    borderStyle: 'solid',
+    borderWidth: 5,
   },
 
 >>>>>>> bcd6ff3 (implementing figma layout)
