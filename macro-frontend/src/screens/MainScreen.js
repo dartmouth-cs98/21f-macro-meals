@@ -46,6 +46,7 @@ function MainScreen({ navigation, storedUserName }) {
   const [protein, setProtein] = useState(0);
   const [carb, setCarb] = useState(0);
   const [fat, setFat] = useState(0);
+  const [confidence, setConfidence] = useState(0);
   const [simple, setSimple] = useState(false);
 
   const dispatch = useDispatch();
@@ -81,6 +82,7 @@ function MainScreen({ navigation, storedUserName }) {
           setProtein(response.data.protein);
           setCarb(response.data.carbs);
           setFat(response.data.fats);
+          setConfidence(response.data.confidence)
         } else {
           setClassification('failed')
         }
@@ -136,6 +138,7 @@ function MainScreen({ navigation, storedUserName }) {
         protein,
         carb,
         fat,
+        confidence,
       })
         .then((response) => {
           console.log(response.data);
