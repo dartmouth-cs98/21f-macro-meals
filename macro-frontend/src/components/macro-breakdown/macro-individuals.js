@@ -42,15 +42,13 @@ class MacroPieChart extends Component {
   }
 
     /* function from https://reactnativeforyou.com/how-to-generate-random-colors-in-react-native/ */
-    addColor = () => {
-      const randomColor = Math.floor(Math.random() * 16777215)
-        .toString(16)
-        .padStart(6, '0');
-      return `#${randomColor}`;
-    }
-
-    testing = () => {
-      console.log('why hello');
+    /* adjusted to only create shades of purple/blue */
+    addColor = (i) => {
+      let color = '';
+      if (i == 0) { color = '#ffff00'; }
+      if (i == 1) { color = '#F956F2'; }
+      if (i == 2) { color = '#0000ff'; }
+      return color;
     }
 
     // making the calculations to render the circle
@@ -72,10 +70,6 @@ class MacroPieChart extends Component {
           tProtein += element.protein;
         } return total;
       });
-
-      console.log(tFat);
-      console.log(tProtein);
-      console.log(tCarbs);
 
       const totalMacro = tFat + tProtein + tCarbs;
 
@@ -99,42 +93,12 @@ class MacroPieChart extends Component {
             angle,
             prevAngle: prevState.prevAngles,
             sliceSpacing: 3,
-            color: this.addColor(),
+            color: this.addColor(i),
           }],
         }));
 
         this.setState((prevState) => ({ prevAngles: prevState.prevAngles + angle }));
-
-        console.log(tFat);
-        console.log(tProtein);
-        console.log(tCarbs);
-        console.log(totalMacro);
       }
-
-      /*
-      following code goes through the various items and plots calories
-      // going through Macros and processing needed calc for angles
-      // eslint-disable-next-line array-callback-return
-      this.props.allMacros.map((element, index) => {
-        const { cirCircumference } = this.state;
-        const percent = (element.calories / total) * 100;
-        const strokeDashoffset = cirCircumference - (cirCircumference * percent) / 100;
-        const angle = (element.calories / total) * 360;
-
-        this.setState((prevState) => ({
-          macroDisplay: [...prevState.macroDisplay, {
-            key: index,
-            percent,
-            strokeDashoffset,
-            angle,
-            prevAngle: prevState.prevAngles,
-            sliceSpacing: itemNum,
-            color: this.addColor(),
-          }],
-        }));
-        this.setState((prevState) => ({ prevAngles: prevState.prevAngles + angle }));
-      });
-      */
     }
 
     render() {
@@ -193,6 +157,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
     fontSize: 24,
-    color: 'white',
+    color: '#54595F',
   },
 });
