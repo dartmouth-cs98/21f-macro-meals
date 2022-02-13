@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   StyleSheet, Text, Image, View, Dimensions, TouchableOpacity,
@@ -34,6 +34,11 @@ const MealCard = (props) => {
     id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage,
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  /* need to fix so only dispatches on expansion */
+  useEffect(() => {
+    dispatch(fetchRecipe(classification));
+  }, []);
 
   let moodImage = null;
   if (mood === 'positive') { moodImage = positiveMood; } else if (mood === 'neutral') { moodImage = neutralMood; } else { moodImage = negativeMood; }
@@ -112,12 +117,18 @@ const MealCard = (props) => {
     getFavoriteStatus();
   }
 
-  const getSpoonacular = (mainFood) => {
-    if (!didFetchRecipe) {
-      dispatch(fetchRecipe('pasta', mainFood));
-      console.log(allRecipes);
-      getRecipe(true);
-    }
+  const mapSpoonacular = () => {
+    return (allRecipes.all.map((item) => {
+      return (
+        <View key={item.id}>
+          <Image
+            style={stylesLocal.foodImage}
+            source={{ uri: `${item.image}` }}
+          />
+          <Text>{item.title}</Text>
+        </View>
+      );
+    }));
   };
 
   return (
@@ -331,6 +342,10 @@ const MealCard = (props) => {
                 </Text>
                 <Text>carbs</Text>
               </View>
+            </View>
+
+            <View>
+              {mapSpoonacular()}
             </View>
           </View>
         )}
