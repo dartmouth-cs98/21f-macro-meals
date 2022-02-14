@@ -83,13 +83,14 @@ function MainScreen({ navigation, storedUserName }) {
           setProtein(response.data.protein);
           setCarb(response.data.carbs);
           setFat(response.data.fats);
-          setConfidence(response.data.confidence)
+          setConfidence(response.data.confidence);
         } else {
-          setClassification('failed')
+          setClassification('failed');
         }
         
       })
       .catch((error) => {
+        setClassification('failed');
         console.log(error.message);
       });
   };
@@ -221,16 +222,7 @@ function MainScreen({ navigation, storedUserName }) {
       >
         {!showForm && !showError
         && (
-        <View style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          position: 'relative',
-          paddingBottom: 0.05 * windowWidth,
-        }}
-        >
+        <View style={styles.navBtnsWrapper}>
           <TouchableOpacity
             style={styles.navTertBtn}
             onPress={() => {
@@ -290,16 +282,7 @@ function MainScreen({ navigation, storedUserName }) {
         )}
         {showForm
         && (
-        <View style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          position: 'relative',
-          paddingTop: 25,
-        }}
-        >
+        <View style={styles.formWrapper}>
           <View style={styles.formToggle}>
             <TouchableOpacity 
               style={{ backgroundColor: simple ? '#DC95FE' : '#e7b3ff' }}
@@ -347,14 +330,7 @@ function MainScreen({ navigation, storedUserName }) {
             </Picker>
             <View style={styles.mainFormElement}>
               <Text style={{ color: 'white', fontSize: 16 }}>current mood</Text>
-              <View style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'space-evenly',
-                marginTop: 10,
-                marginBottom: 10,
-              }}>
+              <View style={styles.formIconSelect}>
                 <TouchableOpacity onPress={() => { setMood('positive'); }} style={{ 
                   borderWidth: mood === 'positive' ? 2 : 0,
                   borderColor: 'white',
@@ -383,14 +359,7 @@ function MainScreen({ navigation, storedUserName }) {
             </View>
             <View style={styles.mainFormElement}>
               <Text style={{ color: 'white', fontSize: 16 }}>make public?</Text>
-              <View style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'space-evenly',
-                marginTop: 10,
-                marginBottom: 10,
-              }}>
+              <View style={styles.formIconSelect}>
                 <TouchableOpacity onPress={() => { setPublicFood(1); }} style={{ 
                   borderWidth: publicFood === 1 ? 2 : 0,
                   borderColor: 'white',
@@ -411,12 +380,7 @@ function MainScreen({ navigation, storedUserName }) {
             </View>
           </View>
           }
-          <View style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '50%',
-            justifyContent: 'space-evenly',
-          }}>
+          <View style={styles.formBtnWrapper}>
             <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
               <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
             </TouchableOpacity>
@@ -449,7 +413,7 @@ function MainScreen({ navigation, storedUserName }) {
               width: '50%',
               justifyContent: 'space-evenly',
             }}>
-              <TouchableOpacity onPress={navigation.navigate('Manual')} style={styles.mainFormBtn}>
+              <TouchableOpacity onPress={() => { navigation.navigate('Manual', { imageUrl: imageUrl, foodId: null }); }} style={styles.mainFormBtn}>
                 <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>

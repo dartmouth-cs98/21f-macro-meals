@@ -34,7 +34,7 @@ function BreakdownScreen({ navigation, foodList }) {
       <View style={[ styles.flexCol, { marginBottom: 10 } ]}><Text style={styles.secFontBold}>Confidence: </Text><Text style={styles.secFont}>{(food.confidence*100).toFixed(1)}%</Text></View>
       <View>
         <Text style={styles.secFont}>Incorrect classification?</Text>
-        <TouchableOpacity style={styles.authBtn}><Text style={styles.authBtnFont}>Let Us Know!</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.authBtn} onPress={navigation.navigate('Manual', { foodUrl: null, foodId: food.id })}><Text style={styles.authBtnFont}>Let Us Know!</Text></TouchableOpacity>
       </View>
     </View>
   );
