@@ -24,37 +24,14 @@ function BreakdownScreen({ navigation, foodList }) {
       </TouchableOpacity>
       <Text style={[ styles.secFontBold, { fontSize: 24 }]}>breakdown</Text>
       <MacroPieChart allMacros={foodList} />
-      <Text style={styles.secFont}>{food.customName}</Text>
+      <Text style={[ styles.secFontBold, { marginBottom: 10, fontSize: 18 } ]}>{food.customName}</Text>
       <View style={styles.centerMeEvenly}>
-        <Text style={styles.secFont}>
-          <b>Protein:</b>
-          {' '}
-          {food.protein}
-          g
-        </Text>
-        <Text style={styles.secFont}>
-          <b>Carbs:</b>
-          {' '}
-          {food.carb}
-          g
-        </Text>
-        <Text style={styles.secFont}>
-          <b>Fats:</b>
-          {' '}
-          {food.fat}
-          g
-        </Text>
+        <View style={styles.flexCol}><Text style={styles.secFontBold}>Protein: </Text><Text style={styles.secFont}>{food.protein}g</Text></View>
+        <View style={styles.flexCol}><Text style={styles.secFontBold}>Carbs: </Text><Text style={styles.secFont}>{food.carb}g</Text></View>
+        <View style={styles.flexCol}><Text style={styles.secFontBold}>Fats: </Text><Text style={styles.secFont}>{food.fat}g</Text></View>
       </View>
-      <Text style={[ styles.secFont, { marginTop: 10} ]}>
-        <b>Classification:</b>
-        {' '}
-        {food.classification}
-      </Text>
-      <Text style={[ styles.secFont, { marginBottom: 10} ]}>
-        <b>Confidence:</b>
-        {' '}
-        {food.confidence*100}%
-      </Text>
+      <View style={styles.flexCol}><Text style={[ styles.secFontBold, { marginTop: 10} ]}>Classification: </Text><Text style={styles.secFont}>{food.classification}</Text></View>
+      <View style={[ styles.flexCol, { marginBottom: 10 } ]}><Text style={styles.secFontBold}>Confidence: </Text><Text style={styles.secFont}>{(food.confidence*100).toFixed(1)}%</Text></View>
       <View>
         <Text style={styles.secFont}>Incorrect classification?</Text>
         <TouchableOpacity style={styles.authBtn}><Text style={styles.authBtnFont}>Let Us Know!</Text></TouchableOpacity>

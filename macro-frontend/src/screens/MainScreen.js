@@ -13,7 +13,7 @@ import styles from '../styles';
 import { RNS3 } from 'react-native-aws3';
 
 const options = {
-  keyPrefix: "uploads/",
+  keyPrefix: "",
   bucket: "macro-meals-images",
   region: "us-east-1",
   accessKey: "AKIAXST3R2TTOITGUBFB",
@@ -100,7 +100,7 @@ function MainScreen({ navigation, storedUserName }) {
     if (photo.uri.substring(0,4) == 'file') {
       const file = {
         uri: photo.uri,
-        name: storedUserName + Date.now().toString() + '.jpg',
+        name: storedUserName + Date.now().toString(),
         type: 'image/jpeg',
       }
   
@@ -297,7 +297,7 @@ function MainScreen({ navigation, storedUserName }) {
           flexDirection: 'column',
           alignItems: 'center',
           position: 'relative',
-          paddingTop: 20,
+          paddingTop: 25,
         }}
         >
           <View style={styles.formToggle}>
@@ -339,9 +339,8 @@ function MainScreen({ navigation, storedUserName }) {
               style={styles.mainFormElement}
               selectedValue={mealTime}
               onValueChange={(itemValue, itemIndex) => setMealTime(itemValue)}
-              itemTextStyle={{ color: 'white' }}
             >
-              <Picker.Item label="breakfast" value="breakfast" />
+              <Picker.Item label="breakfast" value="breakfast" style={{ color: 'white' }} />
               <Picker.Item label="lunch" value="lunch" />
               <Picker.Item label="dinner" value="dinner" />
               <Picker.Item label="snack" value="snack" />

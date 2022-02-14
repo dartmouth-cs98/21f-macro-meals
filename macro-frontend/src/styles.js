@@ -132,6 +132,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
+  flexCol: {
+    display: 'flex',
+    width: '30%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+
   pt1: {
     paddingTop: 10,
   },
