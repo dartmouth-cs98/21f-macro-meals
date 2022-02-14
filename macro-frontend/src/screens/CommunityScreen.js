@@ -34,7 +34,7 @@ function CommunityScreen({ navigation, storedUserName }) {
           idList.push(response.data[i]._id);
         }
         axios.post('https://macro-cs98.herokuapp.com/api/community/getFoodList', {
-          list: idList,
+          list: idList, publicFood: 1,
         })
           .then((response1) => {
             setTop(response1.data);

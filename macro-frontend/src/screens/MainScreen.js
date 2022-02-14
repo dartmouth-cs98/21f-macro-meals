@@ -107,6 +107,8 @@ function MainScreen({ navigation, storedUserName }) {
         if (response.status !== 201)
           throw new Error("Failed to upload image to S3");
         console.log(response.body.postResponse.location);
+        setImageUrl(response.body.postResponse.location);
+        classifyImage(response.body.postResponse.location);
       });
     } else {
       const response = await fetch(photo.uri);
@@ -296,7 +298,7 @@ function MainScreen({ navigation, storedUserName }) {
           flexDirection: 'column',
           alignItems: 'center',
           position: 'relative',
-          paddingTop: 0.1 * windowHeight,
+          paddingTop: 20,
         }}
         >
           <View style={styles.formToggle}>

@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    textAlign: 'center',
   },
 
   verticalContainer: {
@@ -37,8 +38,9 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
     color: 'white',
-    padding: '10px',
+    padding: 10,
   },
 
   headerText: {
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
+    textAlign: 'center',
     color: primColor,
     fontSize: 24,
     fontWeight: 'bold',
@@ -63,13 +66,14 @@ const styles = StyleSheet.create({
 
   communityTab: {
     width: '30%',
-    marginLeft: '5px',
-    marginRight: '5px',
-    marginBottom: '10px',
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 10,
     borderRadius: 8,
     padding: 8,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
   },
 
   cTabText: {
@@ -78,6 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
     width: '100%',
   },
 
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: neutralColor,
     color: '#54595F',
-    padding: '10px',
+    padding: 10,
     flex: 1,
   },
 
@@ -103,6 +108,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
+    textAlign: 'center',
   },
 
   centerMeColumn: {
@@ -110,6 +116,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
+    textAlign: 'center',
     alignItems: 'center',
   },
 
@@ -118,6 +125,11 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 
   pt1: {
@@ -132,6 +144,7 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
     alignItems: 'center',
     borderRadius: 1000,
     margin: 0.04 * windowWidth,
@@ -145,6 +158,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
     alignItems: 'center',
     borderRadius: 12,
   },
@@ -160,6 +174,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
     alignItems: 'center',
     borderRadius: 1000,
     zIndex: 2,
@@ -175,6 +190,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
     alignItems: 'center',
     borderRadius: 1000,
     zIndex:2,
@@ -191,6 +207,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
     alignItems: 'center',
     borderRadius: 1000,
   },
@@ -201,6 +218,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
   },
 
   authBtn: {
@@ -209,6 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
   },
 
   authBtnFont: {
@@ -217,6 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     display: 'flex',
     justifyContent: 'center',
+    textAlign: 'center',
   },
 
   formToggle: {
@@ -225,6 +245,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 3,
     justifyContent: 'center',
+    textAlign: 'center',
     borderRadius: 5,
     marginBottom: 12,
   },
@@ -239,7 +260,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     width: 0.7 * windowWidth,
     fontSize: 16,
-    marginBottom: 12,
+    marginBottom: 10,
   },
 
   mainFormBtn: {
@@ -319,6 +340,7 @@ const styles = StyleSheet.create({
 
     flexDirection: 'column',
     justifyContent: 'center',
+    textAlign: 'center',
     alignItems: 'center',
   },
   foodImage: {
