@@ -220,7 +220,7 @@ function MainScreen({ navigation, storedUserName }) {
         type={type}
         ref={(ref) => { setCameraRef(ref); }}
       >
-        {!showForm
+        {!showForm && !showError
         && (
         <View style={{
           width: '100%',
@@ -441,7 +441,7 @@ function MainScreen({ navigation, storedUserName }) {
           justifyContent: 'center',
         }}
         >
-          <Text style={styles.boldWhiteText}>{errorMessage}</Text>
+           <View style={styles.mainFormElement}><Text style={styles.boldWhiteText}>{errorMessage}</Text></View>
         </View>
         )}
       </Camera>
