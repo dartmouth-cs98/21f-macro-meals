@@ -144,6 +144,16 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 
+  navBtnsWrapper: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    position: 'relative',
+    paddingBottom: 0.05 * windowWidth,
+  },
+
   navPrimBtn: {
     backgroundColor: secColor,
     width: 0.28 * windowWidth,
@@ -245,6 +255,32 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     textAlign: 'center',
+  },
+
+  formWrapper: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    position: 'relative',
+    paddingTop: 25,
+  },
+
+  formBtnWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '50%',
+    justifyContent: 'space-evenly',
+  },
+
+  formIconSelect: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-evenly',
+    marginTop: 10,
+    marginBottom: 10,
   },
 
   formToggle: {
