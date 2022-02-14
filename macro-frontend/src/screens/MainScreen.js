@@ -34,7 +34,8 @@ function MainScreen({ navigation, storedUserName }) {
   const [cameraRef, setCameraRef] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('classification failed. please try again!');
+  const [correctError, setCorrectError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('classification failed. would you like to create a manual entry?');
   const [customName, setCustomName] = useState('');
   const [description, setDescription] = useState('');
   const [mealTime, setMealTime] = useState('breakfast');
@@ -156,15 +157,10 @@ function MainScreen({ navigation, storedUserName }) {
         });
     }
     else if (classification === 'failed') {
-      setErrorMessage('classification failed. please try again!');
+      setErrorMessage('classification failed. would you like to create a manual entry?');
       setShowError(true);
-      setTimeout(() => {
-        setShowError(false);
-      }, 2000);
-      cameraRef.resumePreview();
+      setCorrectError(true);
       setShowForm(false);
-      setCustomName('');
-      setDescription('');
     } else if (classification === '') {
       setErrorMessage('still classifying... try again in a moment!');
       setShowError(true);
@@ -179,8 +175,11 @@ function MainScreen({ navigation, storedUserName }) {
   const resetForm = () => {
     cameraRef.resumePreview();
     setShowForm(false);
+    setShowError(false);
+    setCorrectError(false);
     setCustomName('');
     setDescription('');
+    setClassification('');
   }
 
   const updateFieldsSimple = (s) => {
@@ -441,7 +440,23 @@ function MainScreen({ navigation, storedUserName }) {
           justifyContent: 'center',
         }}
         >
-           <View style={styles.mainFormElement}><Text style={styles.boldWhiteText}>{errorMessage}</Text></View>
+           <View style={[ styles.mainFormElement, { textAlign: 'center' } ]}><Text style={styles.boldWhiteText}>{errorMessage}</Text></View>
+           {correctError
+           && (
+            <View style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '50%',
+              justifyContent: 'space-evenly',
+            }}>
+              <TouchableOpacity onPress={navigation.navigate('Manual')} style={styles.mainFormBtn}>
+                <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+                <Text style={{ color: 'white', fontSize: 16 }}>no</Text>
+              </TouchableOpacity>
+            </View>
+           )}
         </View>
         )}
       </Camera>
