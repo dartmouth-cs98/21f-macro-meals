@@ -339,6 +339,7 @@ function MainScreen({ navigation, storedUserName }) {
               style={styles.mainFormElement}
               selectedValue={mealTime}
               onValueChange={(itemValue, itemIndex) => setMealTime(itemValue)}
+              itemTextStyle={{ color: 'white' }}
             >
               <Picker.Item label="breakfast" value="breakfast" />
               <Picker.Item label="lunch" value="lunch" />
