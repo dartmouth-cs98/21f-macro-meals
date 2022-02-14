@@ -132,15 +132,15 @@ const MealCard = (props) => {
         <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
         <View style={styles.mealColumn}>
           <Text style={styles.secFont}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
-          <Text style={styles.primFontBold}>Classification: </Text><Text style={styles.secFont}>{classification}</Text>
+          <View style={styles.flexRow}><Text style={styles.primFontBold}>Classification: </Text><Text style={styles.secFont}>{classification}</Text></View>
           { expand
           && (
             <View style={[styles.mealColumn, { marginTop: 20 }]}>
               <View style={{ marginBottom: 10 }}>
-                <Text style={styles.primFontBold}>Calories: </Text><Text style={styles.secFont}>{totalCal}</Text>
-                <Text style={styles.primFontBold}>Protein: </Text><Text style={styles.secFont}>{protein}g</Text>
-                <Text style={styles.primFontBold}>Carbs: </Text><Text style={styles.secFont}>{carb}g</Text>
-                <Text style={styles.primFontBold}>Fats: </Text><Text style={styles.secFont}>{fat}g</Text>
+                <View style={styles.flexRow}><Text style={styles.primFontBold}>Calories: </Text><Text style={styles.secFont}>{totalCal}</Text></View>
+                <View style={styles.flexRow}><Text style={styles.primFontBold}>Protein: </Text><Text style={styles.secFont}>{protein}g</Text></View>
+                <View style={styles.flexRow}><Text style={styles.primFontBold}>Carbs: </Text><Text style={styles.secFont}>{carb}g</Text></View>
+                <View style={styles.flexRow}><Text style={styles.primFontBold}>Fats: </Text><Text style={styles.secFont}>{fat}g</Text></View>
               </View>
               <View style={styles.mealColumn}>
                 <Text style={styles.primFontBold}>Description:</Text>

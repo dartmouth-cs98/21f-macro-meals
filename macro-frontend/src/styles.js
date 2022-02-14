@@ -127,6 +127,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
 
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+
   pt1: {
     paddingTop: 10,
   },
@@ -255,7 +260,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     width: 0.7 * windowWidth,
     fontSize: 16,
-    marginBottom: 12,
+    marginBottom: 10,
   },
 
   mainFormBtn: {
@@ -350,7 +355,6 @@ const styles = StyleSheet.create({
     height: '100%',
 
     justifyContent: 'center',
-    textAlign: 'center',
 
   },
   mealNameContainer: {
