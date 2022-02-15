@@ -29,7 +29,6 @@ const AppStack = createStackNavigator(
   {
     Main: MainScreen,
     Breakdown: BreakdownScreen,
-    Manual: ManualScreen,
     History: HistoryScreen,
     Community: CommunityScreen,
     User: UserScreen,

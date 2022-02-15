@@ -413,7 +413,7 @@ function MainScreen({ navigation, storedUserName }) {
               width: '50%',
               justifyContent: 'space-evenly',
             }}>
-              <TouchableOpacity onPress={() => { navigation.navigate('Manual', { imageUrl: imageUrl, foodId: null }); }} style={styles.mainFormBtn}>
+              <TouchableOpacity onPress={() => { setManualInput(true); }} style={styles.mainFormBtn}>
                 <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
