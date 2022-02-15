@@ -4,9 +4,6 @@ import {
   StyleSheet, Text, Image, View, Dimensions, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-<<<<<<< HEAD
-import { LinearGradient } from 'expo-linear-gradient';
-=======
 import { useSelector, useDispatch } from 'react-redux';
 import {
   useFonts,
@@ -14,7 +11,6 @@ import {
 } from '@expo-google-fonts/dosis';
 import { fetchRecipe, fetchRecipeInfo } from '../../redux/actions/spoonacularActions';
 import styles from '../../styles';
->>>>>>> bcd6ff3 (implementing figma layout)
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -171,15 +167,6 @@ const MealCard = (props) => {
   };
 
   return (
-<<<<<<< HEAD
-    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { setExpand(!expand); }}>
-      <Icon name={expand ? 'compress' : 'expand'}
-        color="#54595F"
-        style={{
-          fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8,
-        }}
-      />
-=======
     <View>
       {!confirmScreen
       && (
@@ -203,7 +190,6 @@ const MealCard = (props) => {
         </TouchableOpacity>
         { historyPage
       && (
->>>>>>> bcd6ff3 (implementing figma layout)
       <TouchableOpacity
         style={{
           position: 'absolute', bottom: 4, left: 4, padding: 4, zIndex: 2,
@@ -217,102 +203,6 @@ const MealCard = (props) => {
       </TouchableOpacity>
       )}
 
-<<<<<<< HEAD
-      {/* each individual meal card */}
-      <View style={styles.cardContainer}>
-        <LinearGradient start={[0, 0.5]} end={[1, 0.5]} colors={['#EFBB35', '#4AAE9B']} style={{ borderRadius: 5 }}>
-          <Image
-            style={styles.foodImage}
-            source={{ uri: `${foodImg}` }}
-          />
-
-          {/* the food information */}
-          <View style={styles.mealInfo}>
-
-            <Text style={styles.mealHeader}>{(mealName || classification)}</Text>
-
-            <View style={styles.subInfo}>
-              <Text style={styles.mealSubHeader}>
-                {monthArray[parseInt(time.substring(5, 7)) - 1]}
-                {' '}
-                {time.substring(8, 10)}
-              </Text>
-              <Text style={styles.mealSubHeader}>
-                {totalCal}
-                {' '}
-                Cal
-              </Text>
-            </View>
-          </View>
-        </LinearGradient>
-      </View>
-
-      {/*
-      <View style={styles.container}>
-        <Image
-          style={styles.foodImage}
-          source={{ uri: `${foodImg}` }}
-        />
-      </View>
-      <View style={styles.mealText}>
-        <View styles={styles.mealNameContainer}>
-          <Text style={styles.mealNameText}>{(mealName || classification)}</Text>
-        </View>
-        <View style={styles.mealColumn}>
-          <Text style={{ color: '#54595F' }}>
-            {monthArray[parseInt(time.substring(5, 7)) - 1]}
-            {' '}
-            {time.substring(8, 10)}
-            ,
-            {' '}
-            {time.substring(0, 4)}
-          </Text>
-          <Text style={{ color: '#F956F2' }}>
-            <b>Classification: </b>
-            <Text style={{ color: '#54595F' }}>{classification}</Text>
-          </Text>
-          { expand
-          && (
-            <View style={[styles.mealColumn, { marginTop: 20 }]}>
-              <View style={{ marginBottom: 10 }}>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Calories: </b>
-                  <Text style={{ color: '#54595F' }}>{totalCal}</Text>
-                </Text>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Protein: </b>
-                  <Text style={{ color: '#54595F' }}>
-                    {protein}
-                    g
-                  </Text>
-                </Text>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Carbs: </b>
-                  <Text style={{ color: '#54595F' }}>
-                    {carb}
-                    g
-                  </Text>
-                </Text>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Fats: </b>
-                  <Text style={{ color: '#54595F' }}>
-                    {fat}
-                    g
-                  </Text>
-                </Text>
-              </View>
-              <View style={styles.mealColumn}>
-                <Text style={{ color: '#F956F2' }}><b>Description:</b></Text>
-                <Text style={{ color: '#54595F' }}>{description || 'N/A'}</Text>
-              </View>
-            </View>
-          )}
-        </View>
-      </View> */}
-    </TouchableOpacity>
-    }
-    { confirmScreen &&
-=======
         { !expand
           && (
             <View style={stylesLocal.cardContainer}>
@@ -393,7 +283,6 @@ const MealCard = (props) => {
       )}
       { confirmScreen
     && (
->>>>>>> bcd6ff3 (implementing figma layout)
     <View>
       { !deleted
       && (
@@ -488,8 +377,6 @@ const stylesLocal = StyleSheet.create({
     alignItems: 'flex-start',
   },
 
-<<<<<<< HEAD
-=======
   cardContainerExpand: {
     width: '80%',
     height: '80%',
@@ -523,7 +410,6 @@ const stylesLocal = StyleSheet.create({
     borderWidth: 5,
   },
 
->>>>>>> bcd6ff3 (implementing figma layout)
   mealInfo: {
     display: 'flex',
 
