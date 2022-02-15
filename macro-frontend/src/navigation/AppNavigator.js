@@ -11,7 +11,6 @@ import HistoryScreen from '../screens/HistoryScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import UserScreen from '../screens/UserScreen';
 import TestingScreen from '../screens/TestingScreen';
-import ManualScreen from '../screens/ManualScreen';
 
 const AuthStack = createStackNavigator(
   {

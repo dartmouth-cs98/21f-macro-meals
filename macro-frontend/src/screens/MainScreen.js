@@ -49,6 +49,7 @@ function MainScreen({ navigation, storedUserName }) {
   const [fat, setFat] = useState(0);
   const [confidence, setConfidence] = useState(0);
   const [simple, setSimple] = useState(false);
+  const [manualInput, setManualInput] = useState(false);
 
   const dispatch = useDispatch();
   const addItem = (value) => {
@@ -178,6 +179,7 @@ function MainScreen({ navigation, storedUserName }) {
     setShowForm(false);
     setShowError(false);
     setCorrectError(false);
+    setManualInput(false);
     setCustomName('');
     setDescription('');
     setClassification('');
@@ -389,6 +391,66 @@ function MainScreen({ navigation, storedUserName }) {
             </TouchableOpacity>
           </View>
         </View>
+        )}
+        {manualInput
+        && (
+          <View style={styles.formWrapper}>
+            <TextInput
+            style={styles.mainFormElement}
+            onChangeText={setClassification}
+            value={classification}
+            placeholder="classification [ex. apple]"
+            placeholderTextColor="white"
+            />
+            <View style={[ styles.mainFormElement, styles.flexCol ]}>
+              <Text style={{ color: 'white', fontSize: 16 }}>calories</Text>
+              <TextInput
+              onChangeText={setCalories}
+              value={calories}
+              placeholder="[ex. 150]"
+              placeholderTextColor="white"
+              style={{ marginBottom: 10 }}
+              />
+              <Text style={{ color: 'white', fontSize: 16 }}>macros</Text>
+              <View style={styles.centerMeEvenly}>
+                <View style={styles.flexCol}>
+                  <Text style={{ color: 'white', fontSize: 16 }}>protein</Text>
+                  <TextInput
+                  onChangeText={setProtein}
+                  value={protein}
+                  placeholder="[ex. 20]"
+                  placeholderTextColor="white"
+                  />
+                </View>
+                <View style={styles.flexCol}>
+                  <Text style={{ color: 'white', fontSize: 16 }}>carbs</Text>
+                  <TextInput
+                  onChangeText={setCarb}
+                  value={carb}
+                  placeholder="[ex. 40]"
+                  placeholderTextColor="white"
+                  />
+                </View>
+                <View style={styles.flexCol}>
+                  <Text style={{ color: 'white', fontSize: 16 }}>fats</Text>
+                  <TextInput
+                  onChangeText={setFat}
+                  value={fat}
+                  placeholder="[ex. 10]"
+                  placeholderTextColor="white"
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={styles.formBtnWrapper}>
+            <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
+            </TouchableOpacity>
+          </View>
+          </View>
         )}
         {showError
         && (
