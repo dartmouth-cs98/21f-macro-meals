@@ -11,8 +11,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   useFonts,
   Dosis_400Regular,
-} from '@expo-google-fonts/dev';
-import { fetchRecipe } from '../../redux/actions/spoonacularActions';
+} from '@expo-google-fonts/dosis';
+import { fetchRecipe, fetchRecipeInfo } from '../../redux/actions/spoonacularActions';
 import styles from '../../styles';
 >>>>>>> bcd6ff3 (implementing figma layout)
 
@@ -28,6 +28,7 @@ const MealCard = (props) => {
   });
 
   const allRecipes = useSelector((state) => state.recipe);
+  const individRecipe = useSelector((state) => state.recipe);
   const dispatch = useDispatch();
 
   const {
@@ -36,9 +37,6 @@ const MealCard = (props) => {
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   /* need to fix so only dispatches on expansion */
-  useEffect(() => {
-    dispatch(fetchRecipe(classification));
-  }, []);
 
   let moodImage = null;
   if (mood === 'positive') { moodImage = positiveMood; } else if (mood === 'neutral') { moodImage = neutralMood; } else { moodImage = negativeMood; }
@@ -47,7 +45,13 @@ const MealCard = (props) => {
   const [favorite, setFavorite] = useState(null);
   const [confirmScreen, setConfirmScreen] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const [didFetchRecipe, getRecipe] = useState(false);
+  const [didRecipeInfo, setRecipeInfo] = useState(false);
+
+  /* jank wiring, will replace later */
+  const [recipe1, setRecipe1] = useState(0);
+  const [recipe2, setRecipe2] = useState(false);
+  const [recipe3, setRecipe3] = useState(false);
+  const [count, setCount] = useState(0);
 
   const handleFavoritePress = () => {
     if (favorite) { // if is a favorite, need to delete
@@ -117,16 +121,51 @@ const MealCard = (props) => {
     getFavoriteStatus();
   }
 
+  const retrieveRecipe = (foodItem) => {
+    /* need to add use state so it is only called once */
+    dispatch(fetchRecipe(foodItem));
+    setExpand(!expand);
+  };
+
+  const getRecipeSteps = (mealId) => {
+    if (mealId === recipe1) {
+      console.log('found it');
+    } else {
+      setRecipe1(mealId);
+      dispatch(fetchRecipeInfo(mealId));
+    }
+  };
+
+  const displayRecipe = (mealId) => {
+    if (mealId === recipe1 && individRecipe.individ !== undefined && individRecipe.individ.id === mealId) {
+      const wordArray = individRecipe.individ.summary.split('It is brought');
+      const newWordArray = wordArray[0].replace(/<\/?[^>]+(>|$)/g, '');
+      console.log(newWordArray);
+      // console.log(individRecipe.individ.summary);
+      // return (<Text>{individRecipe.individ.summary}</Text>);
+    }
+  };
+
+  const errorTry = () => {
+    console.log(recipe1);
+  };
+
   const mapSpoonacular = () => {
     return (allRecipes.all.map((item) => {
       return (
-        <View key={item.id}>
+        <TouchableOpacity key={item.id} style={stylesLocal.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
+
           <Image
-            style={stylesLocal.foodImage}
+            style={stylesLocal.recipeImage}
             source={{ uri: `${item.image}` }}
           />
-          <Text>{item.title}</Text>
-        </View>
+          <Text style={stylesLocal.subheaderText}>{item.title}</Text>
+          {displayRecipe(item.id)}
+          {didRecipeInfo
+          && (
+            <Text>Hello</Text>
+          )}
+        </TouchableOpacity>
       );
     }));
   };
@@ -144,7 +183,7 @@ const MealCard = (props) => {
     <View>
       {!confirmScreen
       && (
-      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { setExpand(!expand); }}>
+      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { retrieveRecipe(classification); }}>
         <Icon name={expand ? 'compress' : 'expand'}
           color="#54595F"
           style={{
@@ -344,7 +383,7 @@ const MealCard = (props) => {
               </View>
             </View>
 
-            <View>
+            <View style={stylesLocal.suggestedRecipeContainer}>
               {mapSpoonacular()}
             </View>
           </View>
@@ -385,6 +424,45 @@ const MealCard = (props) => {
 export default MealCard;
 
 const stylesLocal = StyleSheet.create({
+
+  suggestedRecipeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent: 'center',
+
+    height: '80%',
+    width: '100%',
+  },
+
+  suggestedRecipeCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
+    justifyContent: 'space-around',
+
+    borderStyle: 'solid',
+    borderColor: '#DC95FE',
+    borderWidth: 3,
+    borderRadius: 7,
+
+    width: '30%',
+    height: '50%',
+  },
+
+  subheaderText: {
+    fontSize: 10,
+    fontFamily: 'Dosis_400Regular',
+    width: '100%',
+    textAlign: 'center',
+    textTransform: 'lowercase',
+  },
+
+  recipeImage: {
+    height: '40%',
+    width: '100%',
+    resizeMode: 'contain',
+  },
 
   overallContainer: {
     width: 0.9 * windowWidth,
