@@ -1,15 +1,16 @@
-/* TODO:
- * flesh out the expanded view
- * add linear gradient border
- */
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
   StyleSheet, Text, Image, View, Dimensions, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+<<<<<<< HEAD
 import { LinearGradient } from 'expo-linear-gradient';
+=======
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchRecipe } from '../../redux/actions/spoonacularActions';
+import styles from '../../styles';
+>>>>>>> bcd6ff3 (implementing figma layout)
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -22,7 +23,7 @@ const MealCard = (props) => {
   const dispatch = useDispatch();
 
   const {
-    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username,
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage,
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -31,8 +32,9 @@ const MealCard = (props) => {
 
   const [expand, setExpand] = useState(false);
   const [favorite, setFavorite] = useState(null);
-  const [confirmScreen, setConfirmScreen] = useState(false); 
+  const [confirmScreen, setConfirmScreen] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [didFetchRecipe, getRecipe] = useState(false);
 
   const handleFavoritePress = () => {
     if (favorite) { // if is a favorite, need to delete
@@ -68,11 +70,11 @@ const MealCard = (props) => {
     if (!confirmScreen) {
       setConfirmScreen(true);
     } else {
-      axios.post(`https://macro-cs98.herokuapp.com/api/food/delete`, {
-        id: id,
+      axios.post('https://macro-cs98.herokuapp.com/api/food/delete', {
+        id,
       })
         .then((response) => {
-          console.log('Deleted Food: ' + id);
+          console.log(`Deleted Food: ${id}`);
           setDeleted(true);
         })
         .catch((error) => {
@@ -80,7 +82,7 @@ const MealCard = (props) => {
           console.log(error.message);
         });
     }
-  }
+  };
 
   const getFavoriteStatus = () => {
     axios.post('https://macro-cs98.herokuapp.com/api/fav/check', {
@@ -98,20 +100,20 @@ const MealCard = (props) => {
       });
   };
 
-  const mapSpoonacular = () => {
-    dispatch(fetchRecipe('pasta', 'chicken'));
-    console.log(allRecipes);
-
-    return (
-      <Text>hello</Text>
-    );
-  };
-
   if (favorite === null) {
     getFavoriteStatus();
   }
 
+  const getSpoonacular = (mainFood) => {
+    if (!didFetchRecipe) {
+      dispatch(fetchRecipe('pasta', mainFood));
+      console.log(allRecipes);
+      getRecipe(true);
+    }
+  };
+
   return (
+<<<<<<< HEAD
     <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { setExpand(!expand); }}>
       <Icon name={expand ? 'compress' : 'expand'}
         color="#54595F"
@@ -119,18 +121,45 @@ const MealCard = (props) => {
           fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8,
         }}
       />
+=======
+    <View>
+      {!confirmScreen
+      && (
+      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { setExpand(!expand); }}>
+        <Icon name={expand ? 'compress' : 'expand'}
+          color="#54595F"
+          style={{
+            fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8,
+          }}
+        />
+        <TouchableOpacity
+          style={{
+            position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2,
+          }}
+          onPress={() => { handleFavoritePress(); }}
+        >
+          <Text style={StyleSheet.absoluteFillObject} />
+          <View>
+            <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
+          </View>
+        </TouchableOpacity>
+        { historyPage
+      && (
+>>>>>>> bcd6ff3 (implementing figma layout)
       <TouchableOpacity
         style={{
-          position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2,
+          position: 'absolute', bottom: 4, left: 4, padding: 4, zIndex: 2,
         }}
-        onPress={() => { handleFavoritePress(); }}
+        onPress={() => { handleDeletePress(); }}
       >
         <Text style={StyleSheet.absoluteFillObject} />
         <View>
-          <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
+          <Icon name="trash-o" color="#54595F" style={{ fontSize: 0.06 * windowWidth }} />
         </View>
       </TouchableOpacity>
+      )}
 
+<<<<<<< HEAD
       {/* each individual meal card */}
       <View style={styles.cardContainer}>
         <LinearGradient start={[0, 0.5]} end={[1, 0.5]} colors={['#EFBB35', '#4AAE9B']} style={{ borderRadius: 5 }}>
@@ -225,18 +254,97 @@ const MealCard = (props) => {
     </TouchableOpacity>
     }
     { confirmScreen &&
+=======
+        { !expand
+          && (
+            <View style={stylesLocal.cardContainer}>
+              <Image
+                style={stylesLocal.foodImage}
+                source={{ uri: `${foodImg}` }}
+              />
+
+              {/* the food information */}
+              <View style={stylesLocal.mealInfo}>
+
+                <Text style={stylesLocal.mealHeader}>{(mealName || classification)}</Text>
+
+                <View style={stylesLocal.subInfo}>
+                  <Text style={stylesLocal.mealSubHeader}>
+                    {monthArray[parseInt(time.substring(5, 7)) - 1]}
+                    {' '}
+                    {time.substring(8, 10)}
+                  </Text>
+                  <Text style={stylesLocal.mealSubHeader}>
+                    {totalCal}
+                    {' '}
+                    Cal
+                  </Text>
+                </View>
+              </View>
+            </View>
+          )}
+
+        { expand
+        && (
+          <View style={stylesLocal.cardContainerExpand}>
+            {/* title */}
+            <Text>{mealName}</Text>
+            <Image
+              style={stylesLocal.foodImageExpand}
+              source={{ uri: `${foodImg}` }}
+            />
+            <View style={stylesLocal.allMacroStatsContainer}>
+              {/* protein */}
+              <View style={stylesLocal.individMacroStatConatiner}>
+                <Text>
+                  {protein}
+                  {' '}
+                  g
+                </Text>
+                <Text>protein</Text>
+              </View>
+
+              {/* fats */}
+              <View style={stylesLocal.individMacroStatConatiner}>
+                <Text>
+                  {fat}
+                  {' '}
+                  g
+                </Text>
+                <Text>fat</Text>
+              </View>
+
+              {/* carbs */}
+              <View style={stylesLocal.individMacroStatConatiner}>
+                <Text>
+                  {carb}
+                  {' '}
+                  g
+                </Text>
+                <Text>carbs</Text>
+              </View>
+            </View>
+          </View>
+        )}
+
+      </TouchableOpacity>
+      )}
+      { confirmScreen
+    && (
+>>>>>>> bcd6ff3 (implementing figma layout)
     <View>
-      { !deleted &&
+      { !deleted
+      && (
       <View style={[styles.overallContainerVertical, { height: 0.4 * windowWidth }]}>
         <Text>delete this item?</Text>
         <View style={styles.centerMe}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.dangerBtn, { marginRight: 10 }]}
             onPress={() => { handleDeletePress(); }}
           >
             <Text style={{ color: 'white' }}>delete</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.authBtn}
             onPress={() => { setConfirmScreen(false); }}
           >
@@ -244,9 +352,9 @@ const MealCard = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-      }
+      )}
     </View>
-    }
+    )}
     </View>
   );
 };
@@ -279,6 +387,36 @@ const stylesLocal = StyleSheet.create({
     alignItems: 'flex-start',
   },
 
+<<<<<<< HEAD
+=======
+  cardContainerExpand: {
+    width: '80%',
+    height: '80%',
+
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  allMacroStatsContainer: {
+    width: '100%',
+    height: '30%',
+
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+
+  individMacroStatConatiner: {
+    width: '20%',
+    height: '10%',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+
+>>>>>>> bcd6ff3 (implementing figma layout)
   mealInfo: {
     display: 'flex',
 
@@ -307,6 +445,14 @@ const stylesLocal = StyleSheet.create({
     marginRight: 10,
   },
 
+  foodImageExpand: {
+    width: '50%',
+    height: '20%',
+    resizeMode: 'cover',
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+
   mealHeader: {
     fontSize: 50,
     fontWeight: '500',
@@ -316,33 +462,4 @@ const stylesLocal = StyleSheet.create({
     fontSize: 25,
     fontWeight: '300',
   },
-
-  /*
-  mealText: {
-    width: '60%',
-    height: '100%',
-
-    justifyContent: 'center',
-
-  },
-  mealNameContainer: {
-    paddingBottom: 10,
-
-  },
-  mealNameText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#F956F2',
-
-  },
-  mealInformation: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  mealColumn: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  */
 });
