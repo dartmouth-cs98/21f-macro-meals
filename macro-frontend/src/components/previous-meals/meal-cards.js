@@ -6,12 +6,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-  StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, styles,
+  StyleSheet, Text, Image, View, Dimensions, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchRecipe } from '../../redux/actions/spoonacularActions';
-import stylesGlobal from '../../styles';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -114,7 +112,7 @@ const MealCard = (props) => {
   }
 
   return (
-    <TouchableOpacity style={[stylesLocal.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { setExpand(!expand); }}>
+    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { setExpand(!expand); }}>
       <Icon name={expand ? 'compress' : 'expand'}
         color="#54595F"
         style={{
@@ -133,123 +131,34 @@ const MealCard = (props) => {
         </View>
       </TouchableOpacity>
 
-      {/* summary view */}
-      { !expand
-          && (
-            <View style={stylesLocal.cardContainer}>
-              <Image
-                style={stylesLocal.foodImage}
-                source={{ uri: `${foodImg}` }}
-              />
+      {/* each individual meal card */}
+      <View style={styles.cardContainer}>
+        <LinearGradient start={[0, 0.5]} end={[1, 0.5]} colors={['#EFBB35', '#4AAE9B']} style={{ borderRadius: 5 }}>
+          <Image
+            style={styles.foodImage}
+            source={{ uri: `${foodImg}` }}
+          />
 
-              {/* the food information */}
-              <View style={stylesLocal.mealInfo}>
+          {/* the food information */}
+          <View style={styles.mealInfo}>
 
-                <Text style={stylesLocal.mealHeader}>{(mealName || classification)}</Text>
+            <Text style={styles.mealHeader}>{(mealName || classification)}</Text>
 
-                <View style={stylesLocal.subInfo}>
-                  <Text style={stylesLocal.mealSubHeader}>
-                    {monthArray[parseInt(time.substring(5, 7)) - 1]}
-                    {' '}
-                    {time.substring(8, 10)}
-                  </Text>
-                  <Text style={stylesLocal.mealSubHeader}>
-                    {totalCal}
-                    {' '}
-                    Cal
-                  </Text>
-                </View>
-              </View>
-            </View>
-          )}
-
-      {/* expanded view */}
-      { expand
-          && (
-          <View>
-            {/* title */}
-            <Text>{mealName}</Text>
-            <Image
-              style={stylesLocal.foodImage}
-              source={{ uri: `${foodImg}` }}
-            />
-            <View>
-              {/* protein */}
-              <View>
-                <Text>
-                  {protein}
-                  {' '}
-                  g
-                </Text>
-                <Text>protein</Text>
-              </View>
-
-              {/* fats */}
-              <View>
-                <Text>
-                  {fat}
-                  {' '}
-                  g
-                </Text>
-                <Text>fat</Text>
-              </View>
-
-              {/* carbs */}
-              <View>
-                <Text>
-                  {carb}
-                  {' '}
-                  g
-                </Text>
-                <Text>carbs</Text>
-              </View>
-            </View>
-
-            <View>
-              {mapSpoonacular()}
+            <View style={styles.subInfo}>
+              <Text style={styles.mealSubHeader}>
+                {monthArray[parseInt(time.substring(5, 7)) - 1]}
+                {' '}
+                {time.substring(8, 10)}
+              </Text>
+              <Text style={styles.mealSubHeader}>
+                {totalCal}
+                {' '}
+                Cal
+              </Text>
             </View>
           </View>
-
-      /* image of food */
-
-      /* display of macro amounts */
-
-      /* spoonacular displays */
-
-      /* <View style={[stylesLocal.mealColumn, { marginTop: 20 }]}>
-              <View style={{ marginBottom: 10 }}>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Calories: </b>
-                  <Text style={{ color: '#54595F' }}>{totalCal}</Text>
-                </Text>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Protein: </b>
-                  <Text style={{ color: '#54595F' }}>
-                    {protein}
-                    g
-                  </Text>
-                </Text>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Carbs: </b>
-                  <Text style={{ color: '#54595F' }}>
-                    {carb}
-                    g
-                  </Text>
-                </Text>
-                <Text style={{ color: '#F956F2' }}>
-                  <b>Fats: </b>
-                  <Text style={{ color: '#54595F' }}>
-                    {fat}
-                    g
-                  </Text>
-                </Text>
-              </View>
-              <View style={stylesLocal.mealColumn}>
-                <Text style={{ color: '#F956F2' }}><b>Description:</b></Text>
-                <Text style={{ color: '#54595F' }}>{description || 'N/A'}</Text>
-              </View>
-            </View> */
-          )}
+        </LinearGradient>
+      </View>
 
       {/*
       <View style={styles.container}>
@@ -366,16 +275,6 @@ const stylesLocal = StyleSheet.create({
 
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
-
-  cardContainerExpand: {
-    width: '80%',
-    height: '80%',
-
-    display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
