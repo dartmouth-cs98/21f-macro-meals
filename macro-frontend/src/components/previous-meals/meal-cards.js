@@ -1,7 +1,12 @@
+/* TODO:
+ * flesh out the expanded view
+ * add linear gradient border
+ */
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-  StyleSheet, Text, Image, View, Dimensions, TouchableOpacity
+  StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, styles,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../styles';
@@ -14,14 +19,12 @@ const negativeMood = require('../../img/negativeMood.png');
 
 const MealCard = (props) => {
   const {
-    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username,
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   let moodImage = null;
-  if (mood === 'positive') { moodImage = positiveMood; }
-  else if (mood === 'neutral') { moodImage = neutralMood; }
-  else { moodImage = negativeMood; }
+  if (mood === 'positive') { moodImage = positiveMood; } else if (mood === 'neutral') { moodImage = neutralMood; } else { moodImage = negativeMood; }
 
   const [expand, setExpand] = useState(false);
   const [favorite, setFavorite] = useState(null);
@@ -31,7 +34,7 @@ const MealCard = (props) => {
   const handleFavoritePress = () => {
     if (favorite) { // if is a favorite, need to delete
       axios.post('https://macro-cs98.herokuapp.com/api/fav/delete', {
-        foodId: id, username: username,
+        foodId: id, username,
       })
         .then((response) => {
           if (response.data) {
@@ -44,7 +47,7 @@ const MealCard = (props) => {
         });
     } else {
       axios.post('https://macro-cs98.herokuapp.com/api/fav/new', {
-        foodId: id, username: username,
+        foodId: id, username,
       })
         .then((response) => {
           if (response.data) {
@@ -56,7 +59,7 @@ const MealCard = (props) => {
           console.log(error.message);
         });
     }
-  }
+  };
 
   const handleDeletePress = () => {
     if (!confirmScreen) {
@@ -78,7 +81,7 @@ const MealCard = (props) => {
 
   const getFavoriteStatus = () => {
     axios.post('https://macro-cs98.herokuapp.com/api/fav/check', {
-      foodId: id, username: username,
+      foodId: id, username,
     })
       .then((response) => {
         if (response.data) {
@@ -86,24 +89,28 @@ const MealCard = (props) => {
         } else {
           setFavorite(false);
         }
-        
       })
       .catch((error) => {
         console.log(error.message);
       });
-  }
+  };
 
   if (favorite === null) {
     getFavoriteStatus();
   }
 
   return (
-    <View>
-      {!confirmScreen &&
-      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
-      <Icon name={expand ? 'compress' : 'expand'} color="#54595F" style={{ fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
-      <TouchableOpacity 
-        style={{ position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2 }}
+    <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { setExpand(!expand); }}>
+      <Icon name={expand ? 'compress' : 'expand'}
+        color="#54595F"
+        style={{
+          fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8,
+        }}
+      />
+      <TouchableOpacity
+        style={{
+          position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2,
+        }}
         onPress={() => { handleFavoritePress(); }}
       >
         <Text style={StyleSheet.absoluteFillObject} />
@@ -111,45 +118,98 @@ const MealCard = (props) => {
           <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
         </View>
       </TouchableOpacity>
-      { historyPage && 
-      <TouchableOpacity 
-        style={{ position: 'absolute', bottom: 4, left: 4, padding: 4, zIndex: 2 }}
-        onPress={() => { handleDeletePress(); }}
-      >
-        <Text style={StyleSheet.absoluteFillObject} />
-        <View>
-          <Icon name={'trash-o'} color="#54595F" style={{ fontSize: 0.06 * windowWidth }} />
-        </View>
-      </TouchableOpacity>
-      }
-      <View style={{ width: '30%', height: '80%' }}>
+
+      {/* each individual meal card */}
+      <View style={styles.cardContainer}>
+        <LinearGradient start={[0, 0.5]} end={[1, 0.5]} colors={['#EFBB35', '#4AAE9B']} style={{ borderRadius: 5 }}>
+          <Image
+            style={styles.foodImage}
+            source={{ uri: `${foodImg}` }}
+          />
+
+          {/* the food information */}
+          <View style={styles.mealInfo}>
+
+            <Text style={styles.mealHeader}>{(mealName || classification)}</Text>
+
+            <View style={styles.subInfo}>
+              <Text style={styles.mealSubHeader}>
+                {monthArray[parseInt(time.substring(5, 7)) - 1]}
+                {' '}
+                {time.substring(8, 10)}
+              </Text>
+              <Text style={styles.mealSubHeader}>
+                {totalCal}
+                {' '}
+                Cal
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+      </View>
+
+      {/*
+      <View style={styles.container}>
         <Image
           style={styles.foodImage}
           source={{ uri: `${foodImg}` }}
         />
       </View>
       <View style={styles.mealText}>
-        <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
+        <View styles={styles.mealNameContainer}>
+          <Text style={styles.mealNameText}>{(mealName || classification)}</Text>
+        </View>
         <View style={styles.mealColumn}>
-          <Text style={styles.secFont}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
-          <View style={styles.flexRow}><Text style={styles.primFontBold}>Classification: </Text><Text style={styles.secFont}>{classification}</Text></View>
+          <Text style={{ color: '#54595F' }}>
+            {monthArray[parseInt(time.substring(5, 7)) - 1]}
+            {' '}
+            {time.substring(8, 10)}
+            ,
+            {' '}
+            {time.substring(0, 4)}
+          </Text>
+          <Text style={{ color: '#F956F2' }}>
+            <b>Classification: </b>
+            <Text style={{ color: '#54595F' }}>{classification}</Text>
+          </Text>
           { expand
           && (
             <View style={[styles.mealColumn, { marginTop: 20 }]}>
               <View style={{ marginBottom: 10 }}>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Calories: </Text><Text style={styles.secFont}>{totalCal}</Text></View>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Protein: </Text><Text style={styles.secFont}>{protein}g</Text></View>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Carbs: </Text><Text style={styles.secFont}>{carb}g</Text></View>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Fats: </Text><Text style={styles.secFont}>{fat}g</Text></View>
+                <Text style={{ color: '#F956F2' }}>
+                  <b>Calories: </b>
+                  <Text style={{ color: '#54595F' }}>{totalCal}</Text>
+                </Text>
+                <Text style={{ color: '#F956F2' }}>
+                  <b>Protein: </b>
+                  <Text style={{ color: '#54595F' }}>
+                    {protein}
+                    g
+                  </Text>
+                </Text>
+                <Text style={{ color: '#F956F2' }}>
+                  <b>Carbs: </b>
+                  <Text style={{ color: '#54595F' }}>
+                    {carb}
+                    g
+                  </Text>
+                </Text>
+                <Text style={{ color: '#F956F2' }}>
+                  <b>Fats: </b>
+                  <Text style={{ color: '#54595F' }}>
+                    {fat}
+                    g
+                  </Text>
+                </Text>
               </View>
               <View style={styles.mealColumn}>
-                <Text style={styles.primFontBold}>Description:</Text>
-                <Text style={styles.secFont}>{description ? description : 'N/A'}</Text>
+                <Text style={{ color: '#F956F2' }}><b>Description:</b></Text>
+                <Text style={{ color: '#54595F' }}>{description || 'N/A'}</Text>
               </View>
             </View>
           )}
         </View>
-      </View>
+      </View> */}
     </TouchableOpacity>
     }
     { confirmScreen &&
@@ -180,3 +240,97 @@ const MealCard = (props) => {
 };
 
 export default MealCard;
+
+const styles = StyleSheet.create({
+
+  overallContainer: {
+    width: 0.9 * windowWidth,
+    marginBottom: 20,
+    backgroundColor: '#FFFAF0',
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: '#DC95FE',
+    padding: 10,
+    position: 'relative',
+
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  cardContainer: {
+    width: '80%',
+    height: '80%',
+
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+
+  mealInfo: {
+    display: 'flex',
+
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    width: '50%',
+    height: '80%',
+
+    marginLeft: 10,
+    paddingLeft: 10,
+  },
+
+  subInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+
+  foodImage: {
+    width: '50%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderRadius: 20,
+    overflow: 'hidden',
+
+    marginRight: 10,
+  },
+
+  mealHeader: {
+    fontSize: 50,
+    fontWeight: '500',
+  },
+
+  mealSubHeader: {
+    fontSize: 25,
+    fontWeight: '300',
+  },
+
+  /*
+  mealText: {
+    width: '60%',
+    height: '100%',
+
+    justifyContent: 'center',
+
+  },
+  mealNameContainer: {
+    paddingBottom: 10,
+
+  },
+  mealNameText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#F956F2',
+
+  },
+  mealInformation: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  mealColumn: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  */
+});
