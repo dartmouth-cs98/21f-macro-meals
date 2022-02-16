@@ -201,11 +201,11 @@ const MealCard = (props) => {
           && (
             <View style={styles.mealText}>
               <Image
-                style={stylesLocal.foodImage}
+                style={styles.foodImage}
                 source={{ uri: `${foodImg}` }}
               />
               {/* the food information */}
-              <View>
+              <View style={styles.allMealInfo}>
                 <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
                 <View style={styles.mealColumn}>
                   <Text style={styles.secFont}>
@@ -297,142 +297,3 @@ const MealCard = (props) => {
 };
 
 export default MealCard;
-
-const stylesLocal = StyleSheet.create({
-
-  suggestedRecipeContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignContent: 'center',
-
-    height: '80%',
-    width: '100%',
-  },
-
-  suggestedRecipeCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignContent: 'center',
-    justifyContent: 'space-around',
-
-    borderStyle: 'solid',
-    borderColor: '#DC95FE',
-    borderWidth: 3,
-    borderRadius: 7,
-
-    width: '40%',
-    height: '50%',
-  },
-
-  subheaderText: {
-    fontSize: 10,
-    fontFamily: 'Dosis_400Regular',
-    width: '100%',
-    textAlign: 'center',
-    textTransform: 'lowercase',
-  },
-
-  overallContainer: {
-    width: 0.9 * windowWidth,
-    marginBottom: 20,
-    backgroundColor: '#FFFAF0',
-    borderRadius: 10,
-    borderWidth: 3,
-    borderColor: '#DC95FE',
-    padding: 10,
-    position: 'relative',
-
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  cardContainer: {
-    width: '80%',
-    height: '80%',
-
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
-
-  cardContainerExpand: {
-    width: '80%',
-    height: '80%',
-
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  allMacroStatsContainer: {
-    width: '100%',
-    height: '30%',
-
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-
-  individMacroStatConatiner: {
-    width: '30%',
-    height: '50%',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    padding: 20,
-
-    borderColor: '#DC95FE',
-    borderRadius: 10,
-    borderStyle: 'solid',
-    borderWidth: 5,
-  },
-
-  mealInfo: {
-    display: 'flex',
-
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    width: '50%',
-    height: '80%',
-
-    marginLeft: 10,
-    paddingLeft: 10,
-  },
-
-  subInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-
-  foodImage: {
-    width: '50%',
-    height: '100%',
-    resizeMode: 'cover',
-    borderRadius: 20,
-    overflow: 'hidden',
-
-    marginRight: 10,
-  },
-
-  foodImageExpand: {
-    width: '50%',
-    height: '20%',
-    resizeMode: 'cover',
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-
-  mealHeader: {
-    fontSize: 50,
-    fontWeight: '500',
-  },
-
-  mealSubHeader: {
-    fontSize: 25,
-    fontWeight: '300',
-  },
-});

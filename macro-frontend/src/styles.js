@@ -386,6 +386,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    alignContent: 'center',
   },
   overallContainerVertical: {
     width: 0.9 * windowWidth,
@@ -402,6 +403,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
   },
+
   foodImage: {
     width: '100%',
     height: '100%',
@@ -409,6 +411,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: 'hidden',
   },
+
   mealText: {
     display: 'flex',
     flexDirection: 'row',
@@ -424,6 +427,7 @@ const styles = StyleSheet.create({
 
   allMealInfo: {
     height: '100%',
+    justifyContent: 'center',
   },
 
   mealNameContainer: {
