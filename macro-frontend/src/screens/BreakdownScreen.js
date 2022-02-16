@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -15,6 +15,7 @@ const windowWidth = Dimensions.get('window').width;
 
 function BreakdownScreen({ navigation, foodList }) {
   const food = foodList[foodList.length - 1]; // get the most recent food off of the list
+  const [letUsKnow, setLetUsKnow] = useState(false);
   console.log(food);
 
   return (
@@ -34,7 +35,16 @@ function BreakdownScreen({ navigation, foodList }) {
       <View style={[ styles.flexCol, { marginBottom: 10 } ]}><Text style={styles.secFontBold}>Confidence: </Text><Text style={styles.secFont}>{(food.confidence*100).toFixed(1)}%</Text></View>
       <View>
         <Text style={styles.secFont}>Incorrect classification?</Text>
-        <TouchableOpacity style={styles.authBtn} onPress={navigation.navigate('Manual', { foodUrl: null, foodId: food.id })}><Text style={styles.authBtnFont}>Let Us Know!</Text></TouchableOpacity>
+        <View>
+          {!letUsKnow
+          && (
+            <TouchableOpacity style={styles.authBtn} onPress={() => { setLetUsKnow(!letUsKnow) }}><Text style={styles.authBtnFont}>Let Us Know!</Text></TouchableOpacity>
+          )}
+          {letUsKnow
+          && (
+            <TouchableOpacity style={styles.authBtn} onPress={() => { setLetUsKnow(!letUsKnow) }}><Text style={styles.authBtnFont}>Coming soon...</Text></TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   );

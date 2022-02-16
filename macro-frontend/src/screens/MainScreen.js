@@ -43,10 +43,10 @@ function MainScreen({ navigation, storedUserName }) {
   const [publicFood, setPublicFood] = useState(1);
   const [imageUrl, setImageUrl] = useState('');
   const [classification, setClassification] = useState('');
-  const [calories, setCalories] = useState(0);
-  const [protein, setProtein] = useState(0);
-  const [carb, setCarb] = useState(0);
-  const [fat, setFat] = useState(0);
+  const [calories, setCalories] = useState('');
+  const [protein, setProtein] = useState('');
+  const [carb, setCarb] = useState('');
+  const [fat, setFat] = useState('');
   const [confidence, setConfidence] = useState(0);
   const [simple, setSimple] = useState(false);
   const [manualInput, setManualInput] = useState(false);
@@ -78,13 +78,13 @@ function MainScreen({ navigation, storedUserName }) {
     })
       .then((response) => {
         console.log(response.data);
-        if (response.data.classification) {
-          setClassification(response.data.classification);
-          setCalories(response.data.calories);
-          setProtein(response.data.protein);
-          setCarb(response.data.carbs);
-          setFat(response.data.fats);
-          setConfidence(response.data.confidence);
+        if (response.data.one) {
+          setClassification(response.data.one.food);
+          setCalories(response.data.one.calorie);
+          setProtein(response.data.one.protein);
+          setCarb(response.data.one.carb);
+          setFat(response.data.one.fat);
+          setConfidence(response.data.one.confidence);
         } else {
           setClassification('failed');
         }
@@ -140,19 +140,16 @@ function MainScreen({ navigation, storedUserName }) {
         publicFood,
         imageUrl,
         classification,
-        calories,
-        protein,
-        carb,
-        fat,
+        calories: parseFloat(calories),
+        protein: parseFloat(protein),
+        carb: parseFloat(carb),
+        fat: parseFloat(fat),
         confidence,
       })
         .then((response) => {
           console.log(response.data);
           addItem(response.data);
-          cameraRef.resumePreview();
-          setShowForm(false);
-          setCustomName('');
-          setDescription('');
+          resetForm();
           navigation.navigate('Breakdown');
         })
         .catch((error) => {
@@ -223,7 +220,7 @@ function MainScreen({ navigation, storedUserName }) {
         type={type}
         ref={(ref) => { setCameraRef(ref); }}
       >
-        {!showForm && !showError
+        {!showForm && !showError && !manualInput
         && (
         <View style={styles.navBtnsWrapper}>
           <TouchableOpacity
@@ -403,23 +400,25 @@ function MainScreen({ navigation, storedUserName }) {
             placeholder="classification [ex. apple]"
             placeholderTextColor="white"
             />
-            <View style={[ styles.mainFormElement, styles.flexCol ]}>
-              <Text style={{ color: 'white', fontSize: 16 }}>calories</Text>
+            <View style={[ styles.mainFormElement, styles.flexCol, { width: '90%' } ]}>
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>calories</Text>
               <TextInput
               onChangeText={setCalories}
+              keyboardType='numeric'
               value={calories}
-              placeholder="[ex. 150]"
+              placeholder="150"
               placeholderTextColor="white"
               style={{ marginBottom: 10 }}
               />
-              <Text style={{ color: 'white', fontSize: 16 }}>macros</Text>
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>macros</Text>
               <View style={styles.centerMeEvenly}>
                 <View style={styles.flexCol}>
                   <Text style={{ color: 'white', fontSize: 16 }}>protein</Text>
                   <TextInput
                   onChangeText={setProtein}
+                  keyboardType='numeric'
                   value={protein}
-                  placeholder="[ex. 20]"
+                  placeholder="40"
                   placeholderTextColor="white"
                   />
                 </View>
@@ -427,8 +426,9 @@ function MainScreen({ navigation, storedUserName }) {
                   <Text style={{ color: 'white', fontSize: 16 }}>carbs</Text>
                   <TextInput
                   onChangeText={setCarb}
+                  keyboardType='numeric'
                   value={carb}
-                  placeholder="[ex. 40]"
+                  placeholder="40"
                   placeholderTextColor="white"
                   />
                 </View>
@@ -436,8 +436,9 @@ function MainScreen({ navigation, storedUserName }) {
                   <Text style={{ color: 'white', fontSize: 16 }}>fats</Text>
                   <TextInput
                   onChangeText={setFat}
+                  keyboardType='numeric'
                   value={fat}
-                  placeholder="[ex. 10]"
+                  placeholder="10"
                   placeholderTextColor="white"
                   />
                 </View>
@@ -476,7 +477,7 @@ function MainScreen({ navigation, storedUserName }) {
               width: '50%',
               justifyContent: 'space-evenly',
             }}>
-              <TouchableOpacity onPress={() => { setManualInput(true); }} style={styles.mainFormBtn}>
+              <TouchableOpacity onPress={() => { setClassification(''); setManualInput(true); setShowError(false); setCorrectError(false); }} style={styles.mainFormBtn}>
                 <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
