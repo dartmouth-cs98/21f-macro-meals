@@ -4,7 +4,7 @@ import {
   Text, View, Animated, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Button, CheckBox, Input } from 'react-native-elements';
+import { CheckBox, Input } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userLogin } from '../redux/actions/userActions';
@@ -42,6 +42,10 @@ const SceneLogin = ({
   };
 
   fadeIn();
+
+  const toggleRememberMe = (value) => {
+    setKeepSignedIn(value);
+  }
 
   const validateLogin = () => {
     let formStatus = 'valid';
@@ -116,6 +120,7 @@ const SceneLogin = ({
 
             <Input
               placeholder="password"
+              secureTextEntry={true}
               onChangeText={(text) => {
                 setPassWord(text);
                 setPasswordStatus('okay');
@@ -135,7 +140,7 @@ const SceneLogin = ({
               center
               title='remember me'
               checkedColor='#DC95FE'
-              onPress={() => { setKeepSignedIn(!keepSignedIn); }}
+              onPress={() => { toggleRememberMe(!keepSignedIn); }}
             />
             <View style={styles.centerMe}>
               <TouchableOpacity onPress={() => { validateLogin(); }} style={styles.authBtn}>

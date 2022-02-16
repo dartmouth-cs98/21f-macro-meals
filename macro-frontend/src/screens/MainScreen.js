@@ -13,11 +13,11 @@ import styles from '../styles';
 import { RNS3 } from 'react-native-aws3';
 
 const options = {
-  keyPrefix: "uploads/",
-  bucket: "macro-meals-images",
+  keyPrefix: "",
+  bucket: "macro-meals-food-images",
   region: "us-east-1",
-  accessKey: "AKIAXST3R2TTOITGUBFB",
-  secretKey: "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",
+  accessKey: "AKIA2NYKPWHN3VHSQPIE",
+  secretKey: "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",
   successActionStatus: 201
 }
 
@@ -34,7 +34,8 @@ function MainScreen({ navigation, storedUserName }) {
   const [cameraRef, setCameraRef] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('classification failed. please try again!');
+  const [correctError, setCorrectError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('classification failed. would you like to create a manual entry?');
   const [customName, setCustomName] = useState('');
   const [description, setDescription] = useState('');
   const [mealTime, setMealTime] = useState('breakfast');
@@ -42,12 +43,13 @@ function MainScreen({ navigation, storedUserName }) {
   const [publicFood, setPublicFood] = useState(1);
   const [imageUrl, setImageUrl] = useState('');
   const [classification, setClassification] = useState('');
-  const [calories, setCalories] = useState(0);
-  const [protein, setProtein] = useState(0);
-  const [carb, setCarb] = useState(0);
-  const [fat, setFat] = useState(0);
+  const [calories, setCalories] = useState('');
+  const [protein, setProtein] = useState('');
+  const [carb, setCarb] = useState('');
+  const [fat, setFat] = useState('');
   const [confidence, setConfidence] = useState(0);
   const [simple, setSimple] = useState(false);
+  const [manualInput, setManualInput] = useState(false);
 
   const dispatch = useDispatch();
   const addItem = (value) => {
@@ -76,19 +78,20 @@ function MainScreen({ navigation, storedUserName }) {
     })
       .then((response) => {
         console.log(response.data);
-        if (response.data.classification) {
-          setClassification(response.data.classification);
-          setCalories(response.data.calories);
-          setProtein(response.data.protein);
-          setCarb(response.data.carbs);
-          setFat(response.data.fats);
-          setConfidence(response.data.confidence)
+        if (response.data.one) {
+          setClassification(response.data.one.food);
+          setCalories(response.data.one.calorie);
+          setProtein(response.data.one.protein);
+          setCarb(response.data.one.carb);
+          setFat(response.data.one.fat);
+          setConfidence(response.data.one.confidence);
         } else {
-          setClassification('failed')
+          setClassification('failed');
         }
         
       })
       .catch((error) => {
+        setClassification('failed');
         console.log(error.message);
       });
   };
@@ -96,10 +99,11 @@ function MainScreen({ navigation, storedUserName }) {
   async function onPictureSaved(photo) {
     cameraRef.pausePreview();
     setShowForm(true);
+    console.log(photo.uri);
     if (photo.uri.substring(0,4) == 'file') {
       const file = {
         uri: photo.uri,
-        name: storedUserName + Date.now().toString() + '.jpg',
+        name: storedUserName + Date.now().toString(),
         type: 'image/jpeg',
       }
   
@@ -136,19 +140,16 @@ function MainScreen({ navigation, storedUserName }) {
         publicFood,
         imageUrl,
         classification,
-        calories,
-        protein,
-        carb,
-        fat,
+        calories: parseFloat(calories),
+        protein: parseFloat(protein),
+        carb: parseFloat(carb),
+        fat: parseFloat(fat),
         confidence,
       })
         .then((response) => {
           console.log(response.data);
           addItem(response.data);
-          cameraRef.resumePreview();
-          setShowForm(false);
-          setCustomName('');
-          setDescription('');
+          resetForm();
           navigation.navigate('Breakdown');
         })
         .catch((error) => {
@@ -156,15 +157,10 @@ function MainScreen({ navigation, storedUserName }) {
         });
     }
     else if (classification === 'failed') {
-      setErrorMessage('classification failed. please try again!');
+      setErrorMessage('classification failed. would you like to create a manual entry?');
       setShowError(true);
-      setTimeout(() => {
-        setShowError(false);
-      }, 2000);
-      cameraRef.resumePreview();
+      setCorrectError(true);
       setShowForm(false);
-      setCustomName('');
-      setDescription('');
     } else if (classification === '') {
       setErrorMessage('still classifying... try again in a moment!');
       setShowError(true);
@@ -179,8 +175,12 @@ function MainScreen({ navigation, storedUserName }) {
   const resetForm = () => {
     cameraRef.resumePreview();
     setShowForm(false);
+    setShowError(false);
+    setCorrectError(false);
+    setManualInput(false);
     setCustomName('');
     setDescription('');
+    setClassification('');
   }
 
   const updateFieldsSimple = (s) => {
@@ -220,18 +220,9 @@ function MainScreen({ navigation, storedUserName }) {
         type={type}
         ref={(ref) => { setCameraRef(ref); }}
       >
-        {!showForm
+        {!showForm && !showError && !manualInput
         && (
-        <View style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          position: 'relative',
-          paddingBottom: 0.05 * windowWidth,
-        }}
-        >
+        <View style={styles.navBtnsWrapper}>
           <TouchableOpacity
             style={styles.navTertBtn}
             onPress={() => {
@@ -291,16 +282,7 @@ function MainScreen({ navigation, storedUserName }) {
         )}
         {showForm
         && (
-        <View style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          position: 'relative',
-          paddingTop: 20,
-        }}
-        >
+        <View style={styles.formWrapper}>
           <View style={styles.formToggle}>
             <TouchableOpacity 
               style={{ backgroundColor: simple ? '#DC95FE' : '#e7b3ff' }}
@@ -341,21 +323,14 @@ function MainScreen({ navigation, storedUserName }) {
               selectedValue={mealTime}
               onValueChange={(itemValue, itemIndex) => setMealTime(itemValue)}
             >
-              <Picker.Item label="breakfast" value="breakfast" />
+              <Picker.Item label="breakfast" value="breakfast" style={{ color: 'white' }} />
               <Picker.Item label="lunch" value="lunch" />
               <Picker.Item label="dinner" value="dinner" />
               <Picker.Item label="snack" value="snack" />
             </Picker>
             <View style={styles.mainFormElement}>
               <Text style={{ color: 'white', fontSize: 16 }}>current mood</Text>
-              <View style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'space-evenly',
-                marginTop: 10,
-                marginBottom: 10,
-              }}>
+              <View style={styles.formIconSelect}>
                 <TouchableOpacity onPress={() => { setMood('positive'); }} style={{ 
                   borderWidth: mood === 'positive' ? 2 : 0,
                   borderColor: 'white',
@@ -384,14 +359,7 @@ function MainScreen({ navigation, storedUserName }) {
             </View>
             <View style={styles.mainFormElement}>
               <Text style={{ color: 'white', fontSize: 16 }}>make public?</Text>
-              <View style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'space-evenly',
-                marginTop: 10,
-                marginBottom: 10,
-              }}>
+              <View style={styles.formIconSelect}>
                 <TouchableOpacity onPress={() => { setPublicFood(1); }} style={{ 
                   borderWidth: publicFood === 1 ? 2 : 0,
                   borderColor: 'white',
@@ -412,12 +380,7 @@ function MainScreen({ navigation, storedUserName }) {
             </View>
           </View>
           }
-          <View style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '50%',
-            justifyContent: 'space-evenly',
-          }}>
+          <View style={styles.formBtnWrapper}>
             <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
               <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
             </TouchableOpacity>
@@ -426,6 +389,70 @@ function MainScreen({ navigation, storedUserName }) {
             </TouchableOpacity>
           </View>
         </View>
+        )}
+        {manualInput
+        && (
+          <View style={styles.formWrapper}>
+            <TextInput
+            style={styles.mainFormElement}
+            onChangeText={setClassification}
+            value={classification}
+            placeholder="classification [ex. apple]"
+            placeholderTextColor="white"
+            />
+            <View style={[ styles.mainFormElement, styles.flexCol, { width: '90%' } ]}>
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>calories</Text>
+              <TextInput
+              onChangeText={setCalories}
+              keyboardType='numeric'
+              value={calories}
+              placeholder="[ex. 150]"
+              placeholderTextColor="white"
+              style={{ marginBottom: 10 }}
+              />
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>macros</Text>
+              <View style={styles.centerMeEvenly}>
+                <View style={styles.flexCol}>
+                  <Text style={{ color: 'white', fontSize: 16 }}>protein</Text>
+                  <TextInput
+                  onChangeText={setProtein}
+                  keyboardType='numeric'
+                  value={protein}
+                  placeholder="[ex. 20]"
+                  placeholderTextColor="white"
+                  />
+                </View>
+                <View style={styles.flexCol}>
+                  <Text style={{ color: 'white', fontSize: 16 }}>carbs</Text>
+                  <TextInput
+                  onChangeText={setCarb}
+                  keyboardType='numeric'
+                  value={carb}
+                  placeholder="[ex. 40]"
+                  placeholderTextColor="white"
+                  />
+                </View>
+                <View style={styles.flexCol}>
+                  <Text style={{ color: 'white', fontSize: 16 }}>fats</Text>
+                  <TextInput
+                  onChangeText={setFat}
+                  keyboardType='numeric'
+                  value={fat}
+                  placeholder="[ex. 10]"
+                  placeholderTextColor="white"
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={styles.formBtnWrapper}>
+            <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
+            </TouchableOpacity>
+          </View>
+          </View>
         )}
         {showError
         && (
@@ -441,7 +468,23 @@ function MainScreen({ navigation, storedUserName }) {
           justifyContent: 'center',
         }}
         >
-          <Text style={styles.boldWhiteText}>{errorMessage}</Text>
+           <View style={[ styles.mainFormElement, { textAlign: 'center' } ]}><Text style={styles.boldWhiteText}>{errorMessage}</Text></View>
+           {correctError
+           && (
+            <View style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '50%',
+              justifyContent: 'space-evenly',
+            }}>
+              <TouchableOpacity onPress={() => { setClassification(''); setManualInput(true); setShowError(false); setCorrectError(false); }} style={styles.mainFormBtn}>
+                <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+                <Text style={{ color: 'white', fontSize: 16 }}>no</Text>
+              </TouchableOpacity>
+            </View>
+           )}
         </View>
         )}
       </Camera>

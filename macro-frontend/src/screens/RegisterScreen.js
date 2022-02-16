@@ -99,6 +99,7 @@ const SceneRegister = ({ navigation, login }) => {
 
           <Input
             placeholder="password"
+            secureTextEntry={true}
             onChangeText={(text) => {
               setPassWord(text);
               setPasswordStatus('okay');
@@ -115,6 +116,7 @@ const SceneRegister = ({ navigation, login }) => {
 
           <Input
             placeholder="confirm password"
+            secureTextEntry={true}
             onChangeText={(text) => {
               setPassWordConfirm(text);
               setPasswordStatus('okay');
