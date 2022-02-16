@@ -41,6 +41,7 @@ const MealCard = (props) => {
   const [favorite, setFavorite] = useState(null);
   const [confirmScreen, setConfirmScreen] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [recipeExpand, setRecipeExpand] = useState(false);
   const [didRecipeInfo, setRecipeInfo] = useState(false);
 
   /* jank wiring, will replace later */
@@ -136,31 +137,25 @@ const MealCard = (props) => {
     if (mealId === recipe1 && individRecipe.individ !== undefined && individRecipe.individ.id === mealId) {
       const wordArray = individRecipe.individ.summary.split('It is brought');
       const newWordArray = wordArray[0].replace(/<\/?[^>]+(>|$)/g, '');
-      console.log(newWordArray);
-      // console.log(individRecipe.individ.summary);
-      // return (<Text>{individRecipe.individ.summary}</Text>);
+      return (
+        <Text style={styles.subHeaderText}>
+          {newWordArray}
+        </Text>
+      );
     }
-  };
-
-  const errorTry = () => {
-    console.log(recipe1);
   };
 
   const mapSpoonacular = () => {
     return (allRecipes.all.map((item) => {
       return (
-        <TouchableOpacity key={item.id} style={stylesLocal.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
+        <TouchableOpacity key={item.id} style={styles.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
 
           <Image
-            style={stylesLocal.recipeImage}
+            style={styles.recipeImage}
             source={{ uri: `${item.image}` }}
           />
-          <Text style={stylesLocal.subheaderText}>{item.title}</Text>
+          <Text style={styles.subheaderText}>{item.title}</Text>
           {displayRecipe(item.id)}
-          {didRecipeInfo
-          && (
-            <Text>Hello</Text>
-          )}
         </TouchableOpacity>
       );
     }));
@@ -202,82 +197,73 @@ const MealCard = (props) => {
         </View>
       </TouchableOpacity>
       )}
-
         { !expand
           && (
-            <View style={stylesLocal.cardContainer}>
+            <View style={styles.mealText}>
               <Image
                 style={stylesLocal.foodImage}
                 source={{ uri: `${foodImg}` }}
               />
-
               {/* the food information */}
-              <View style={stylesLocal.mealInfo}>
-
-                <Text style={{ fontFamily: 'Dosis_400Regular', fontSize: 28 }}>{(mealName || classification)}</Text>
-
-                <View style={stylesLocal.subInfo}>
-                  <Text style={stylesLocal.mealSubHeader}>
+              <View>
+                <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
+                <View style={styles.mealColumn}>
+                  <Text style={styles.secFont}>
                     {monthArray[parseInt(time.substring(5, 7)) - 1]}
                     {' '}
                     {time.substring(8, 10)}
-                  </Text>
-                  <Text style={stylesLocal.mealSubHeader}>
-                    {totalCal}
+                    ,
                     {' '}
-                    Cal
+                    {time.substring(0, 4)}
                   </Text>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.primFontBold}>Classification: </Text>
+                    <Text style={styles.secFont}>{classification}</Text>
+                  </View>
                 </View>
               </View>
             </View>
           )}
 
         { expand
-        && (
-          <View style={stylesLocal.cardContainerExpand}>
-            {/* title */}
-            <Text>{mealName}</Text>
-            <Image
-              style={stylesLocal.foodImageExpand}
-              source={{ uri: `${foodImg}` }}
-            />
-            <View style={stylesLocal.allMacroStatsContainer}>
-              {/* protein */}
-              <View style={stylesLocal.individMacroStatConatiner}>
-                <Text>
-                  {protein}
-                  {' '}
-                  g
-                </Text>
-                <Text>protein</Text>
+          && (
+            <View style={styles.mealCardContainerExpand}>
+              <View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Calories: </Text>
+                  <Text style={styles.secFont}>{totalCal}</Text>
+                </View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Protein: </Text>
+                  <Text style={styles.secFont}>
+                    {protein}
+                    g
+                  </Text>
+                </View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Carbs: </Text>
+                  <Text style={styles.secFont}>
+                    {carb}
+                    g
+                  </Text>
+                </View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Fats: </Text>
+                  <Text style={styles.secFont}>
+                    {fat}
+                    g
+                  </Text>
+                </View>
               </View>
-
-              {/* fats */}
-              <View style={stylesLocal.individMacroStatConatiner}>
-                <Text>
-                  {fat}
-                  {' '}
-                  g
-                </Text>
-                <Text>fat</Text>
+              <View style={styles.mealColumn}>
+                <Text style={styles.primFontBold}>Description:</Text>
+                <Text style={styles.secFont}>{description || 'N/A'}</Text>
               </View>
-
-              {/* carbs */}
-              <View style={stylesLocal.individMacroStatConatiner}>
-                <Text>
-                  {carb}
-                  {' '}
-                  g
-                </Text>
-                <Text>carbs</Text>
+              <View style={styles.suggestedRecipeContainer}>
+                {mapSpoonacular()}
               </View>
             </View>
-
-            <View style={stylesLocal.suggestedRecipeContainer}>
-              {mapSpoonacular()}
-            </View>
-          </View>
-        )}
+          )}
 
       </TouchableOpacity>
       )}
@@ -335,7 +321,7 @@ const stylesLocal = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 7,
 
-    width: '30%',
+    width: '40%',
     height: '50%',
   },
 
@@ -345,12 +331,6 @@ const stylesLocal = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     textTransform: 'lowercase',
-  },
-
-  recipeImage: {
-    height: '40%',
-    width: '100%',
-    resizeMode: 'contain',
   },
 
   overallContainer: {

@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     borderRadius: 1000,
-    zIndex:2,
+    zIndex: 2,
   },
 
   backBtn: {
@@ -250,7 +250,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
-
   mainFormElement: {
     backgroundColor: secColor,
     color: 'white',
@@ -272,7 +271,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
 
-
   subHeaderText: {
     color: 'white',
     fontSize: 18,
@@ -280,7 +278,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  
+
   subSubHeaderText: {
     color: 'white',
     fontSize: 16,
@@ -308,8 +306,69 @@ const styles = StyleSheet.create({
   },
 
   secFontBold: {
-    color: '#54595F', 
-    fontWeight: 'bold', 
+    color: '#54595F',
+    fontWeight: 'bold',
+  },
+
+  // updated meal cards
+  mealCardContainerExpand: {
+    width: '100%',
+    height: '100%',
+
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+
+  mealInformation: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'center',
+  },
+
+  suggestedRecipeCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+
+    borderStyle: 'solid',
+    borderColor: '#DC95FE',
+    borderWidth: 3,
+    borderRadius: 7,
+
+    width: '30%',
+    height: '50%',
+  },
+
+  recipeImage: {
+    height: '40%',
+    width: '20%',
+    resizeMode: 'contain',
+  },
+
+  subheaderText: {
+    fontSize: 5,
+    width: '80%',
+    textAlign: 'center',
+    textTransform: 'lowercase',
+  },
+
+  suggestedRecipeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent: 'center',
+
+    height: '30%',
+    width: '100%',
+  },
+
+  spoonacularRecipe: {
+    display: 'flex',
+    flexDirection: 'row',
   },
 
   // OLD MEAL-CARDS STYLES
@@ -351,12 +410,22 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   mealText: {
+    display: 'flex',
+    flexDirection: 'row',
+
     width: '60%',
     height: '100%',
 
     justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
 
   },
+
+  allMealInfo: {
+    height: '100%',
+  },
+
   mealNameContainer: {
     paddingBottom: 10,
 
@@ -367,7 +436,8 @@ const styles = StyleSheet.create({
     color: secColor,
 
   },
-  mealInformation: {
+
+  meal1Information: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
