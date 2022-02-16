@@ -406,7 +406,7 @@ function MainScreen({ navigation, storedUserName }) {
               onChangeText={setCalories}
               keyboardType='numeric'
               value={calories}
-              placeholder="150"
+              placeholder="[ex. 150]"
               placeholderTextColor="white"
               style={{ marginBottom: 10 }}
               />
@@ -418,7 +418,7 @@ function MainScreen({ navigation, storedUserName }) {
                   onChangeText={setProtein}
                   keyboardType='numeric'
                   value={protein}
-                  placeholder="40"
+                  placeholder="[ex. 20]"
                   placeholderTextColor="white"
                   />
                 </View>
@@ -428,7 +428,7 @@ function MainScreen({ navigation, storedUserName }) {
                   onChangeText={setCarb}
                   keyboardType='numeric'
                   value={carb}
-                  placeholder="40"
+                  placeholder="[ex. 40]"
                   placeholderTextColor="white"
                   />
                 </View>
@@ -438,7 +438,7 @@ function MainScreen({ navigation, storedUserName }) {
                   onChangeText={setFat}
                   keyboardType='numeric'
                   value={fat}
-                  placeholder="10"
+                  placeholder="[ex. 10]"
                   placeholderTextColor="white"
                   />
                 </View>
