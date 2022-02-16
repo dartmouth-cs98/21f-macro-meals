@@ -116,6 +116,7 @@ const SceneLogin = ({
 
             <Input
               placeholder="password"
+              secureTextEntry={true}
               onChangeText={(text) => {
                 setPassWord(text);
                 setPasswordStatus('okay');

@@ -14,10 +14,10 @@ import { RNS3 } from 'react-native-aws3';
 
 const options = {
   keyPrefix: "",
-  bucket: "macro-meals-images",
+  bucket: "macro-meals-food-images",
   region: "us-east-1",
-  accessKey: "AKIAXST3R2TTOITGUBFB",
-  secretKey: "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",
+  accessKey: "AKIA2NYKPWHN3VHSQPIE",
+  secretKey: "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",
   successActionStatus: 201
 }
 
@@ -99,6 +99,7 @@ function MainScreen({ navigation, storedUserName }) {
   async function onPictureSaved(photo) {
     cameraRef.pausePreview();
     setShowForm(true);
+    console.log(photo.uri);
     if (photo.uri.substring(0,4) == 'file') {
       const file = {
         uri: photo.uri,
