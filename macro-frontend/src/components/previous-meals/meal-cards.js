@@ -155,7 +155,7 @@ const MealCard = (props) => {
             source={{ uri: `${item.image}` }}
           />
           <Text style={styles.subheaderText}>{item.title}</Text>
-          {displayRecipe(item.id)}
+          {/* {displayRecipe(item.id)} */}
         </TouchableOpacity>
       );
     }));
