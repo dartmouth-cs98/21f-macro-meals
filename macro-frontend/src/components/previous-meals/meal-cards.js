@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  StyleSheet, Text, Image, View, Dimensions, TouchableOpacity
+  StyleSheet, Text, Image, View, Dimensions, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  useFonts,
+  Dosis_400Regular,
+} from '@expo-google-fonts/dosis';
+import { fetchRecipe, fetchRecipeInfo } from '../../redux/actions/spoonacularActions';
 import styles from '../../styles';
 
 const windowWidth = Dimensions.get('window').width;
@@ -13,25 +19,41 @@ const neutralMood = require('../../img/neutralMood.png');
 const negativeMood = require('../../img/negativeMood.png');
 
 const MealCard = (props) => {
+  const [fontsLoaded] = useFonts({
+    Dosis_400Regular,
+  });
+
+  const allRecipes = useSelector((state) => state.recipe);
+  const individRecipe = useSelector((state) => state.recipe);
+  const dispatch = useDispatch();
+
   const {
-    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage,
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+  /* need to fix so only dispatches on expansion */
+
   let moodImage = null;
-  if (mood === 'positive') { moodImage = positiveMood; }
-  else if (mood === 'neutral') { moodImage = neutralMood; }
-  else { moodImage = negativeMood; }
+  if (mood === 'positive') { moodImage = positiveMood; } else if (mood === 'neutral') { moodImage = neutralMood; } else { moodImage = negativeMood; }
 
   const [expand, setExpand] = useState(false);
   const [favorite, setFavorite] = useState(null);
-  const [confirmScreen, setConfirmScreen] = useState(false); 
+  const [confirmScreen, setConfirmScreen] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [recipeExpand, setRecipeExpand] = useState(false);
+  const [didRecipeInfo, setRecipeInfo] = useState(false);
+
+  /* jank wiring, will replace later */
+  const [recipe1, setRecipe1] = useState(0);
+  const [recipe2, setRecipe2] = useState(false);
+  const [recipe3, setRecipe3] = useState(false);
+  const [count, setCount] = useState(0);
 
   const handleFavoritePress = () => {
     if (favorite) { // if is a favorite, need to delete
       axios.post('https://macro-cs98.herokuapp.com/api/fav/delete', {
-        foodId: id, username: username,
+        foodId: id, username,
       })
         .then((response) => {
           if (response.data) {
@@ -44,7 +66,7 @@ const MealCard = (props) => {
         });
     } else {
       axios.post('https://macro-cs98.herokuapp.com/api/fav/new', {
-        foodId: id, username: username,
+        foodId: id, username,
       })
         .then((response) => {
           if (response.data) {
@@ -56,17 +78,17 @@ const MealCard = (props) => {
           console.log(error.message);
         });
     }
-  }
+  };
 
   const handleDeletePress = () => {
     if (!confirmScreen) {
       setConfirmScreen(true);
     } else {
-      axios.post(`https://macro-cs98.herokuapp.com/api/food/delete`, {
-        id: id,
+      axios.post('https://macro-cs98.herokuapp.com/api/food/delete', {
+        id,
       })
         .then((response) => {
-          console.log('Deleted Food: ' + id);
+          console.log(`Deleted Food: ${id}`);
           setDeleted(true);
         })
         .catch((error) => {
@@ -74,11 +96,11 @@ const MealCard = (props) => {
           console.log(error.message);
         });
     }
-  }
+  };
 
   const getFavoriteStatus = () => {
     axios.post('https://macro-cs98.herokuapp.com/api/fav/check', {
-      foodId: id, username: username,
+      foodId: id, username,
     })
       .then((response) => {
         if (response.data) {
@@ -86,85 +108,180 @@ const MealCard = (props) => {
         } else {
           setFavorite(false);
         }
-        
       })
       .catch((error) => {
         console.log(error.message);
       });
-  }
+  };
 
   if (favorite === null) {
     getFavoriteStatus();
   }
 
+  const retrieveRecipe = (foodItem) => {
+    /* need to add use state so it is only called once */
+    dispatch(fetchRecipe(foodItem));
+    setExpand(!expand);
+  };
+
+  const getRecipeSteps = (mealId) => {
+    if (mealId === recipe1) {
+      console.log('found it');
+    } else {
+      setRecipe1(mealId);
+      dispatch(fetchRecipeInfo(mealId));
+    }
+  };
+
+  const displayRecipe = (mealId) => {
+    if (mealId === recipe1 && individRecipe.individ !== undefined && individRecipe.individ.id === mealId) {
+      const wordArray = individRecipe.individ.summary.split('It is brought');
+      const newWordArray = wordArray[0].replace(/<\/?[^>]+(>|$)/g, '');
+      return (
+        <Text style={styles.subHeaderText}>
+          {newWordArray}
+        </Text>
+      );
+    }
+  };
+
+  const mapSpoonacular = () => {
+    return (allRecipes.all.map((item) => {
+      return (
+        <TouchableOpacity key={item.id} style={styles.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
+
+          <Image
+            style={styles.recipeImage}
+            source={{ uri: `${item.image}` }}
+          />
+          <Text style={styles.subheaderText}>{item.title}</Text>
+          {/* {displayRecipe(item.id)} */}
+        </TouchableOpacity>
+      );
+    }));
+  };
+
   return (
     <View>
-      {!confirmScreen &&
-      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => {setExpand(!expand); }}>
-      <Icon name={expand ? 'compress' : 'expand'} color="#54595F" style={{ fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8 }} />
-      <TouchableOpacity 
-        style={{ position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2 }}
-        onPress={() => { handleFavoritePress(); }}
-      >
-        <Text style={StyleSheet.absoluteFillObject} />
-        <View>
-          <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
-        </View>
-      </TouchableOpacity>
-      { historyPage && 
-      <TouchableOpacity 
-        style={{ position: 'absolute', bottom: 4, left: 4, padding: 4, zIndex: 2 }}
+      {!confirmScreen
+      && (
+      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { retrieveRecipe(classification); }}>
+        <Icon name={expand ? 'compress' : 'expand'}
+          color="#54595F"
+          style={{
+            fontSize: 0.06 * windowWidth, position: 'absolute', top: 8, right: 8,
+          }}
+        />
+        <TouchableOpacity
+          style={{
+            position: 'absolute', bottom: 4, right: 4, padding: 4, zIndex: 2,
+          }}
+          onPress={() => { handleFavoritePress(); }}
+        >
+          <Text style={StyleSheet.absoluteFillObject} />
+          <View>
+            <Icon name={favorite ? 'heart' : 'heart-o'} color="#f66" style={{ fontSize: 0.06 * windowWidth }} />
+          </View>
+        </TouchableOpacity>
+        { historyPage
+      && (
+      <TouchableOpacity
+        style={{
+          position: 'absolute', bottom: 4, left: 4, padding: 4, zIndex: 2,
+        }}
         onPress={() => { handleDeletePress(); }}
       >
         <Text style={StyleSheet.absoluteFillObject} />
         <View>
-          <Icon name={'trash-o'} color="#54595F" style={{ fontSize: 0.06 * windowWidth }} />
+          <Icon name="trash-o" color="#54595F" style={{ fontSize: 0.06 * windowWidth }} />
         </View>
       </TouchableOpacity>
-      }
-      <View style={{ width: '30%', height: '80%' }}>
-        <Image
-          style={styles.foodImage}
-          source={{ uri: `${foodImg}` }}
-        />
-      </View>
-      <View style={styles.mealText}>
-        <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
-        <View style={styles.mealColumn}>
-          <Text style={styles.secFont}>{monthArray[parseInt(time.substring(5,7))-1]} {time.substring(8,10)}, {time.substring(0,4)}</Text>
-          <View style={styles.flexRow}><Text style={styles.primFontBold}>Classification: </Text><Text style={styles.secFont}>{classification}</Text></View>
-          { expand
+      )}
+        { !expand
           && (
-            <View style={[styles.mealColumn, { marginTop: 20 }]}>
-              <View style={{ marginBottom: 10 }}>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Calories: </Text><Text style={styles.secFont}>{totalCal}</Text></View>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Protein: </Text><Text style={styles.secFont}>{protein}g</Text></View>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Carbs: </Text><Text style={styles.secFont}>{carb}g</Text></View>
-                <View style={styles.flexRow}><Text style={styles.primFontBold}>Fats: </Text><Text style={styles.secFont}>{fat}g</Text></View>
-              </View>
-              <View style={styles.mealColumn}>
-                <Text style={styles.primFontBold}>Description:</Text>
-                <Text style={styles.secFont}>{description ? description : 'N/A'}</Text>
+            <View style={styles.mealText}>
+              <Image
+                style={styles.foodImage}
+                source={{ uri: `${foodImg}` }}
+              />
+              {/* the food information */}
+              <View style={styles.allMealInfo}>
+                <View styles={styles.mealNameContainer}><Text style={styles.mealNameText}>{(mealName || classification)}</Text></View>
+                <View style={styles.mealColumn}>
+                  <Text style={styles.secFont}>
+                    {monthArray[parseInt(time.substring(5, 7)) - 1]}
+                    {' '}
+                    {time.substring(8, 10)}
+                    ,
+                    {' '}
+                    {time.substring(0, 4)}
+                  </Text>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.primFontBold}>Classification: </Text>
+                    <Text style={styles.secFont}>{classification}</Text>
+                  </View>
+                </View>
               </View>
             </View>
           )}
-        </View>
-      </View>
-    </TouchableOpacity>
-    }
-    { confirmScreen &&
+
+        { expand
+          && (
+            <View style={styles.mealCardContainerExpand}>
+              <View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Calories: </Text>
+                  <Text style={styles.secFont}>{totalCal}</Text>
+                </View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Protein: </Text>
+                  <Text style={styles.secFont}>
+                    {protein}
+                    g
+                  </Text>
+                </View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Carbs: </Text>
+                  <Text style={styles.secFont}>
+                    {carb}
+                    g
+                  </Text>
+                </View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.primFontBold}>Fats: </Text>
+                  <Text style={styles.secFont}>
+                    {fat}
+                    g
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.mealColumn}>
+                <Text style={styles.primFontBold}>Description:</Text>
+                <Text style={styles.secFont}>{description || 'N/A'}</Text>
+              </View>
+              <View style={styles.suggestedRecipeContainer}>
+                {mapSpoonacular()}
+              </View>
+            </View>
+          )}
+
+      </TouchableOpacity>
+      )}
+      { confirmScreen
+    && (
     <View>
-      { !deleted &&
+      { !deleted
+      && (
       <View style={[styles.overallContainerVertical, { height: 0.4 * windowWidth }]}>
         <Text>delete this item?</Text>
         <View style={styles.centerMe}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.dangerBtn, { marginRight: 10 }]}
             onPress={() => { handleDeletePress(); }}
           >
             <Text style={{ color: 'white' }}>delete</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.authBtn}
             onPress={() => { setConfirmScreen(false); }}
           >
@@ -172,9 +289,9 @@ const MealCard = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-      }
+      )}
     </View>
-    }
+    )}
     </View>
   );
 };
