@@ -3448,13 +3448,6 @@ expo-constants@~11.0.2:
     expo-modules-core "~0.2.0"
     uuid "^3.3.2"
 
-expo-device@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/expo-device/-/expo-device-4.1.1.tgz#5de94144113ffb7fa0f37fa3d70e452113954c10"
-  integrity sha512-It0SGtKcvzQSf+Co6zdPdB63zZvG2/rDolB1lqswMNKj03Y7KVU41s5tcQCqNczj7tmeN3CJy7A8YhYGKdb7gA==
-  dependencies:
-    ua-parser-js "^0.7.19"
-
 expo-error-recovery@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-2.2.0.tgz#89e5494d97347530dd53cd817d7ac63f07bf8de0"
@@ -3497,11 +3490,6 @@ expo-modules-core@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.2.0.tgz#68e5b6e53d0afbf8d131578831aed657589a2d42"
   integrity sha512-inpfZ5X/BaTtbj2wG9PA9AC0MN8VyId6KSRlVuEg7+ziurHBy/kKDFxpOddUokhwiln2uhoYPSStJjR/tKypdw==
-
-expo-secure-store@^11.1.1:
-  version "11.1.1"
-  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-11.1.1.tgz#16f727f56f5b0eef9817fc0d64d79be26f8a34a8"
-  integrity sha512-pCajYYoZbl8IORxXw83SLUsWlU6a+HmjJZP8oiSvkG1KnZ5gPepiAMRRmcFUApYXBgiOvKRGOBEUfVwmR7yO4A==
 
 expo-status-bar@~1.0.4:
   version "1.0.4"
@@ -7003,7 +6991,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-ua-parser-js@^0.7.18, ua-parser-js@^0.7.19, ua-parser-js@^0.7.30:
+ua-parser-js@^0.7.18, ua-parser-js@^0.7.30:
   version "0.7.31"
   resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.31.tgz"
   integrity sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==
