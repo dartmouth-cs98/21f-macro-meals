@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "macro-frontend",
-    "slug": "macro-frontend",
+    "name": "macro",
+    "slug": "macro",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/macro-logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,7 +18,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.qspraut.macro"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +29,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/dartmouth-cs98/21f-macro-meals"
   }
 }
