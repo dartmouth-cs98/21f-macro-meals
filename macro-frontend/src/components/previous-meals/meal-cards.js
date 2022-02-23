@@ -120,7 +120,7 @@ const MealCard = (props) => {
 
   const retrieveRecipe = (foodItem) => {
     /* need to add use state so it is only called once */
-    dispatch(fetchRecipe(foodItem));
+    dispatch(fetchRecipe('apples'));
     setExpand(!expand);
   };
 
@@ -149,12 +149,7 @@ const MealCard = (props) => {
     return (allRecipes.all.map((item) => {
       return (
         <TouchableOpacity key={item.id} style={styles.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
-
-          <Image
-            style={styles.recipeImage}
-            source={{ uri: `${item.image}` }}
-          />
-          <Text style={styles.subheaderText}>{item.title}</Text>
+          <Text style={styles.mealCardRecipeFont}>{item.title}</Text>
           {/* {displayRecipe(item.id)} */}
         </TouchableOpacity>
       );
@@ -228,37 +223,50 @@ const MealCard = (props) => {
         { expand
           && (
             <View style={styles.mealCardContainerExpand}>
-              <View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.primFontBold}>Calories: </Text>
-                  <Text style={styles.secFont}>{totalCal}</Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.primFontBold}>Protein: </Text>
-                  <Text style={styles.secFont}>
-                    {protein}
-                    g
-                  </Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.primFontBold}>Carbs: </Text>
-                  <Text style={styles.secFont}>
-                    {carb}
-                    g
-                  </Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.primFontBold}>Fats: </Text>
-                  <Text style={styles.secFont}>
-                    {fat}
-                    g
-                  </Text>
+
+              <Text style={styles.mealNameTextExp}>{classification}</Text>
+
+              <View style={styles.mealCardExpandView}>
+                <Image
+                  style={styles.foodImageExpand}
+                  source={{ uri: `${foodImg}` }}
+                />
+
+                <View style={styles.mealCardColumnExpand}>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.primFontBold}>Calories: </Text>
+                    <Text style={styles.secFont}>{totalCal}</Text>
+                  </View>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.primFontBold}>Protein: </Text>
+                    <Text style={styles.secFont}>
+                      {protein}
+                      g
+                    </Text>
+                  </View>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.primFontBold}>Carbs: </Text>
+                    <Text style={styles.secFont}>
+                      {carb}
+                      g
+                    </Text>
+                  </View>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.primFontBold}>Fats: </Text>
+                    <Text style={styles.secFont}>
+                      {fat}
+                      g
+                    </Text>
+                  </View>
+                  <View style={styles.mealColumn}>
+                    <Text style={styles.primFontBold}>Description:</Text>
+                    <Text style={styles.secFont}>{description || 'N/A'}</Text>
+                  </View>
                 </View>
               </View>
-              <View style={styles.mealColumn}>
-                <Text style={styles.primFontBold}>Description:</Text>
-                <Text style={styles.secFont}>{description || 'N/A'}</Text>
-              </View>
+
+              <Text style={styles.subsectionHeader}>related foods</Text>
+
               <View style={styles.suggestedRecipeContainer}>
                 {mapSpoonacular()}
               </View>

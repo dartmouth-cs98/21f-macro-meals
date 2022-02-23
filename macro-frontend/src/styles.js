@@ -415,6 +415,72 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
+  mealCardRecipeFont: {
+    fontSize: 10,
+    color: 'black',
+    fontWeight: 'normal',
+
+    textAlign: 'center',
+    textTransform: 'lowercase',
+  },
+
+  foodImageExpand: {
+    width: '40%',
+    height: '80%',
+
+    resizeMode: 'cover',
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginRight: 20,
+
+  },
+
+  mealCardExpandView: {
+    width: '80%',
+    height: '40%',
+
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    marginBottom: 50,
+    marginTop: 10,
+
+  },
+
+  mealCardColumnExpand: {
+    width: '60%',
+
+    padding: 8,
+
+    borderStyle: 'solid',
+    borderColor: '#DC95FE',
+    borderWidth: 2,
+    borderRadius: 7,
+  },
+
+  subsectionHeader: {
+    width: '100%',
+    textTransform: 'uppercase',
+
+    fontWeight: 'bold',
+    fontSize: 10,
+    textAlign: 'left',
+    marginLeft: 30,
+    marginBottom: 30,
+  },
+
+  mealNameTextExp: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: secColor,
+
+    marginTop: 25,
+    marginBottom: 20,
+  },
+
   // OLD MEAL-CARDS STYLES
 
   overallContainer: {
@@ -454,6 +520,8 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 20,
     overflow: 'hidden',
+
+    marginRight: 10,
   },
 
   mealText: {
