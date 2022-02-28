@@ -43,6 +43,7 @@ function MainScreen({ navigation, storedUserName }) {
   const [publicFood, setPublicFood] = useState(1);
   const [imageUrl, setImageUrl] = useState('');
   const [classification, setClassification] = useState('');
+  const [classificationStatus, setClassificationStatus] = useState('classifying');
   const [calories, setCalories] = useState('');
   const [protein, setProtein] = useState('');
   const [carb, setCarb] = useState('');
@@ -80,6 +81,7 @@ function MainScreen({ navigation, storedUserName }) {
         console.log(response.data);
         if (response.data.one) {
           setClassification(response.data.one.food);
+          setClassificationStatus('ready');
           setCalories(response.data.one.calorie);
           setProtein(response.data.one.protein);
           setCarb(response.data.one.carb);
@@ -87,11 +89,13 @@ function MainScreen({ navigation, storedUserName }) {
           setConfidence(response.data.one.confidence);
         } else {
           setClassification('failed');
+          setClassificationStatus('failed');
         }
         
       })
       .catch((error) => {
         setClassification('failed');
+        setClassificationStatus('failed');
         console.log(error.message);
       });
   };
@@ -181,6 +185,7 @@ function MainScreen({ navigation, storedUserName }) {
     setCustomName('');
     setDescription('');
     setClassification('');
+    setClassificationStatus('classifying');
   }
 
   const updateFieldsSimple = (s) => {
@@ -380,8 +385,15 @@ function MainScreen({ navigation, storedUserName }) {
             </View>
           </View>
           }
+          <View style={styles.mainFormElement}>
+            <Text style={{ color: 'white', fontSize: 12 }}>status: {classificationStatus}</Text>
+          </View>
           <View style={styles.formBtnWrapper}>
-            <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
+            <TouchableOpacity 
+              onPress={classificationStatus !== 'classifying' ? submitForm : null } 
+              disabled={classificationStatus !== 'classifying' ? false : true } 
+              style={classificationStatus !== 'classifying' ? styles.mainFormBtn : styles.mainFormBtnDisabled }
+            >
               <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
@@ -477,7 +489,7 @@ function MainScreen({ navigation, storedUserName }) {
               width: '50%',
               justifyContent: 'space-evenly',
             }}>
-              <TouchableOpacity onPress={() => { setClassification(''); setManualInput(true); setShowError(false); setCorrectError(false); }} style={styles.mainFormBtn}>
+              <TouchableOpacity onPress={() => { setClassification(''); setClassificationStatus('classifying'); setManualInput(true); setShowError(false); setCorrectError(false); }} style={styles.mainFormBtn}>
                 <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>

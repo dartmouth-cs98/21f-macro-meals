@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
 
   navTertBtn: {
     position: 'absolute',
-    top: 0.08 * windowWidth,
+    top: 0.1 * windowWidth,
     right: 0.04 * windowWidth,
     backgroundColor: secColor,
     width: 0.1 * windowWidth,
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   },
   navTertBtnLeft: {
     position: 'absolute',
-    top: 0.08 * windowWidth,
+    top: 0.1 * windowWidth,
     left: 0.04 * windowWidth,
     backgroundColor: secColor,
     width: 0.1 * windowWidth,
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
 
   backBtn: {
     position: 'absolute',
-    top: 0.04 * windowWidth,
+    top: 0.1 * windowWidth,
     left: 0.04 * windowWidth,
     backgroundColor: secColor,
     width: 0.1 * windowWidth,
@@ -310,6 +310,15 @@ const styles = StyleSheet.create({
 
   mainFormBtn: {
     backgroundColor: primColor,
+    color: 'white',
+    padding: 5,
+    borderRadius: 5,
+    borderColor: 'white',
+    borderWidth: 3,
+  },
+
+  mainFormBtnDisabled: {
+    backgroundColor: 'gray',
     color: 'white',
     padding: 5,
     borderRadius: 5,
