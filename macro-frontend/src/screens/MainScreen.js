@@ -186,6 +186,7 @@ function MainScreen({ navigation, storedUserName }) {
         carbThree: parseFloat(carbThree),
         fatThree: parseFloat(fatThree),
         confidenceThree,
+        correctClassification: 1,
       })
         .then((response) => {
           console.log(response.data);
