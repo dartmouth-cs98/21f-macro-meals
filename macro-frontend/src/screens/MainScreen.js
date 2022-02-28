@@ -43,12 +43,24 @@ function MainScreen({ navigation, storedUserName }) {
   const [publicFood, setPublicFood] = useState(1);
   const [imageUrl, setImageUrl] = useState('');
   const [classification, setClassification] = useState('');
+  const [classificationTwo, setClassificationTwo] = useState('');
+  const [classificationThree, setClassificationThree] = useState('');
   const [classificationStatus, setClassificationStatus] = useState('classifying');
   const [calories, setCalories] = useState('');
   const [protein, setProtein] = useState('');
   const [carb, setCarb] = useState('');
   const [fat, setFat] = useState('');
   const [confidence, setConfidence] = useState(0);
+  const [caloriesTwo, setCaloriesTwo] = useState('');
+  const [proteinTwo, setProteinTwo] = useState('');
+  const [carbTwo, setCarbTwo] = useState('');
+  const [fatTwo, setFatTwo] = useState('');
+  const [confidenceTwo, setConfidenceTwo] = useState(0);
+  const [caloriesThree, setCaloriesThree] = useState('');
+  const [proteinThree, setProteinThree] = useState('');
+  const [carbThree, setCarbThree] = useState('');
+  const [fatThree, setFatThree] = useState('');
+  const [confidenceThree, setConfidenceThree] = useState(0);
   const [simple, setSimple] = useState(false);
   const [manualInput, setManualInput] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -88,6 +100,18 @@ function MainScreen({ navigation, storedUserName }) {
           setCarb(response.data.one.carb);
           setFat(response.data.one.fat);
           setConfidence(response.data.one.confidence);
+          setClassificationTwo(response.data.two.food);
+          setCaloriesTwo(response.data.two.calorie);
+          setProteinTwo(response.data.two.protein);
+          setCarbTwo(response.data.two.carb);
+          setFatTwo(response.data.two.fat);
+          setConfidenceThree(response.data.two.confidence);
+          setClassificationThree(response.data.three.food);
+          setCaloriesThree(response.data.three.calorie);
+          setProteinThree(response.data.three.protein);
+          setCarbThree(response.data.three.carb);
+          setFatThree(response.data.three.fat);
+          setConfidenceThree(response.data.three.confidence);
         } else {
           setClassification('failed');
           setClassificationStatus('failed');
@@ -150,6 +174,18 @@ function MainScreen({ navigation, storedUserName }) {
         carb: parseFloat(carb),
         fat: parseFloat(fat),
         confidence,
+        classificationTwo,
+        caloriesTwo: parseFloat(caloriesTwo),
+        proteinTwo: parseFloat(proteinTwo),
+        carbTwo: parseFloat(carbTwo),
+        fatTwo: parseFloat(fatTwo),
+        confidenceTwo,
+        classificationThree,
+        caloriesThree: parseFloat(caloriesThree),
+        proteinThree: parseFloat(proteinThree),
+        carbThree: parseFloat(carbThree),
+        fatThree: parseFloat(fatThree),
+        confidenceThree,
       })
         .then((response) => {
           console.log(response.data);
