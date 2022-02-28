@@ -118,7 +118,7 @@ function CommunityScreen({ navigation, storedUserName }) {
       </View>
       <View style={styles.pageBody}>
         {currTab === 'recent' &&
-          <ScrollView styles={styles.scrollContainer}>
+          <ScrollView showsVerticalScrollIndicator={false} styles={styles.scrollContainer}>
           { recent !== null &&
           (
             recent.map((element, index) => (
@@ -151,7 +151,7 @@ function CommunityScreen({ navigation, storedUserName }) {
         </ScrollView>
         }
         {currTab === 'top' &&
-          <ScrollView styles={styles.scrollContainer}>
+          <ScrollView showsVerticalScrollIndicator={false} styles={styles.scrollContainer}>
           { top !== null &&
           (
             top.map((element, index) => (
@@ -183,7 +183,7 @@ function CommunityScreen({ navigation, storedUserName }) {
         </ScrollView>
         }
         {currTab === 'favorite' &&
-          <ScrollView styles={styles.scrollContainer}>
+          <ScrollView showsVerticalScrollIndicator={false} styles={styles.scrollContainer}>
           { favorite !== null &&
           (
             favorite.map((element, index) => (

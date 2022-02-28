@@ -40,7 +40,7 @@ function HistoryScreen({ navigation, storedUserName }) {
         <Text style={styles.headerText}>history</Text>
       </View>
       <View style={styles.pageBody}>
-        <ScrollView styles={styles.scrollContainer}>
+        <ScrollView showsVerticalScrollIndicator={false} styles={styles.scrollContainer}>
           { history !== null &&
           (
             history.map((element, index) => (
