@@ -214,6 +214,23 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 
+  navQuadBtnLeft: {
+    position: 'absolute',
+    top: 0.1 * windowWidth,
+    left: 0.16 * windowWidth,
+    backgroundColor: secColor,
+    width: 0.22 * windowWidth,
+    height: 0.1 * windowWidth,
+    borderColor: 'white',
+    borderWidth: 3,
+    display: 'flex',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+    borderRadius: 1000,
+    zIndex: 2,
+  },
+
   backBtn: {
     position: 'absolute',
     top: 0.1 * windowWidth,
@@ -304,6 +321,8 @@ const styles = StyleSheet.create({
     width: 0.7 * windowWidth,
     fontSize: 16,
     marginBottom: 10,
+    display: 'flex',
+    flexDirection: 'column',
   },
 
   mainFormBtn: {
