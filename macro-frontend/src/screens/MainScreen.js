@@ -51,6 +51,7 @@ function MainScreen({ navigation, storedUserName }) {
   const [confidence, setConfidence] = useState(0);
   const [simple, setSimple] = useState(false);
   const [manualInput, setManualInput] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   const dispatch = useDispatch();
   const addItem = (value) => {
@@ -225,7 +226,7 @@ function MainScreen({ navigation, storedUserName }) {
         type={type}
         ref={(ref) => { setCameraRef(ref); }}
       >
-        {!showForm && !showError && !manualInput
+        {!showForm && !showError && !manualInput && !showInfo
         && (
         <View style={styles.navBtnsWrapper}>
           <TouchableOpacity
@@ -241,6 +242,12 @@ function MainScreen({ navigation, storedUserName }) {
             <Text>
               <Icon name="rotate-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navQuadBtnLeft}
+            onPress={() => { setShowInfo(true); }}
+          >
+            <Text style={{ fontSize: 0.05 * windowWidth, fontWeight: 'bold', color: 'white' }}>beta <Icon name="info-circle" color="white" style={{ fontSize: 0.05 * windowWidth }} /></Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navTertBtnLeft}
@@ -281,6 +288,22 @@ function MainScreen({ navigation, storedUserName }) {
               <Text>
                 <Icon name="pie-chart" color="white" style={{ fontSize: 0.08 * windowWidth }} />
               </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        )}
+        {showInfo
+        && (
+        <View style={[ styles.formWrapper, { justifyContent: 'center' }]}>
+          <View style={styles.mainFormElement}>
+            <Text style={{ color: 'white', fontSize: 16 }}>macro is still in beta and is capable of recognizing the following foods:</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>apple</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>banana</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>onion</Text>
+          </View>
+          <View style={styles.formBtnWrapper}>
+            <TouchableOpacity onPress={() => { setShowInfo(false); }} style={styles.mainFormBtn}>
+              <Text style={{ color: 'white', fontSize: 16 }}>close</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -457,13 +480,13 @@ function MainScreen({ navigation, storedUserName }) {
               </View>
             </View>
             <View style={styles.formBtnWrapper}>
-            <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
-              <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
-              <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
+                <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+                <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
         {showError
