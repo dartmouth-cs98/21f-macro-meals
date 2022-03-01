@@ -11,6 +11,7 @@ import HistoryScreen from '../screens/HistoryScreen';
 import CommunityScreen from '../screens/CommunityScreen';
 import UserScreen from '../screens/UserScreen';
 import TestingScreen from '../screens/TestingScreen';
+import RecipeScreen from '../screens/recipeItemScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -31,7 +32,7 @@ const AppStack = createStackNavigator(
     History: HistoryScreen,
     Community: CommunityScreen,
     User: UserScreen,
-    Testing: TestingScreen,
+    Recipe: RecipeScreen,
   },
   {
     headerMode: 'none',
