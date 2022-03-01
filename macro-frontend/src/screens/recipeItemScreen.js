@@ -17,6 +17,37 @@ function RecipeScreen({ navigation }) {
     dispatch(fetchRecipeInstructions(navigation.state.params.id));
   }, []);
 
+  // loops through and creates containers for the recipes
+  const ingredientsDisplay = () => {
+    return (singleRecipe.ingredients.extendedIngredients.map((foodItem) => {
+      return (
+        <View key={foodItem.id}>
+          <Text>{foodItem.name}</Text>
+          <Text>
+            {foodItem.amount}
+            {' '}
+            {foodItem.unit}
+          </Text>
+        </View>
+      );
+    }));
+  };
+
+  // loops through and displays the instructions
+  const instructionDisplay = () => {
+    return (singleRecipe.instructions[0].steps.map((stepItem) => {
+      return (
+        <View key={stepItem.id}>
+          <Text>
+            {stepItem.number}
+            {' '}
+            {stepItem.step}
+          </Text>
+        </View>
+      );
+    }));
+  };
+
   const sanityCheck = () => {
     console.log(singleRecipe);
   };
@@ -32,13 +63,20 @@ function RecipeScreen({ navigation }) {
     } else {
       return (
         <View>
-          {/* displaying the title */}
-          <Text>{singleRecipe.ingredients.title}</Text>
+          {/* displaying the title and image */}
+          <View>
+            <Text>{singleRecipe.ingredients.title}</Text>
+          </View>
 
           {/* displaying the ingredients */}
-          <View />
+          <View>
+            {ingredientsDisplay()}
+          </View>
 
           {/* displaying the instructions */}
+          <View>
+            {instructionDisplay()}
+          </View>
         </View>
       );
     }
