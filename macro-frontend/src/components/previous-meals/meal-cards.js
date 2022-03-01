@@ -28,7 +28,7 @@ const MealCard = (props) => {
   const dispatch = useDispatch();
 
   const {
-    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage,
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage, navigation,
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -145,10 +145,18 @@ const MealCard = (props) => {
     }
   };
 
+  // HERE IS THE PROBLEM
   const mapSpoonacular = () => {
     return (allRecipes.all.map((item) => {
       return (
-        <TouchableOpacity key={item.id} style={styles.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
+        <TouchableOpacity key={item.id}
+          style={styles.suggestedRecipeCard}
+          onPress={() => {
+            navigation.navigate('Recipe', {
+              id: item.id,
+            });
+          }}
+        >
           <Text style={styles.mealCardRecipeFont}>{item.title}</Text>
           {/* {displayRecipe(item.id)} */}
         </TouchableOpacity>

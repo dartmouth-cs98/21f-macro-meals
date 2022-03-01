@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { View, Text, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
+import {
+  View, Text, TouchableOpacity, Dimensions, ScrollView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MealCard from '../components/previous-meals/meal-cards';
 import styles from '../styles';
@@ -23,13 +25,13 @@ function CommunityScreen({ navigation, storedUserName }) {
       .catch((error) => {
         console.log('Error in getCommunityRecent:');
         console.log(error.message);
-      })
-  }
+      });
+  };
 
   const getCommunityTop = () => {
     axios.get('https://macro-cs98.herokuapp.com/api/fav/top')
       .then((response) => {
-        let idList = [];
+        const idList = [];
         for (let i = 0; i < response.data.length; i++) {
           idList.push(response.data[i]._id);
         }
@@ -42,19 +44,19 @@ function CommunityScreen({ navigation, storedUserName }) {
           .catch((error1) => {
             console.log('Error in getCommunityTop:');
             console.log(error1.message);
-          })
+          });
       })
       .catch((error) => {
         console.log('Error in getCommunityTop:');
         console.log(error.message);
-      })
-  }
+      });
+  };
   const getCommunityFavorite = () => {
     axios.post('https://macro-cs98.herokuapp.com/api/fav/user', {
       username: storedUserName,
     })
       .then((response) => {
-        let idList = [];
+        const idList = [];
         for (let i = 0; i < response.data.length; i++) {
           idList.push(response.data[i].foodId);
         }
@@ -67,14 +69,14 @@ function CommunityScreen({ navigation, storedUserName }) {
           .catch((error1) => {
             console.log('Error in getCommunityFavorite:');
             console.log(error1.message);
-          })
+          });
       })
       .catch((error) => {
         console.log('Error in getCommunityFavorite:');
         console.log(error.message);
-      })
-  }
-  
+      });
+  };
+
   if (recent === null) {
     getCommunityRecent();
   }
@@ -97,39 +99,40 @@ function CommunityScreen({ navigation, storedUserName }) {
         <Text style={styles.headerText}>community</Text>
       </View>
       <View style={styles.communityTabs}>
-        <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'recent' ? '#DC95FE' : '#e7b3ff' }]}
-          onPress={() => {setCurrTab('recent')}}
+        <TouchableOpacity
+          style={[styles.communityTab, { backgroundColor: currTab == 'recent' ? '#DC95FE' : '#e7b3ff' }]}
+          onPress={() => { setCurrTab('recent'); }}
         >
           <Text style={styles.cTabText}>recent</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'top' ? '#DC95FE' : '#e7b3ff'}]}
-          onPress={() => {setCurrTab('top')}}
+        <TouchableOpacity
+          style={[styles.communityTab, { backgroundColor: currTab == 'top' ? '#DC95FE' : '#e7b3ff' }]}
+          onPress={() => { setCurrTab('top'); }}
         >
           <Text style={styles.cTabText}>top rated</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={[styles.communityTab, {backgroundColor: currTab == 'favorite' ? '#DC95FE' : '#e7b3ff'}]}
-          onPress={() => {setCurrTab('favorite')}}
+        <TouchableOpacity
+          style={[styles.communityTab, { backgroundColor: currTab == 'favorite' ? '#DC95FE' : '#e7b3ff' }]}
+          onPress={() => { setCurrTab('favorite'); }}
         >
           <Text style={styles.cTabText}>favorite</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.pageBody}>
-        {currTab === 'recent' &&
+        {currTab === 'recent'
+          && (
           <ScrollView styles={styles.scrollContainer}>
-          { recent !== null &&
-          (
+            { recent !== null
+          && (
             recent.map((element, index) => (
-              <MealCard 
-                key={element.id} 
+              <MealCard
+                key={element.id}
                 id={element.id}
                 mealName={element.customName}
                 description={element.description}
-                time={element.createdAt} 
-                totalCal={element.calories} 
-                foodImg={element.imageUrl} 
+                time={element.createdAt}
+                totalCal={element.calories}
+                foodImg={element.imageUrl}
                 classification={element.classification}
                 protein={element.protein}
                 carb={element.carb}
@@ -137,85 +140,90 @@ function CommunityScreen({ navigation, storedUserName }) {
                 mood={element.mood}
                 username={storedUserName}
                 historyPage={false}
+                navigation={navigation}
               />
             ))
           )}
-          {recent !== null && recent.length === 0 && 
-          (
+            {recent !== null && recent.length === 0
+          && (
             <Text style={styles.secFontBold}>an error occurred...</Text>
           )}
-          { recent === null 
+            { recent === null
           && (
             <Text style={styles.secFontBold}>loading recents...</Text>
           )}
-        </ScrollView>
-        }
-        {currTab === 'top' &&
+          </ScrollView>
+          )}
+        {currTab === 'top'
+          && (
           <ScrollView styles={styles.scrollContainer}>
-          { top !== null &&
-          (
+            { top !== null
+          && (
             top.map((element, index) => (
-              <MealCard 
-                key={element.id} 
+              <MealCard
+                key={element.id}
                 id={element.id}
                 mealName={element.customName}
                 description={element.description}
-                time={element.createdAt} 
-                totalCal={element.calories} 
-                foodImg={element.imageUrl} 
+                time={element.createdAt}
+                totalCal={element.calories}
+                foodImg={element.imageUrl}
                 classification={element.classification}
                 protein={element.protein}
                 carb={element.carb}
                 fat={element.fat}
                 mood={element.mood}
                 username={storedUserName}
+                navigation={navigation}
               />
             ))
           )}
-          {top !== null && top.length === 0 &&
-          (
+            {top !== null && top.length === 0
+          && (
             <Text style={styles.secFontBold}>an error occurred...</Text>
           )}
-          { top === null 
+            { top === null
           && (
             <Text style={styles.secFontBold}>loading top rated...</Text>
           )}
-        </ScrollView>
-        }
-        {currTab === 'favorite' &&
+          </ScrollView>
+          )}
+        {currTab === 'favorite'
+          && (
           <ScrollView styles={styles.scrollContainer}>
-          { favorite !== null &&
-          (
+            { favorite !== null
+          && (
             favorite.map((element, index) => (
-              <MealCard 
-                key={element.id} 
+              <MealCard
+                key={element.id}
                 id={element.id}
                 mealName={element.customName}
                 description={element.description}
-                time={element.createdAt} 
-                totalCal={element.calories} 
-                foodImg={element.imageUrl} 
+                time={element.createdAt}
+                totalCal={element.calories}
+                foodImg={element.imageUrl}
                 classification={element.classification}
                 protein={element.protein}
                 carb={element.carb}
                 fat={element.fat}
                 mood={element.mood}
                 username={storedUserName}
+                navigation={navigation}
               />
             ))
           )}
-          {favorite !== null && favorite.length === 0 && 
-          (
+            {favorite !== null && favorite.length === 0
+          && (
             <Text style={styles.secFontBold}>you don't seem to have any favorites!</Text>
           )}
-          { favorite === null 
+            { favorite === null
           && (
             <Text style={styles.secFontBold}>loading your favorites...</Text>
           )}
-        </ScrollView>
-        }
+          </ScrollView>
+          )}
       </View>
-        
+
     </View>
   );
 }
