@@ -26,7 +26,6 @@ function BreakdownScreen({ navigation, foodList }) {
     fat: baseFood.fat,
     confidence: baseFood.confidence,
   });
-  console.log(baseFood);
 
   const updateClassification = (num) => {
     setClassificationNumber(num);
