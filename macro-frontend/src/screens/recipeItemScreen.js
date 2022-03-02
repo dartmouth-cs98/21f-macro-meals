@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import {
-  View, Text, TouchableOpacity, Dimensions,
+  View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView, ScrollView,
 } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRecipeInstructions, fetchIngredients } from '../redux/actions/spoonacularActions';
+import styles from '../styles';
 
 function RecipeScreen({ navigation }) {
   // check if it is loading
@@ -21,7 +22,7 @@ function RecipeScreen({ navigation }) {
   const ingredientsDisplay = () => {
     return (singleRecipe.ingredients.extendedIngredients.map((foodItem) => {
       return (
-        <View key={foodItem.id}>
+        <View key={foodItem.id} style={styles.ingredientCardContainer}>
           <Text>{foodItem.name}</Text>
           <Text>
             {foodItem.amount}
@@ -37,7 +38,7 @@ function RecipeScreen({ navigation }) {
   const instructionDisplay = () => {
     return (singleRecipe.instructions[0].steps.map((stepItem) => {
       return (
-        <View key={stepItem.id}>
+        <View key={stepItem.number}>
           <Text>
             {stepItem.number}
             {' '}
@@ -62,35 +63,40 @@ function RecipeScreen({ navigation }) {
       );
     } else {
       return (
-        <View>
+        <View style={styles.informationContainer}>
           {/* displaying the title and image */}
-          <View>
+          <View style={styles.titleContainer}>
             <Text>{singleRecipe.ingredients.title}</Text>
+            <Image
+              source={{ uri: `${singleRecipe.ingredients.image}` }}
+              style={styles.titleImage}
+            />
           </View>
 
-          {/* displaying the ingredients */}
-          <View>
+          {/* displaying the ingredients
+          <View style={styles.ingredientContainer}>
             {ingredientsDisplay()}
           </View>
 
-          {/* displaying the instructions */}
+          {/* displaying the instructions
           <View>
             {instructionDisplay()}
           </View>
+          */}
         </View>
       );
     }
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.recipeContainer}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <View>
-          <Text>Press Me</Text>
+          <Text>Go Back</Text>
         </View>
       </TouchableOpacity>
       {loading()}
-    </View>
+    </SafeAreaView>
   );
 }
 

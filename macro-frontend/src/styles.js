@@ -354,6 +354,37 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+  // RECIPE SCREEN
+  recipeContainer: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: neutralColor,
+  },
+
+  informationContainer: {
+    width: '100%',
+    height: '100%',
+
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  titleContainer: {
+    width: '100%',
+    height: '20%',
+
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  titleImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+
   // updated meal cards
   mealCardContainerExpand: {
     width: '100%',
