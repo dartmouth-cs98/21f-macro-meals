@@ -23,12 +23,12 @@ function RecipeScreen({ navigation }) {
     return (singleRecipe.ingredients.extendedIngredients.map((foodItem) => {
       return (
         <View key={foodItem.id} style={styles.ingredientCardContainer}>
-          <Text>{foodItem.name}</Text>
-          <Text>
+          <Text style={styles.ingredientAmount}>
             {foodItem.amount}
             {' '}
-            {foodItem.unit}
+            {foodItem.unit }
           </Text>
+          <Text style={styles.ingredientTitle}>{foodItem.name}</Text>
         </View>
       );
     }));
@@ -38,8 +38,8 @@ function RecipeScreen({ navigation }) {
   const instructionDisplay = () => {
     return (singleRecipe.instructions[0].steps.map((stepItem) => {
       return (
-        <View key={stepItem.number}>
-          <Text>
+        <View key={stepItem.number} style={styles.instructionCardContainer}>
+          <Text style={styles.instructionText}>
             {stepItem.number}
             {' '}
             {stepItem.step}
@@ -66,23 +66,25 @@ function RecipeScreen({ navigation }) {
         <View style={styles.informationContainer}>
           {/* displaying the title and image */}
           <View style={styles.titleContainer}>
-            <Text>{singleRecipe.ingredients.title}</Text>
             <Image
               source={{ uri: `${singleRecipe.ingredients.image}` }}
               style={styles.titleImage}
             />
+            <Text style={styles.titleText}>{singleRecipe.ingredients.title}</Text>
           </View>
 
-          {/* displaying the ingredients
+          {/* displaying the ingredients */}
           <View style={styles.ingredientContainer}>
-            {ingredientsDisplay()}
+            <ScrollView style={styles.ingredientScroll} horizontal>
+              {ingredientsDisplay()}
+            </ScrollView>
           </View>
 
-          {/* displaying the instructions
-          <View>
-            {instructionDisplay()}
+          <View style={styles.instructionConatiner}>
+            <ScrollView style={styles.instructionScroll}>
+              {instructionDisplay()}
+            </ScrollView>
           </View>
-          */}
         </View>
       );
     }
@@ -90,9 +92,9 @@ function RecipeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.recipeContainer}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
         <View>
-          <Text>Go Back</Text>
+          <Text>Back</Text>
         </View>
       </TouchableOpacity>
       {loading()}

@@ -120,7 +120,7 @@ const MealCard = (props) => {
 
   const retrieveRecipe = (foodItem) => {
     /* need to add use state so it is only called once */
-    dispatch(fetchRecipe('apples'));
+    dispatch(fetchRecipe(foodItem));
     setExpand(!expand);
   };
 
