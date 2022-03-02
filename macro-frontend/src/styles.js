@@ -536,13 +536,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
 
-    borderStyle: 'solid',
-    borderColor: '#DC95FE',
-    borderWidth: 3,
     borderRadius: 7,
 
-    width: '30%',
-    height: '50%',
+    backgroundColor: '#F956F2',
+
+    width: '32%',
+    padding: 10,
   },
 
   recipeImage: {
@@ -564,8 +563,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignContent: 'center',
 
-    height: '30%',
     width: '100%',
+    marginBottom: 50,
   },
 
   spoonacularRecipe: {
@@ -574,11 +573,11 @@ const styles = StyleSheet.create({
   },
 
   mealCardRecipeFont: {
-    fontSize: 10,
-    color: 'black',
-    fontWeight: 'normal',
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '600',
 
-    textAlign: 'center',
+    textAlign: 'left',
     textTransform: 'lowercase',
   },
 
@@ -604,7 +603,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     marginBottom: 50,
-    marginTop: 10,
+    marginTop: 40,
 
   },
 
@@ -624,10 +623,12 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
 
     fontWeight: 'bold',
-    fontSize: 10,
+    fontSize: 15,
     textAlign: 'left',
     marginLeft: 30,
-    marginBottom: 30,
+    marginBottom: 40,
+
+    color: '#F956F2',
   },
 
   mealNameTextExp: {
@@ -673,7 +674,7 @@ const styles = StyleSheet.create({
   },
 
   foodImage: {
-    width: '100%',
+    width: '80%',
     height: '100%',
     resizeMode: 'cover',
     borderRadius: 20,

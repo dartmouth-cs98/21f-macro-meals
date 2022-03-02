@@ -119,38 +119,25 @@ const MealCard = (props) => {
   }
 
   const retrieveRecipe = (foodItem) => {
-    /* need to add use state so it is only called once */
-    dispatch(fetchRecipe('apples'));
+    dispatch(fetchRecipe(foodItem));
     setExpand(!expand);
   };
 
-  const getRecipeSteps = (mealId) => {
-    if (mealId === recipe1) {
-      console.log('found it');
-    } else {
-      setRecipe1(mealId);
-      dispatch(fetchRecipeInfo(mealId));
-    }
-  };
-
-  const displayRecipe = (mealId) => {
-    if (mealId === recipe1 && individRecipe.individ !== undefined && individRecipe.individ.id === mealId) {
-      const wordArray = individRecipe.individ.summary.split('It is brought');
-      const newWordArray = wordArray[0].replace(/<\/?[^>]+(>|$)/g, '');
+  // HERE IS THE PROBLEM
+  const mapSpoonacular = () => {
+    if (allRecipes.all.length === 0) {
       return (
-        <Text style={styles.subHeaderText}>
-          {newWordArray}
-        </Text>
+        <View
+          style={styles.suggestedRecipeCard}
+        >
+          <Text style={styles.mealCardRecipeFont}>No items found!</Text>
+        </View>
       );
     }
-  };
-
-  const mapSpoonacular = () => {
     return (allRecipes.all.map((item) => {
       return (
         <TouchableOpacity key={item.id} style={styles.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
           <Text style={styles.mealCardRecipeFont}>{item.title}</Text>
-          {/* {displayRecipe(item.id)} */}
         </TouchableOpacity>
       );
     }));
@@ -160,7 +147,7 @@ const MealCard = (props) => {
     <View>
       {!confirmScreen
       && (
-      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 0.8 * windowWidth : 0.4 * windowWidth }]} onPress={() => { retrieveRecipe(classification); }}>
+      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 1 * windowWidth : 0.4 * windowWidth }]} onPress={() => { retrieveRecipe(classification); }}>
         <Icon name={expand ? 'compress' : 'expand'}
           color="#54595F"
           style={{
@@ -212,7 +199,7 @@ const MealCard = (props) => {
                     {time.substring(0, 4)}
                   </Text>
                   <View style={styles.flexRow}>
-                    <Text style={styles.primFontBold}>Classification: </Text>
+                    <Text style={styles.primFontBold}>Food: </Text>
                     <Text style={styles.secFont}>{classification}</Text>
                   </View>
                 </View>
