@@ -4,12 +4,13 @@ import {
 } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { fetchRecipeInstructions, fetchIngredients } from '../redux/actions/spoonacularActions';
 import styles from '../styles';
 
 function RecipeScreen({ navigation }) {
   // check if it is loading
-
+  const windowWidth = Dimensions.get('window').width;
   const singleRecipe = useSelector((state) => state.recipe);
   const dispatch = useDispatch();
 
@@ -73,22 +74,18 @@ function RecipeScreen({ navigation }) {
             <Text style={styles.titleText}>{singleRecipe.ingredients.title}</Text>
           </View>
 
-          <Text style={styles.sectionTitles}>Ingredients</Text>
-          {/* displaying the ingredients */}
-          <View style={styles.ingredientContainer}>
-            <ScrollView style={styles.ingredientScroll}>
-              <View style={styles.allIngredient}>
-                {ingredientsDisplay()}
-              </View>
-            </ScrollView>
-          </View>
+          <ScrollView style={styles.ingredientScroll}>
+            {/* displaying the ingredients */}
+            <Text style={styles.sectionTitles}>Ingredients</Text>
+            <View style={styles.ingredientContainer}>
+              {ingredientsDisplay()}
+            </View>
 
-          <Text style={styles.sectionTitles}>Recipe Instructions</Text>
-          <View style={styles.instructionConatiner}>
-            <ScrollView style={styles.instructionScroll}>
+            <Text style={styles.sectionTitles}>Recipe Instructions</Text>
+            <View style={styles.instructionConatiner}>
               {instructionDisplay()}
-            </ScrollView>
-          </View>
+            </View>
+          </ScrollView>
         </View>
       );
     }
@@ -96,10 +93,10 @@ function RecipeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.recipeContainer}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <View>
-          <Text>Back</Text>
-        </View>
+      <TouchableOpacity style={styles.navTertBtn} onPress={() => navigation.goBack()}>
+        <Text>
+          <Icon name="rotate-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+        </Text>
       </TouchableOpacity>
       {loading()}
     </SafeAreaView>

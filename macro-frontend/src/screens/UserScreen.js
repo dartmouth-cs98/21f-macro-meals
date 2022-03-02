@@ -26,10 +26,6 @@ function UserScreen({ navigation, storedUserName, recipe }) {
       <TouchableOpacity style={styles.authBtn} onPress={handleLogout}>
         <Text style={styles.authBtnFont}>logout</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.mainFormBtn} onPress={() => { navigation.navigate('Testing'); }}>
-        <Text style={{ color: 'white', fontSize: 16 }}>testing page</Text>
-      </TouchableOpacity>
     </View>
   );
 }
