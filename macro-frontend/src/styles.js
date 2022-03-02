@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
-    width: '80%',
+    width: '60%',
     height: '20%',
 
     display: 'flex',
@@ -403,6 +403,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '10%',
+    marginBottom: 50,
   },
 
   ingredientScroll: {
@@ -412,15 +413,15 @@ const styles = StyleSheet.create({
 
   ingredientCardContainer: {
     display: 'flex',
-    width: 200,
     height: 100,
     borderRadius: 10,
+    padding: 30,
 
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
 
-    margin: 10,
+    margin: 5,
 
     backgroundColor: '#F956F2',
   },
@@ -443,25 +444,30 @@ const styles = StyleSheet.create({
     height: 500,
   },
 
+  allIngredient: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    justifyContent: 'center',
+  },
+
   instructionScroll: {
     marginRight: 15,
     marginLeft: 15,
   },
 
   instructionCardContainer: {
-    height: 100,
-
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
 
-    paddingLeft: 15,
-    paddingRight: 10,
+    padding: 20,
     marginBottom: 10,
 
     borderRadius: 8,
-    backgroundColor: primColor,
+    backgroundColor: '#F956F2',
   },
 
   instructionText: {
@@ -469,6 +475,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#ffffff',
     textAlign: 'left',
+
+    lineHeight: 25,
+  },
+
+  sectionTitles: {
+    fontWeight: '500',
+    color: secColor,
+    fontSize: 20,
+    marginBottom: 15,
   },
 
   // updated meal cards

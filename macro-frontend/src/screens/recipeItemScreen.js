@@ -73,13 +73,17 @@ function RecipeScreen({ navigation }) {
             <Text style={styles.titleText}>{singleRecipe.ingredients.title}</Text>
           </View>
 
+          <Text style={styles.sectionTitles}>Ingredients</Text>
           {/* displaying the ingredients */}
           <View style={styles.ingredientContainer}>
-            <ScrollView style={styles.ingredientScroll} horizontal>
-              {ingredientsDisplay()}
+            <ScrollView style={styles.ingredientScroll}>
+              <View style={styles.allIngredient}>
+                {ingredientsDisplay()}
+              </View>
             </ScrollView>
           </View>
 
+          <Text style={styles.sectionTitles}>Recipe Instructions</Text>
           <View style={styles.instructionConatiner}>
             <ScrollView style={styles.instructionScroll}>
               {instructionDisplay()}
@@ -92,7 +96,7 @@ function RecipeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.recipeContainer}>
-      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <View>
           <Text>Back</Text>
         </View>
