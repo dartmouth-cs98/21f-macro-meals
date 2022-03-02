@@ -432,11 +432,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '10%',
     marginBottom: 50,
+
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    justifyContent: 'center',
   },
 
   ingredientScroll: {
-    marginRight: 5,
-    marginLeft: 5,
+    marginRight: 20,
+    marginLeft: 20,
   },
 
   ingredientCardContainer: {
@@ -469,15 +475,7 @@ const styles = StyleSheet.create({
   instructionConatiner: {
     flex: 1,
     width: '100%',
-    height: 500,
-  },
-
-  allIngredient: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-
-    justifyContent: 'center',
+    marginBottom: 20,
   },
 
   instructionScroll: {
