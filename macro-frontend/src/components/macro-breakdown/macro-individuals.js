@@ -54,10 +54,10 @@ class MacroPieChart extends Component {
     // making the calculations to render the circle
     calcCircle = () => {
       // settiing up basic figures
-      let total = this.props.allMacros[this.props.allMacros.length - 1].calories;
-      let tFat = this.props.allMacros[this.props.allMacros.length - 1].fat;
-      let tProtein = this.props.allMacros[this.props.allMacros.length - 1].protein;
-      let tCarbs = this.props.allMacros[this.props.allMacros.length - 1].carb;
+      let total = this.props.allMacros.calories;
+      let tFat = this.props.allMacros.fat;
+      let tProtein = this.props.allMacros.protein;
+      let tCarbs = this.props.allMacros.carb;
       const totalMacro = tFat + tProtein + tCarbs;
 
       this.setState({

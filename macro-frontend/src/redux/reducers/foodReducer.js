@@ -21,6 +21,18 @@ const foodReducer = (state = initialState, action) => {
           carb: action.payload.carb,
           fat: action.payload.fat,
           confidence: action.payload.confidence,
+          classificationTwo: action.payload.classificationTwo,
+          caloriesTwo: action.payload.caloriesTwo,
+          proteinTwo: action.payload.proteinTwo,
+          carbTwo: action.payload.carbTwo,
+          fatTwo: action.payload.fatTwo,
+          confidenceTwo: action.payload.confidenceTwo,
+          classificationThree: action.payload.classificationThree,
+          caloriesThree: action.payload.caloriesThree,
+          proteinThree: action.payload.proteinThree,
+          carbThree: action.payload.carbThree,
+          fatThree: action.payload.fatThree,
+          confidenceThree: action.payload.confidenceThree,
         }),
       };
     case REMOVE_FOOD:
