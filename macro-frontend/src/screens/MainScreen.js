@@ -105,7 +105,7 @@ function MainScreen({ navigation, storedUserName }) {
           setProteinTwo(response.data.two.protein);
           setCarbTwo(response.data.two.carb);
           setFatTwo(response.data.two.fat);
-          setConfidenceThree(response.data.two.confidence);
+          setConfidenceTwo(response.data.two.confidence);
           setClassificationThree(response.data.three.food);
           setCaloriesThree(response.data.three.calorie);
           setProteinThree(response.data.three.protein);

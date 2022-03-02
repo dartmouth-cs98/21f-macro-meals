@@ -20,7 +20,7 @@ const foodReducer = (state = initialState, action) => {
           protein: action.payload.protein,
           carb: action.payload.carb,
           fat: action.payload.fat,
-          confidenceTwo: action.payload.confidence,
+          confidence: action.payload.confidence,
           classificationTwo: action.payload.classificationTwo,
           caloriesTwo: action.payload.caloriesTwo,
           proteinTwo: action.payload.proteinTwo,
