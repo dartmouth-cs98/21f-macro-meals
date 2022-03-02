@@ -228,6 +228,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     borderRadius: 1000,
+
+    zIndex: 1,
   },
 
   dangerBtn: {
@@ -352,6 +354,136 @@ const styles = StyleSheet.create({
   secFontBold: {
     color: '#54595F',
     fontWeight: 'bold',
+  },
+
+  // RECIPE SCREEN
+  recipeContainer: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: neutralColor,
+  },
+
+  informationContainer: {
+    width: '100%',
+    height: '100%',
+
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+
+  titleContainer: {
+    width: '60%',
+    height: '20%',
+
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    margin: 10,
+  },
+
+  titleImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    marginRight: 5,
+  },
+
+  titleText: {
+    color: secColor,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    fontSize: 15,
+  },
+
+  ingredientContainer: {
+    flex: 1,
+    width: '100%',
+    height: '10%',
+    marginBottom: 50,
+  },
+
+  ingredientScroll: {
+    marginRight: 5,
+    marginLeft: 5,
+  },
+
+  ingredientCardContainer: {
+    display: 'flex',
+    height: 100,
+    borderRadius: 10,
+    padding: 30,
+
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    margin: 5,
+
+    backgroundColor: '#F956F2',
+  },
+
+  ingredientTitle: {
+    fontWeight: '300',
+    fontSize: 20,
+    color: '#ffffff',
+  },
+
+  ingredientAmount: {
+    fontWeight: '700',
+    fontSize: 15,
+    color: '#ffffff',
+  },
+
+  instructionConatiner: {
+    flex: 1,
+    width: '100%',
+    height: 500,
+  },
+
+  allIngredient: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    justifyContent: 'center',
+  },
+
+  instructionScroll: {
+    marginRight: 15,
+    marginLeft: 15,
+  },
+
+  instructionCardContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    padding: 20,
+    marginBottom: 10,
+
+    borderRadius: 8,
+    backgroundColor: '#F956F2',
+  },
+
+  instructionText: {
+    fontWeight: '500',
+    fontSize: 15,
+    color: '#ffffff',
+    textAlign: 'left',
+
+    lineHeight: 25,
+  },
+
+  sectionTitles: {
+    fontWeight: '500',
+    color: secColor,
+    fontSize: 20,
+    marginBottom: 15,
   },
 
   // updated meal cards

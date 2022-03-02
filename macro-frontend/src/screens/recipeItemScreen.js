@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import {
-  View, Text, TouchableOpacity, Dimensions,
+  View, Text, Image, TouchableOpacity, Dimensions, SafeAreaView, ScrollView,
 } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRecipeInstructions, fetchIngredients } from '../redux/actions/spoonacularActions';
+import styles from '../styles';
 
 function RecipeScreen({ navigation }) {
   // check if it is loading
@@ -21,13 +22,13 @@ function RecipeScreen({ navigation }) {
   const ingredientsDisplay = () => {
     return (singleRecipe.ingredients.extendedIngredients.map((foodItem) => {
       return (
-        <View key={foodItem.id}>
-          <Text>{foodItem.name}</Text>
-          <Text>
+        <View key={foodItem.id} style={styles.ingredientCardContainer}>
+          <Text style={styles.ingredientAmount}>
             {foodItem.amount}
             {' '}
-            {foodItem.unit}
+            {foodItem.unit }
           </Text>
+          <Text style={styles.ingredientTitle}>{foodItem.name}</Text>
         </View>
       );
     }));
@@ -37,8 +38,8 @@ function RecipeScreen({ navigation }) {
   const instructionDisplay = () => {
     return (singleRecipe.instructions[0].steps.map((stepItem) => {
       return (
-        <View key={stepItem.id}>
-          <Text>
+        <View key={stepItem.number} style={styles.instructionCardContainer}>
+          <Text style={styles.instructionText}>
             {stepItem.number}
             {' '}
             {stepItem.step}
@@ -62,20 +63,31 @@ function RecipeScreen({ navigation }) {
       );
     } else {
       return (
-        <View>
+        <View style={styles.informationContainer}>
           {/* displaying the title and image */}
-          <View>
-            <Text>{singleRecipe.ingredients.title}</Text>
+          <View style={styles.titleContainer}>
+            <Image
+              source={{ uri: `${singleRecipe.ingredients.image}` }}
+              style={styles.titleImage}
+            />
+            <Text style={styles.titleText}>{singleRecipe.ingredients.title}</Text>
           </View>
 
+          <Text style={styles.sectionTitles}>Ingredients</Text>
           {/* displaying the ingredients */}
-          <View>
-            {ingredientsDisplay()}
+          <View style={styles.ingredientContainer}>
+            <ScrollView style={styles.ingredientScroll}>
+              <View style={styles.allIngredient}>
+                {ingredientsDisplay()}
+              </View>
+            </ScrollView>
           </View>
 
-          {/* displaying the instructions */}
-          <View>
-            {instructionDisplay()}
+          <Text style={styles.sectionTitles}>Recipe Instructions</Text>
+          <View style={styles.instructionConatiner}>
+            <ScrollView style={styles.instructionScroll}>
+              {instructionDisplay()}
+            </ScrollView>
           </View>
         </View>
       );
@@ -83,14 +95,14 @@ function RecipeScreen({ navigation }) {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.recipeContainer}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <View>
-          <Text>Press Me</Text>
+          <Text>Back</Text>
         </View>
       </TouchableOpacity>
       {loading()}
-    </View>
+    </SafeAreaView>
   );
 }
 
