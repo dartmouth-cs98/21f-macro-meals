@@ -50,12 +50,12 @@ function HistoryScreen({ navigation, storedUserName }) {
                 mealName={element.customName}
                 description={element.description}
                 time={element.createdAt} 
-                totalCal={element.calories} 
+                totalCal={(element.correctClassification == 1) ? element.calories : ((element.correctClassification == 2) ? element.caloriesTwo : element.caloriesThree)} 
                 foodImg={element.imageUrl} 
-                classification={element.classification}
-                protein={element.protein}
-                carb={element.carb}
-                fat={element.fat}
+                classification={(element.correctClassification == 1) ? element.classification : ((element.correctClassification == 2) ? element.classificationTwo : element.classificationThree)}
+                protein={(element.correctClassification == 1) ? element.protein : ((element.correctClassification == 2) ? element.proteinTwo : element.proteinThree)}
+                carb={(element.correctClassification == 1) ? element.carb : ((element.correctClassification == 2) ? element.carbTwo : element.carbThree)}
+                fat={(element.correctClassification == 1) ? element.fat : ((element.correctClassification == 2) ? element.fatTwo : element.fatThree)}
                 mood={element.mood}
                 username={storedUserName}
                 historyPage={true}

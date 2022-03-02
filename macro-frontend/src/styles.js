@@ -721,6 +721,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
 
+
+  graphWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '50%',
+  },
+
+  label: {
+    position: 'absolute',
+    textAlign: 'center',
+    fontWeight: '500',
+    fontSize: 24,
+    color: '#54595F',
+  },
+
 });
 
 export default styles;
