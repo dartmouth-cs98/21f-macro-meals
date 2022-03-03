@@ -83,7 +83,7 @@ function CommunityScreen({ navigation, storedUserName }) {
   if (top === null) {
     getCommunityTop();
   }
-  if (favorite === null) {
+  if (currTab !== 'favorite') {
     getCommunityFavorite();
   }
 
