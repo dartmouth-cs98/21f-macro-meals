@@ -27,10 +27,6 @@ const SceneLogin = ({
   const [currDisplay, setCurrDisplay] = useState('login');
 
   useEffect(() => {
-    getData();
-  }, [])
-
-  useEffect(() => {
     if (isUserLoggedIn) {
       setTimeout(() => {
         navigation.navigate('Main');
@@ -77,7 +73,6 @@ const SceneLogin = ({
     }
     if (formStatus === 'valid') {
       // signing in the account
-      storeData(userName);
       axios
         .post('https://macro-cs98.herokuapp.com/api/user/login', {
           username: userName,
@@ -88,6 +83,9 @@ const SceneLogin = ({
             intMessages.push(`Welcome, ${userName}!`);
             setMessages(intMessages);
             setCurrDisplay('message');
+            if (keepSignedIn) {
+              storeData(userName);
+            }
             login(userName);
           } else { // login failed
             setUsernameStatus('error');
