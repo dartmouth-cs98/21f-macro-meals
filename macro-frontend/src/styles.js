@@ -613,9 +613,18 @@ const styles = StyleSheet.create({
     padding: 8,
 
     borderStyle: 'solid',
-    borderColor: '#DC95FE',
-    borderWidth: 2,
+    backgroundColor: '#DC95FE',
     borderRadius: 7,
+  },
+
+  macroCategory: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+
+  macroCount: {
+    color: '#fff',
+    fontWeight: 'normal',
   },
 
   subsectionHeader: {
@@ -640,15 +649,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
+  classificationFood: {
+    color: '#54595F',
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+
   // OLD MEAL-CARDS STYLES
 
   overallContainer: {
     width: 0.9 * windowWidth,
     marginBottom: 20,
-    backgroundColor: neutralColor,
+    backgroundColor: '#FFEECC',
     borderRadius: 10,
+
+    /*
     borderWidth: 3,
     borderColor: secColor,
+    */
+
     padding: 10,
     position: 'relative',
 
@@ -721,7 +740,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
-
 
   graphWrapper: {
     alignItems: 'center',

@@ -28,7 +28,7 @@ const MealCard = (props) => {
   const dispatch = useDispatch();
 
   const {
-    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage,
+    id, mealName, description, time, totalCal, foodImg, classification, protein, fat, carb, mood, username, historyPage, navigation,
   } = props;
   const monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -136,7 +136,14 @@ const MealCard = (props) => {
     }
     return (allRecipes.all.map((item) => {
       return (
-        <TouchableOpacity key={item.id} style={styles.suggestedRecipeCard} onPress={() => { getRecipeSteps(item.id); }}>
+        <TouchableOpacity key={item.id}
+          style={styles.suggestedRecipeCard}
+          onPress={() => {
+            navigation.navigate('Recipe', {
+              id: item.id,
+            });
+          }}
+        >
           <Text style={styles.mealCardRecipeFont}>{item.title}</Text>
         </TouchableOpacity>
       );
@@ -200,7 +207,7 @@ const MealCard = (props) => {
                   </Text>
                   <View style={styles.flexRow}>
                     <Text style={styles.primFontBold}>Food: </Text>
-                    <Text style={styles.secFont}>{classification}</Text>
+                    <Text style={styles.classificationFood}>{classification}</Text>
                   </View>
                 </View>
               </View>
@@ -221,33 +228,33 @@ const MealCard = (props) => {
 
                 <View style={styles.mealCardColumnExpand}>
                   <View style={styles.flexRow}>
-                    <Text style={styles.primFontBold}>Calories: </Text>
-                    <Text style={styles.secFont}>{totalCal}</Text>
+                    <Text style={styles.macroCategory}>Calories: </Text>
+                    <Text style={styles.macroCount}>{totalCal}</Text>
                   </View>
                   <View style={styles.flexRow}>
-                    <Text style={styles.primFontBold}>Protein: </Text>
-                    <Text style={styles.secFont}>
+                    <Text style={styles.macroCategory}>Protein: </Text>
+                    <Text style={styles.macroCount}>
                       {protein}
                       g
                     </Text>
                   </View>
                   <View style={styles.flexRow}>
-                    <Text style={styles.primFontBold}>Carbs: </Text>
-                    <Text style={styles.secFont}>
+                    <Text style={styles.macroCategory}>Carbs: </Text>
+                    <Text style={styles.macroCount}>
                       {carb}
                       g
                     </Text>
                   </View>
                   <View style={styles.flexRow}>
-                    <Text style={styles.primFontBold}>Fats: </Text>
-                    <Text style={styles.secFont}>
+                    <Text style={styles.macroCategory}>Fats: </Text>
+                    <Text style={styles.macroCount}>
                       {fat}
                       g
                     </Text>
                   </View>
                   <View style={styles.mealColumn}>
-                    <Text style={styles.primFontBold}>Description:</Text>
-                    <Text style={styles.secFont}>{description || 'N/A'}</Text>
+                    <Text style={styles.macroCategory}>Description:</Text>
+                    <Text style={styles.macroCount}>{description || 'N/A'}</Text>
                   </View>
                 </View>
               </View>
