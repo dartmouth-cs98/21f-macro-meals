@@ -292,7 +292,7 @@ function MainScreen({ navigation, storedUserName }) {
             style={styles.navQuadBtnLeft}
             onPress={() => { setShowInfo(true); }}
           >
-            <Text style={{ fontSize: 0.05 * windowWidth, fontWeight: 'bold', color: 'white' }}>beta <Icon name="info-circle" color="white" style={{ fontSize: 0.05 * windowWidth }} /></Text>
+            <Text style={{ fontSize: 0.05 * windowWidth, fontWeight: 'bold', color: 'white' }}>help <Icon name="question-circle" color="white" style={{ fontSize: 0.05 * windowWidth }} /></Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navTertBtnLeft}
@@ -340,11 +340,26 @@ function MainScreen({ navigation, storedUserName }) {
         {showInfo
         && (
         <View style={[ styles.formWrapper, { justifyContent: 'center' }]}>
+          <View style={[ styles.mainFormElement, { display: 'flex', flexDirection: 'column', alignItems: 'center' } ]}>
+            <Text style={{ color: 'white', fontSize: 16, marginBottom: 5 }}>for best results, place your finger next to the food and use a white background</Text>
+            <Image
+              style={{ width: 150, height: 100, borderRadius: 10 }}
+              source={{ uri: 'https://macro-meals-food-images.s3.amazonaws.com/BrandonFeng1646344765812' }}
+            />
+          </View>
           <View style={styles.mainFormElement}>
-            <Text style={{ color: 'white', fontSize: 16 }}>macro is still in beta and is capable of recognizing the following foods:</Text>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>macro is still in beta and is capable of recognizing the following foods:</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>apple</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>banana</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>carrot</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>cucumber</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>onion</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>orange</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>pear</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>pepper</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>qiwi</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>tomato</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>watermelon</Text>
           </View>
           <View style={styles.formBtnWrapper}>
             <TouchableOpacity onPress={() => { setShowInfo(false); }} style={styles.mainFormBtn}>
