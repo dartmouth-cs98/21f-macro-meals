@@ -11,6 +11,7 @@ import { uploadImage } from '../../s3';
 import { addFood } from '../redux/actions/foodActions';
 import styles from '../styles';
 import { RNS3 } from 'react-native-aws3';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 const options = {
   keyPrefix: "",
@@ -129,9 +130,16 @@ function MainScreen({ navigation, storedUserName }) {
     cameraRef.pausePreview();
     setShowForm(true);
     console.log(photo.uri);
+    const manipResult = await manipulateAsync(
+      photo.uri,
+      [
+        { resize: { width: 400 } },
+      ],
+      { compress: 0.35, format: SaveFormat.JPG }
+    );
     if (photo.uri.substring(0,4) == 'file') {
       const file = {
-        uri: photo.uri,
+        uri: manipResult.uri,
         name: storedUserName + Date.now().toString(),
         type: 'image/jpeg',
       }
@@ -144,7 +152,7 @@ function MainScreen({ navigation, storedUserName }) {
         classifyImage(response.body.postResponse.location);
       });
     } else {
-      const response = await fetch(photo.uri);
+      const response = await fetch(manipResult.uri);
       const blob = await response.blob();
       uploadImageToS3(blob);
     }

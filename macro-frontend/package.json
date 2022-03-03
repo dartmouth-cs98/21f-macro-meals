@@ -18,6 +18,8 @@
     "expo": "~42.0.1",
     "expo-camera": "~11.2.2",
     "expo-font": "~9.2.1",
+    "expo-image-manipulator": "^10.2.1",
+    "expo-modules-core": "^0.6.5",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
