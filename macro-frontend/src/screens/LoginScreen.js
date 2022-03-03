@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {
   Text, View, Animated, TouchableOpacity,
@@ -26,6 +27,10 @@ const SceneLogin = ({
   const [currDisplay, setCurrDisplay] = useState('login');
 
   useEffect(() => {
+    getData();
+  }, [])
+
+  useEffect(() => {
     if (isUserLoggedIn) {
       setTimeout(() => {
         navigation.navigate('Main');
@@ -42,6 +47,15 @@ const SceneLogin = ({
   };
 
   fadeIn();
+
+  const storeData = async (value) => {
+    console.log('storing data!');
+    try {
+      await AsyncStorage.setItem('@storedUsername', value)
+    } catch (e) {
+      console.log('Error saving data:' + e);
+    }
+  }
 
   const toggleRememberMe = (value) => {
     setKeepSignedIn(value);
@@ -63,6 +77,7 @@ const SceneLogin = ({
     }
     if (formStatus === 'valid') {
       // signing in the account
+      storeData(userName);
       axios
         .post('https://macro-cs98.herokuapp.com/api/user/login', {
           username: userName,
