@@ -229,26 +229,26 @@ const MealCard = (props) => {
                 <View style={styles.mealCardColumnExpand}>
                   <View style={styles.flexRow}>
                     <Text style={styles.macroCategory}>Calories: </Text>
-                    <Text style={styles.macroCount}>{totalCal}</Text>
+                    <Text style={styles.macroCount}>{totalCal.toFixed(1)}</Text>
                   </View>
                   <View style={styles.flexRow}>
                     <Text style={styles.macroCategory}>Protein: </Text>
                     <Text style={styles.macroCount}>
-                      {protein}
+                      {protein.toFixed(1)}
                       g
                     </Text>
                   </View>
                   <View style={styles.flexRow}>
                     <Text style={styles.macroCategory}>Carbs: </Text>
                     <Text style={styles.macroCount}>
-                      {carb}
+                      {carb.toFixed(1)}
                       g
                     </Text>
                   </View>
                   <View style={styles.flexRow}>
                     <Text style={styles.macroCategory}>Fats: </Text>
                     <Text style={styles.macroCount}>
-                      {fat}
+                      {fat.toFixed(1)}
                       g
                     </Text>
                   </View>
