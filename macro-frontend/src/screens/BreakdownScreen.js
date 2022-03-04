@@ -270,7 +270,9 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
             <View style={styles.flexCol}><Text style={styles.secFontBold}>Confidence: </Text><Text style={styles.secFont}>{(food.confidence*100).toFixed(1)}%</Text></View>
           </View>
           <View style={{ width: '100%' }}>
-            <Text style={[styles.secFont, {marginBottom: 5}]}>top classifications:</Text>
+            <View style={{width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'row'}}>
+              <Text style={[styles.secFont, {marginBottom: 5}]}>top classifications:</Text>
+            </View>
             <View style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center' }}>
               <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 1 ? '#DC95FE' : '#e7b3ff' }]} onPress={() => { updateClassification(1); }}><Text style={styles.authBtnFont}>1</Text></TouchableOpacity>
               <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 2 ? '#DC95FE' : '#e7b3ff', marginLeft: 10, marginRight: 10 }]} onPress={() => { updateClassification(2); }}><Text style={styles.authBtnFont}>2</Text></TouchableOpacity>

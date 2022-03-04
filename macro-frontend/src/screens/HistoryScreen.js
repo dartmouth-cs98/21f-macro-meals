@@ -59,6 +59,7 @@ function HistoryScreen({ navigation, storedUserName }) {
                 mood={element.mood}
                 username={storedUserName}
                 historyPage={true}
+                navigation={navigation}
               />
             ))
           )}

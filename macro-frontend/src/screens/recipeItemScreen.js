@@ -93,9 +93,9 @@ function RecipeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.recipeContainer}>
-      <TouchableOpacity style={styles.navTertBtn} onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={styles.navTertBtnLeft} onPress={() => navigation.goBack()}>
         <Text>
-          <Icon name="rotate-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+          <Icon name="arrow-left" color="white" style={{ fontSize: 0.05 * windowWidth }} />
         </Text>
       </TouchableOpacity>
       {loading()}
