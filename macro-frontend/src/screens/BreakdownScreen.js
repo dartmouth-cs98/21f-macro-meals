@@ -202,6 +202,19 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
     }
   }
 
+  const cancelEntry = () => {
+    axios.post('https://macro-cs98.herokuapp.com/api/food/delete', {
+            id: baseFood.id,
+          })
+            .then((response) => {
+              console.log(response);
+              navigation.navigate('Main');
+            })
+            .catch((error) => {
+              console.log('Error in handleDeletePress:');
+            });
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backBtn} onPress={() => { navigation.navigate('Main'); }}>
@@ -252,19 +265,30 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
             <View style={styles.flexCol}><Text style={styles.secFontBold}>Carbs: </Text><Text style={styles.secFont}>{(food.carb).toFixed(1)}g</Text></View>
             <View style={styles.flexCol}><Text style={styles.secFontBold}>Fats: </Text><Text style={styles.secFont}>{(food.fat).toFixed(1)}g</Text></View>
           </View>
-          <View style={styles.flexCol}><Text style={[ styles.secFontBold, { marginTop: 10} ]}>Classification: </Text><Text style={styles.secFont}>{food.classification}</Text></View>
-          <View style={[ styles.flexCol, { marginBottom: 10 } ]}><Text style={styles.secFontBold}>Confidence: </Text><Text style={styles.secFont}>{(food.confidence*100).toFixed(1)}%</Text></View>
-          <View>
+          <View style={[styles.centerMeEvenly, {marginTop: 5}]}>
+            <View style={styles.flexCol}><Text style={styles.secFontBold}>Classification: </Text><Text style={styles.secFont}>{food.classification}</Text></View>
+            <View style={styles.flexCol}><Text style={styles.secFontBold}>Confidence: </Text><Text style={styles.secFont}>{(food.confidence*100).toFixed(1)}%</Text></View>
+          </View>
+          <View style={{ width: '100%' }}>
             <Text style={[styles.secFont, {marginBottom: 5}]}>top classifications:</Text>
-            <View style={{ display: 'flex', justifyContent: 'center' }}>
+            <View style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center' }}>
               <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 1 ? '#DC95FE' : '#e7b3ff' }]} onPress={() => { updateClassification(1); }}><Text style={styles.authBtnFont}>1</Text></TouchableOpacity>
-              <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 2 ? '#DC95FE' : '#e7b3ff' }]} onPress={() => { updateClassification(2); }}><Text style={styles.authBtnFont}>2</Text></TouchableOpacity>
+              <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 2 ? '#DC95FE' : '#e7b3ff', marginLeft: 10, marginRight: 10 }]} onPress={() => { updateClassification(2); }}><Text style={styles.authBtnFont}>2</Text></TouchableOpacity>
               <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 3 ? '#DC95FE' : '#e7b3ff' }]} onPress={() => { updateClassification(3); }}><Text style={styles.authBtnFont}>3</Text></TouchableOpacity>
             </View>
-            <TouchableOpacity style={[styles.authBtn, {marginBottom: 10, marginTop: 10}]} onPress={() => { setManualInput(true) }}><Text style={styles.authBtnFont}>create manual entry</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => { navigation.navigate('Main'); }} style={styles.authBtn}>
-                <Text style={styles.authBtnFont}>cancel</Text>
+            <View style={styles.centerMeEvenly}>
+              <TouchableOpacity onPress={() => { navigation.navigate('Main'); }} style={[styles.mainFormBtn, {backgroundColor: '#DC95FE'}]}>
+                <Text style={{ color: 'white', fontSize: 16 }}>save</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={cancelEntry} style={[styles.mainFormBtn, {marginLeft: 10, backgroundColor: '#e7b3ff'}]}>
+                <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.centerMeEvenly}>
+              <TouchableOpacity style={[styles.mainFormBtn, {backgroundColor: '#e7b3ff', marginTop: 5}]} onPress={() => { setManualInput(true) }}>
+                  <Text style={{ color: 'white', fontSize: 16 }}>manual entry</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       )}
