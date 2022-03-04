@@ -20,6 +20,7 @@ function UserScreen({ navigation, storedUserName, recipe }) {
 
   return (
     <View style={styles.container}>
+      <Text style={{marginBottom:10}}>logged in as {storedUserName}</Text>
       <TouchableOpacity style={styles.navTertBtnLeft} onPress={() => { navigation.navigate('Main'); }}>
         <Icon name="camera" color="white" style={{ fontSize: 0.05 * windowWidth }} />
       </TouchableOpacity>
