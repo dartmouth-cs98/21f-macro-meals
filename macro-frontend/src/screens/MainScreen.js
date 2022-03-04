@@ -468,7 +468,7 @@ function MainScreen({ navigation, storedUserName }) {
             </View>
           </View>
           }
-          <View style={styles.mainFormElement}>
+          <View style={[styles.mainFormElement, {display: 'flex', justifyContent: 'center'}]}>
             <Text style={{ color: 'white', fontSize: 12 }}>status: {classificationStatus}</Text>
           </View>
           <View style={styles.formBtnWrapper}>

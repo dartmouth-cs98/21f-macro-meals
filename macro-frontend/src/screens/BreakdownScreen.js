@@ -39,7 +39,30 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
 
   const updateClassification = (num) => {
     setClassificationNumber(num);
-    if (num == 2) {
+    if (num == 1) {
+      let f = {
+        customName: baseFood.customName,
+        classification: baseFood.classification,
+        calories: baseFood.calories,
+        protein: baseFood.protein,
+        carb: baseFood.carb,
+        fat: baseFood.fat,
+        confidence: baseFood.confidence,
+      };
+      setFood(f);
+      calcCircle(f);
+      axios.post('https://macro-cs98.herokuapp.com/api/food/updateClassification', {
+        id: baseFood.id,
+        correctClassification: 1,
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    else if (num == 2) {
       let f = {
         customName: baseFood.customName,
         classification: baseFood.classificationTwo,
@@ -84,19 +107,9 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
         .catch((error) => {
           console.log(error);
         });
-    } else {
-      setManualInput(true);
-      axios.post('https://macro-cs98.herokuapp.com/api/food/delete', {
-        id: baseFood.id,
-      })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log('Error in handleDeletePress:');
-        });
-    }
+    } 
   };
+
   // making the calculations to render the circle
   const calcCircle = (f) => {
     // settiing up basic figures
@@ -172,7 +185,16 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
       })
         .then((response) => {
           console.log(response.data);
-          navigation.navigate('Main');
+          axios.post('https://macro-cs98.herokuapp.com/api/food/delete', {
+            id: baseFood.id,
+          })
+            .then((response) => {
+              console.log(response);
+              navigation.navigate('Main');
+            })
+            .catch((error) => {
+              console.log('Error in handleDeletePress:');
+            });
         })
         .catch((error) => {
           console.log(error.message);
@@ -233,10 +255,16 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
           <View style={styles.flexCol}><Text style={[ styles.secFontBold, { marginTop: 10} ]}>Classification: </Text><Text style={styles.secFont}>{food.classification}</Text></View>
           <View style={[ styles.flexCol, { marginBottom: 10 } ]}><Text style={styles.secFontBold}>Confidence: </Text><Text style={styles.secFont}>{(food.confidence*100).toFixed(1)}%</Text></View>
           <View>
-            <Text style={styles.secFont}>incorrect classification?</Text>
-            <View>
-              <TouchableOpacity style={styles.authBtn} onPress={() => { updateClassification(classificationNumber + 1); }}><Text style={styles.authBtnFont}>{btnText}</Text></TouchableOpacity>
+            <Text style={[styles.secFont, {marginBottom: 5}]}>top classifications:</Text>
+            <View style={{ display: 'flex', justifyContent: 'center' }}>
+              <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 1 ? '#DC95FE' : '#e7b3ff' }]} onPress={() => { updateClassification(1); }}><Text style={styles.authBtnFont}>1</Text></TouchableOpacity>
+              <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 2 ? '#DC95FE' : '#e7b3ff' }]} onPress={() => { updateClassification(2); }}><Text style={styles.authBtnFont}>2</Text></TouchableOpacity>
+              <TouchableOpacity style={[styles.numBtn, { backgroundColor: classificationNumber == 3 ? '#DC95FE' : '#e7b3ff' }]} onPress={() => { updateClassification(3); }}><Text style={styles.authBtnFont}>3</Text></TouchableOpacity>
             </View>
+            <TouchableOpacity style={[styles.authBtn, {marginBottom: 10, marginTop: 10}]} onPress={() => { setManualInput(true) }}><Text style={styles.authBtnFont}>create manual entry</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => { navigation.navigate('Main'); }} style={styles.authBtn}>
+                <Text style={styles.authBtnFont}>cancel</Text>
+              </TouchableOpacity>
           </View>
         </View>
       )}
@@ -300,7 +328,7 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
               <TouchableOpacity onPress={submitForm} style={styles.mainFormBtn}>
                 <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { navigation.navigate('Main'); }} style={styles.mainFormBtn}>
+              <TouchableOpacity onPress={() => { setManualInput(false); }} style={styles.mainFormBtn}>
                 <Text style={{ color: 'white', fontSize: 16 }}>cancel</Text>
               </TouchableOpacity>
             </View>

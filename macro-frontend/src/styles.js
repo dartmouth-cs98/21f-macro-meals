@@ -267,6 +267,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
+  numBtn: {
+    padding: 4,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderWidth: 3,
+    borderColor: 'white',
+    borderRadius: 999,
+  },
+
   authBtnFont: {
     color: 'white',
     fontWeight: 'bold',
