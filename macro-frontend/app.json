@@ -3,7 +3,7 @@
     "name": "macro",
     "slug": "macro",
     "privacy": "public",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/macro-logo.png",
     "splash": {
