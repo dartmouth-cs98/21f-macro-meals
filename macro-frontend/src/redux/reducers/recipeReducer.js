@@ -1,17 +1,17 @@
 import { ActionTypes } from '../actions/spoonacularActions';
 
 const initialState = {
-  all: [],
+  all: {},
   individ: [],
   problem: '',
 };
 
 const RecipeReducer = (state = initialState, recipe) => {
+  const newAll = { ...state.all };
   switch (recipe.type) {
     case ActionTypes.FETCH_RECIPES:
-      return {
-        all: recipe.payload.data,
-      };
+      newAll[recipe.payload.cardID] = recipe.payload.data;
+      return { all: newAll };
     case ActionTypes.FETCH_RECIPE_INFO:
       return {
         ...state,

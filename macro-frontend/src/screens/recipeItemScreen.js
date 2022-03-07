@@ -50,16 +50,14 @@ function RecipeScreen({ navigation }) {
     }));
   };
 
-  const sanityCheck = () => {
-    console.log(singleRecipe);
-  };
-
   // while it is not loaded
   const loading = () => {
     if (!singleRecipe.ingredients || !singleRecipe.instructions) {
       return (
-        <View>
-          <Text>We're fetching the recipe!</Text>
+        <View style={styles.loadingScreenContainer}>
+          <View style={styles.loadingScreenCard}>
+            <Text style={styles.titleText}>Hey – we're fetching here!</Text>
+          </View>
         </View>
       );
     } else {
