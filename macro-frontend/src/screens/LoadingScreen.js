@@ -10,6 +10,7 @@ import styles from '../styles';
 
 const macroLogo = require('../../assets/macroLogo.png');
 const macroTagline = require('../../assets/macroTagline.png');
+
 const windowWidth = Dimensions.get('window').width;
 
 const AppLoadingScreen = ({ navigation, isUserLoggedIn, login }) => {
@@ -19,7 +20,7 @@ const AppLoadingScreen = ({ navigation, isUserLoggedIn, login }) => {
     setTimeout(() => {
       getData();
     }, 1500);
-  }, [])
+  }, []);
 
   const fadeIn = () => {
     Animated.timing(fadeAnimation, {
@@ -43,27 +44,27 @@ const AppLoadingScreen = ({ navigation, isUserLoggedIn, login }) => {
 
   const getData = async () => {
     try {
-      const value = await AsyncStorage.getItem('@storedUsername')
-      if(value !== null) {
+      const value = await AsyncStorage.getItem('@storedUsername');
+      if (value !== null) {
         console.log(value);
         login(value);
         fadeOut();
         setTimeout(() => {
           navigation.navigate('Main');
-        }, 500)
+        }, 500);
       } else {
         fadeOut();
         navigation.navigate('Login');
       }
-    } catch(e) {
-      console.log('Error fetching username: ' + e);
+    } catch (e) {
+      console.log(`Error fetching username: ${e}`);
     }
-  }
+  };
   return (
     <View style={styles.container}>
-      <Animated.View style={[ styles.centerMeColumn, { opacity: fadeAnimation } ]}>
-        <Image source={macroLogo} style={{ height: 0.1 * windowWidth, width: 0.49 * windowWidth, }} />
-        <Image source={macroTagline} style={{ height: 0.05 * windowWidth, width: 0.45 * windowWidth, }} />
+      <Animated.View style={[styles.centerMeColumn, { opacity: fadeAnimation }]}>
+        <Image source={macroLogo} style={{ height: 0.1 * windowWidth, width: 0.49 * windowWidth }} />
+        <Image source={macroTagline} style={{ height: 0.05 * windowWidth, width: 0.45 * windowWidth }} />
       </Animated.View>
     </View>
   );

@@ -47,15 +47,15 @@ const SceneLogin = ({
   const storeData = async (value) => {
     console.log('storing data!');
     try {
-      await AsyncStorage.setItem('@storedUsername', value)
+      await AsyncStorage.setItem('@storedUsername', value);
     } catch (e) {
-      console.log('Error saving data:' + e);
+      console.log(`Error saving data:${e}`);
     }
-  }
+  };
 
   const toggleRememberMe = (value) => {
     setKeepSignedIn(value);
-  }
+  };
 
   const validateLogin = () => {
     let formStatus = 'valid';
@@ -113,7 +113,8 @@ const SceneLogin = ({
         ]}
       >
         <View>
-          { currDisplay == 'login' && 
+          { currDisplay === 'login'
+          && (
           <View>
             <Input
               placeholder="username"
@@ -133,7 +134,7 @@ const SceneLogin = ({
 
             <Input
               placeholder="password"
-              secureTextEntry={true}
+              secureTextEntry
               onChangeText={(text) => {
                 setPassWord(text);
                 setPasswordStatus('okay');
@@ -151,25 +152,26 @@ const SceneLogin = ({
               containerStyle={{ backgroundColor: 'transparent', border: 'none' }}
               checked={keepSignedIn}
               center
-              title='remember me'
-              checkedColor='#DC95FE'
+              title="remember me"
+              checkedColor="#DC95FE"
               onPress={() => { toggleRememberMe(!keepSignedIn); }}
             />
             <View style={styles.centerMe}>
               <TouchableOpacity onPress={() => { validateLogin(); }} style={styles.authBtn}>
                 <Text style={styles.authBtnFont}>login</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('Register')} style={[ styles.authBtn, { marginLeft: 10, } ]}>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')} style={[styles.authBtn, { marginLeft: 10 }]}>
                 <Text style={styles.authBtnFont}>register here</Text>
               </TouchableOpacity>
             </View>
           </View>
-          }
-          { currDisplay == 'message' &&
+          )}
+          { currDisplay === 'message'
+          && (
           <View>
             {messages.map((msg) => <Text key={msg} style={styles.secFontBold}>{msg}</Text>)}
           </View>
-          }
+          )}
         </View>
       </Animated.View>
     </View>

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Text, View, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userLogout } from '../redux/actions/userActions';
@@ -10,18 +9,18 @@ import Panel from '../components/panel';
 import styles from '../styles';
 
 const SceneLogOut = ({ navigation, logout }) => {
-  useEffect(() => { 
+  useEffect(() => {
     removeValue();
-    logout(); 
+    logout();
   }, [logout]);
 
   const removeValue = async () => {
     try {
-      await AsyncStorage.removeItem('@storedUsername')
-    } catch(e) {
-      console.log('Error removing user: ' + e);
+      await AsyncStorage.removeItem('@storedUsername');
+    } catch (e) {
+      console.log(`Error removing user: ${e}`);
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
