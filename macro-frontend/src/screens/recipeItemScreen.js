@@ -52,7 +52,7 @@ function RecipeScreen({ navigation }) {
 
   // while it is not loaded
   const loading = () => {
-    if (!singleRecipe.ingredients || singleRecipe.instructions) {
+    if (!singleRecipe.ingredients || !singleRecipe.instructions) {
       return (
         <View style={styles.loadingScreenContainer}>
           <View style={styles.loadingScreenCard}>
