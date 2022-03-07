@@ -9,7 +9,7 @@ import {
   useFonts,
   Dosis_400Regular,
 } from '@expo-google-fonts/dosis';
-import { fetchRecipe, fetchRecipeInfo } from '../../redux/actions/spoonacularActions';
+import { fetchRecipe } from '../../redux/actions/spoonacularActions';
 import styles from '../../styles';
 
 const windowWidth = Dimensions.get('window').width;
@@ -24,7 +24,6 @@ const MealCard = (props) => {
   });
 
   const allRecipes = useSelector((state) => state.recipe);
-  const individRecipe = useSelector((state) => state.recipe);
   const dispatch = useDispatch();
 
   const {
@@ -41,14 +40,6 @@ const MealCard = (props) => {
   const [favorite, setFavorite] = useState(null);
   const [confirmScreen, setConfirmScreen] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const [recipeExpand, setRecipeExpand] = useState(false);
-  const [didRecipeInfo, setRecipeInfo] = useState(false);
-
-  /* jank wiring, will replace later */
-  const [recipe1, setRecipe1] = useState(0);
-  const [recipe2, setRecipe2] = useState(false);
-  const [recipe3, setRecipe3] = useState(false);
-  const [count, setCount] = useState(0);
 
   const handleFavoritePress = () => {
     if (favorite) { // if is a favorite, need to delete
@@ -118,14 +109,21 @@ const MealCard = (props) => {
     getFavoriteStatus();
   }
 
-  const retrieveRecipe = (foodItem) => {
-    dispatch(fetchRecipe(foodItem));
+  const retrieveRecipe = (foodItem, cardID) => {
+    dispatch(fetchRecipe(foodItem, cardID));
     setExpand(!expand);
   };
 
-  // HERE IS THE PROBLEM
   const mapSpoonacular = () => {
-    if (allRecipes.all.length === 0) {
+    if (!allRecipes.all[id]) {
+      return (
+        <View
+          style={styles.suggestedRecipeCard}
+        >
+          <Text style={styles.mealCardRecipeFont}>loading related foods</Text>
+        </View>
+      );
+    } else if (allRecipes.all[id].length === 0) {
       return (
         <View
           style={styles.suggestedRecipeCard}
@@ -133,28 +131,29 @@ const MealCard = (props) => {
           <Text style={styles.mealCardRecipeFont}>No items found!</Text>
         </View>
       );
+    } else {
+      return (allRecipes.all[id].map((item) => {
+        return (
+          <TouchableOpacity key={item.id}
+            style={styles.suggestedRecipeCard}
+            onPress={() => {
+              navigation.navigate('Recipe', {
+                id: item.id,
+              });
+            }}
+          >
+            <Text style={styles.mealCardRecipeFont}>{item.title}</Text>
+          </TouchableOpacity>
+        );
+      }));
     }
-    return (allRecipes.all.map((item) => {
-      return (
-        <TouchableOpacity key={item.id}
-          style={styles.suggestedRecipeCard}
-          onPress={() => {
-            navigation.navigate('Recipe', {
-              id: item.id,
-            });
-          }}
-        >
-          <Text style={styles.mealCardRecipeFont}>{item.title}</Text>
-        </TouchableOpacity>
-      );
-    }));
   };
 
   return (
     <View>
       {!confirmScreen
       && (
-      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 1 * windowWidth : 0.4 * windowWidth }]} onPress={() => { retrieveRecipe(classification); }}>
+      <TouchableOpacity style={[styles.overallContainer, { height: expand ? 1 * windowWidth : 0.4 * windowWidth }]} onPress={() => { retrieveRecipe(classification, id); }}>
         <Icon name={expand ? 'compress' : 'expand'}
           color="#54595F"
           style={{

@@ -394,6 +394,23 @@ const styles = StyleSheet.create({
   },
 
   // RECIPE SCREEN
+  loadingScreenContainer: {
+    height: '100%',
+    width: '100%',
+
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  loadingScreenCard: {
+    backgroundColor: '#FFEECC',
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+  },
+
   recipeContainer: {
     width: '100%',
     height: '100%',
