@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Text, View, TouchableOpacity, Dimensions, TextInput, Picker, Image, ScrollView
+  Text, View, TouchableOpacity, Dimensions, TextInput, Picker, Image, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Camera } from 'expo-camera';
+import { RNS3 } from 'react-native-aws3';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import { uploadImage } from '../../s3';
 import { addFood } from '../redux/actions/foodActions';
 import styles from '../styles';
-import { RNS3 } from 'react-native-aws3';
-import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 
 const options = {
-  keyPrefix: "",
-  bucket: "macro-meals-food-images",
-  region: "us-east-1",
-  accessKey: "AKIA2NYKPWHN3VHSQPIE",
-  secretKey: "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",
-  successActionStatus: 201
-}
+  keyPrefix: '',
+  bucket: 'macro-meals-food-images',
+  region: 'us-east-1',
+  accessKey: 'AKIA2NYKPWHN3VHSQPIE',
+  secretKey: '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',
+  successActionStatus: 201,
+};
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const positiveMood = require('../img/positiveMood.png');
 const neutralMood = require('../img/neutralMood.png');
@@ -117,7 +116,6 @@ function MainScreen({ navigation, storedUserName }) {
           setClassification('failed');
           setClassificationStatus('failed');
         }
-        
       })
       .catch((error) => {
         setClassification('failed');
@@ -135,18 +133,17 @@ function MainScreen({ navigation, storedUserName }) {
       [
         { resize: { width: 400 } },
       ],
-      { compress: 0.35, format: SaveFormat.JPG }
+      { compress: 0.35, format: SaveFormat.JPG },
     );
-    if (photo.uri.substring(0,4) == 'file') {
+    if (photo.uri.substring(0, 4) === 'file') {
       const file = {
         uri: manipResult.uri,
         name: storedUserName + Date.now().toString(),
         type: 'image/jpeg',
-      }
-  
-      RNS3.put(file, options).then(response => {
-        if (response.status !== 201)
-          throw new Error("Failed to upload image to S3");
+      };
+
+      RNS3.put(file, options).then((response) => {
+        if (response.status !== 201) { throw new Error('Failed to upload image to S3'); }
         console.log(response.body.postResponse.location);
         setImageUrl(response.body.postResponse.location);
         classifyImage(response.body.postResponse.location);
@@ -205,8 +202,7 @@ function MainScreen({ navigation, storedUserName }) {
         .catch((error) => {
           console.log(error.message);
         });
-    }
-    else if (classification === 'failed') {
+    } else if (classification === 'failed') {
       setErrorMessage('classification failed. would you like to create a manual entry?');
       setShowError(true);
       setCorrectError(true);
@@ -220,7 +216,7 @@ function MainScreen({ navigation, storedUserName }) {
         setShowForm(true);
       }, 2000);
     }
-  }
+  };
 
   const resetForm = () => {
     cameraRef.resumePreview();
@@ -232,7 +228,7 @@ function MainScreen({ navigation, storedUserName }) {
     setDescription('');
     setClassification('');
     setClassificationStatus('classifying');
-  }
+  };
 
   const updateFieldsSimple = (s) => {
     setSimple(s);
@@ -242,8 +238,8 @@ function MainScreen({ navigation, storedUserName }) {
       setCustomName('');
       setDescription('auto-generated entry');
 
-      var today = new Date()
-      var curHr = today.getHours()
+      const today = new Date();
+      const curHr = today.getHours();
       if (curHr < 11) {
         setMealTime('breakfast');
       } else if (curHr < 16) {
@@ -259,7 +255,7 @@ function MainScreen({ navigation, storedUserName }) {
       setMealTime('breakfast');
       setDescription('');
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -292,7 +288,11 @@ function MainScreen({ navigation, storedUserName }) {
             style={styles.navQuadBtnLeft}
             onPress={() => { setShowInfo(true); }}
           >
-            <Text style={{ fontSize: 0.05 * windowWidth, fontWeight: 'bold', color: 'white' }}>help <Icon name="question-circle" color="white" style={{ fontSize: 0.05 * windowWidth }} /></Text>
+            <Text style={{ fontSize: 0.05 * windowWidth, fontWeight: 'bold', color: 'white' }}>
+              help
+              {' '}
+              <Icon name="question-circle" color="white" style={{ fontSize: 0.05 * windowWidth }} />
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navTertBtnLeft}
@@ -310,7 +310,7 @@ function MainScreen({ navigation, storedUserName }) {
             width: '100%',
           }}
           >
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => { navigation.navigate('Community'); }}
               style={styles.navSecBtn}
             >
@@ -339,8 +339,8 @@ function MainScreen({ navigation, storedUserName }) {
         )}
         {showInfo
         && (
-        <View style={[ styles.formWrapper, { justifyContent: 'center' }]}>
-          <View style={[ styles.mainFormElement, { display: 'flex', flexDirection: 'column', alignItems: 'center' } ]}>
+        <View style={[styles.formWrapper, { justifyContent: 'center' }]}>
+          <View style={[styles.mainFormElement, { display: 'flex', flexDirection: 'column', alignItems: 'center' }]}>
             <Text style={{ color: 'white', fontSize: 16, marginBottom: 5 }}>for best results, place your finger next to the food and use a white background</Text>
             <Image
               style={{ width: 150, height: 100, borderRadius: 10 }}
@@ -373,39 +373,41 @@ function MainScreen({ navigation, storedUserName }) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.formWrapper}>
             <View style={styles.formToggle}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={{ backgroundColor: simple ? '#DC95FE' : '#e7b3ff' }}
                 onPress={() => { updateFieldsSimple(true); }}
               >
                 <Text style={{ color: 'white', fontSize: 16, padding: 8 }}>simple</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={{ backgroundColor: simple ? '#e7b3ff' : '#DC95FE' }}
                 onPress={() => { updateFieldsSimple(false); }}
               >
                 <Text style={{ color: 'white', fontSize: 16, padding: 8 }}>complex</Text>
               </TouchableOpacity>
             </View>
-            { simple &&
+            { simple
+            && (
             <View style={styles.mainFormElement}>
               <Text style={{ color: 'white', fontSize: 16 }}>simple entries will autofill all fields for you. choose a complex entry to have more control over your food journal!</Text>
             </View>
-            }
-            { !simple &&
+            )}
+            { !simple
+            && (
             <View>
               <TextInput
-              style={styles.mainFormElement}
-              onChangeText={setCustomName}
-              value={customName}
-              placeholder="[optional] custom name"
-              placeholderTextColor="white"
+                style={styles.mainFormElement}
+                onChangeText={setCustomName}
+                value={customName}
+                placeholder="[optional] custom name"
+                placeholderTextColor="white"
               />
               <TextInput
-              style={styles.mainFormElement}
-              onChangeText={setDescription}
-              value={description}
-              placeholder="[optional] description"
-              placeholderTextColor="white"
+                style={styles.mainFormElement}
+                onChangeText={setDescription}
+                value={description}
+                placeholder="[optional] description"
+                placeholderTextColor="white"
               />
               <Picker
                 style={styles.mainFormElement}
@@ -420,28 +422,34 @@ function MainScreen({ navigation, storedUserName }) {
               <View style={styles.mainFormElement}>
                 <Text style={{ color: 'white', fontSize: 16 }}>current mood</Text>
                 <View style={styles.formIconSelect}>
-                  <TouchableOpacity onPress={() => { setMood('positive'); }} style={{ 
-                    borderWidth: mood === 'positive' ? 2 : 0,
-                    borderColor: 'white',
-                    padding: 3,
-                    borderRadius: 999,
-                  }}>
+                  <TouchableOpacity onPress={() => { setMood('positive'); }}
+                    style={{
+                      borderWidth: mood === 'positive' ? 2 : 0,
+                      borderColor: 'white',
+                      padding: 3,
+                      borderRadius: 999,
+                    }}
+                  >
                     <Image source={positiveMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => { setMood('neutral'); }} style={{ 
-                    borderWidth: mood === 'neutral' ? 2 : 0,
-                    borderColor: 'white',
-                    padding: 3,
-                    borderRadius: 999,
-                  }}>
+                  <TouchableOpacity onPress={() => { setMood('neutral'); }}
+                    style={{
+                      borderWidth: mood === 'neutral' ? 2 : 0,
+                      borderColor: 'white',
+                      padding: 3,
+                      borderRadius: 999,
+                    }}
+                  >
                     <Image source={neutralMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => { setMood('negative'); }} style={{ 
-                    borderWidth: mood === 'negative' ? 2 : 0,
-                    borderColor: 'white',
-                    padding: 3,
-                    borderRadius: 999,
-                  }}>
+                  <TouchableOpacity onPress={() => { setMood('negative'); }}
+                    style={{
+                      borderWidth: mood === 'negative' ? 2 : 0,
+                      borderColor: 'white',
+                      padding: 3,
+                      borderRadius: 999,
+                    }}
+                  >
                     <Image source={negativeMood} style={{ width: 0.1 * windowWidth, height: 0.1 * windowWidth }} />
                   </TouchableOpacity>
                 </View>
@@ -449,34 +457,42 @@ function MainScreen({ navigation, storedUserName }) {
               <View style={styles.mainFormElement}>
                 <Text style={{ color: 'white', fontSize: 16 }}>make public?</Text>
                 <View style={styles.formIconSelect}>
-                  <TouchableOpacity onPress={() => { setPublicFood(1); }} style={{ 
-                    borderWidth: publicFood === 1 ? 2 : 0,
-                    borderColor: 'white',
-                    padding: 3,
-                    borderRadius: 999,
-                  }}>
+                  <TouchableOpacity onPress={() => { setPublicFood(1); }}
+                    style={{
+                      borderWidth: publicFood === 1 ? 2 : 0,
+                      borderColor: 'white',
+                      padding: 3,
+                      borderRadius: 999,
+                    }}
+                  >
                     <Text style={{ color: 'white', fontSize: 14 }}>yes</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => { setPublicFood(0); }} style={{ 
-                    borderWidth: publicFood === 0 ? 2 : 0,
-                    borderColor: 'white',
-                    padding: 3,
-                    borderRadius: 999,
-                  }}>
+                  <TouchableOpacity onPress={() => { setPublicFood(0); }}
+                    style={{
+                      borderWidth: publicFood === 0 ? 2 : 0,
+                      borderColor: 'white',
+                      padding: 3,
+                      borderRadius: 999,
+                    }}
+                  >
                     <Text style={{ color: 'white', fontSize: 14 }}>no</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
-            }
-            <View style={[styles.mainFormElement, {display: 'flex', justifyContent: 'center', flexDirection: 'row'}]}>
-              <Text style={{ color: 'white', fontSize: 12}}>status: {classificationStatus}</Text>
+            )}
+            <View style={[styles.mainFormElement, { display: 'flex', justifyContent: 'center', flexDirection: 'row' }]}>
+              <Text style={{ color: 'white', fontSize: 12 }}>
+                status:
+                {' '}
+                {classificationStatus}
+              </Text>
             </View>
             <View style={styles.formBtnWrapper}>
-              <TouchableOpacity 
-                onPress={classificationStatus !== 'classifying' ? submitForm : null } 
-                disabled={classificationStatus !== 'classifying' ? false : true } 
-                style={classificationStatus !== 'classifying' ? styles.mainFormBtn : styles.mainFormBtnDisabled }
+              <TouchableOpacity
+                onPress={classificationStatus !== 'classifying' ? submitForm : null}
+                disabled={classificationStatus === 'classifying'}
+                style={classificationStatus !== 'classifying' ? styles.mainFormBtn : styles.mainFormBtnDisabled}
               >
                 <Text style={{ color: 'white', fontSize: 16 }}>submit</Text>
               </TouchableOpacity>
@@ -491,52 +507,52 @@ function MainScreen({ navigation, storedUserName }) {
         && (
           <View style={styles.formWrapper}>
             <TextInput
-            style={styles.mainFormElement}
-            onChangeText={setClassification}
-            value={classification}
-            placeholder="classification [ex. apple]"
-            placeholderTextColor="white"
+              style={styles.mainFormElement}
+              onChangeText={setClassification}
+              value={classification}
+              placeholder="classification [ex. apple]"
+              placeholderTextColor="white"
             />
-            <View style={[ styles.mainFormElement, styles.flexCol, { width: '90%' } ]}>
+            <View style={[styles.mainFormElement, styles.flexCol, { width: '90%' }]}>
               <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>calories</Text>
               <TextInput
-              onChangeText={setCalories}
-              keyboardType='numeric'
-              value={calories}
-              placeholder="[ex. 150]"
-              placeholderTextColor="white"
-              style={{ marginBottom: 10 }}
+                onChangeText={setCalories}
+                keyboardType="numeric"
+                value={calories}
+                placeholder="[ex. 150]"
+                placeholderTextColor="white"
+                style={{ marginBottom: 10 }}
               />
               <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>macros</Text>
               <View style={styles.centerMeEvenly}>
                 <View style={styles.flexCol}>
                   <Text style={{ color: 'white', fontSize: 16 }}>protein</Text>
                   <TextInput
-                  onChangeText={setProtein}
-                  keyboardType='numeric'
-                  value={protein}
-                  placeholder="[ex. 20]"
-                  placeholderTextColor="white"
+                    onChangeText={setProtein}
+                    keyboardType="numeric"
+                    value={protein}
+                    placeholder="[ex. 20]"
+                    placeholderTextColor="white"
                   />
                 </View>
                 <View style={styles.flexCol}>
                   <Text style={{ color: 'white', fontSize: 16 }}>carbs</Text>
                   <TextInput
-                  onChangeText={setCarb}
-                  keyboardType='numeric'
-                  value={carb}
-                  placeholder="[ex. 40]"
-                  placeholderTextColor="white"
+                    onChangeText={setCarb}
+                    keyboardType="numeric"
+                    value={carb}
+                    placeholder="[ex. 40]"
+                    placeholderTextColor="white"
                   />
                 </View>
                 <View style={styles.flexCol}>
                   <Text style={{ color: 'white', fontSize: 16 }}>fats</Text>
                   <TextInput
-                  onChangeText={setFat}
-                  keyboardType='numeric'
-                  value={fat}
-                  placeholder="[ex. 10]"
-                  placeholderTextColor="white"
+                    onChangeText={setFat}
+                    keyboardType="numeric"
+                    value={fat}
+                    placeholder="[ex. 10]"
+                    placeholderTextColor="white"
                   />
                 </View>
               </View>
@@ -565,22 +581,23 @@ function MainScreen({ navigation, storedUserName }) {
           justifyContent: 'center',
         }}
         >
-           <View style={[ styles.mainFormElement, { textAlign: 'center' } ]}><Text style={styles.boldWhiteText}>{errorMessage}</Text></View>
-           {correctError
+          <View style={[styles.mainFormElement, { textAlign: 'center' }]}><Text style={styles.boldWhiteText}>{errorMessage}</Text></View>
+          {correctError
            && (
-            <View style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '50%',
-              justifyContent: 'space-evenly',
-            }}>
-              <TouchableOpacity onPress={() => { setClassification(''); setClassificationStatus('classifying'); setManualInput(true); setShowError(false); setCorrectError(false); }} style={styles.mainFormBtn}>
-                <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
-                <Text style={{ color: 'white', fontSize: 16 }}>no</Text>
-              </TouchableOpacity>
-            </View>
+           <View style={{
+             display: 'flex',
+             flexDirection: 'row',
+             width: '50%',
+             justifyContent: 'space-evenly',
+           }}
+           >
+             <TouchableOpacity onPress={() => { setClassification(''); setClassificationStatus('classifying'); setManualInput(true); setShowError(false); setCorrectError(false); }} style={styles.mainFormBtn}>
+               <Text style={{ color: 'white', fontSize: 16 }}>yes</Text>
+             </TouchableOpacity>
+             <TouchableOpacity onPress={resetForm} style={styles.mainFormBtn}>
+               <Text style={{ color: 'white', fontSize: 16 }}>no</Text>
+             </TouchableOpacity>
+           </View>
            )}
         </View>
         )}

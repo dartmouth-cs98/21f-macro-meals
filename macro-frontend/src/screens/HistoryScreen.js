@@ -1,8 +1,15 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MealCard from '../components/previous-meals/meal-cards';
 import styles from '../styles';
@@ -21,8 +28,8 @@ function HistoryScreen({ navigation, storedUserName }) {
       })
       .catch((error) => {
         console.log(error.message);
-      })
-  }
+      });
+  };
 
   if (history === null) {
     getHistory();
@@ -41,33 +48,34 @@ function HistoryScreen({ navigation, storedUserName }) {
       </View>
       <View style={styles.pageBody}>
         <ScrollView showsVerticalScrollIndicator={false} styles={styles.scrollContainer}>
-          { history !== null &&
-          (
+          { history !== null
+          && (
             history.map((element, index) => (
-              <MealCard 
-                key={element.id} 
+              <MealCard
+                key={element.id}
                 id={element.id}
                 mealName={element.customName}
                 description={element.description}
-                time={element.createdAt} 
-                totalCal={(element.correctClassification == 1) ? element.calories : ((element.correctClassification == 2) ? element.caloriesTwo : element.caloriesThree)} 
-                foodImg={element.imageUrl} 
-                classification={(element.correctClassification == 1) ? element.classification : ((element.correctClassification == 2) ? element.classificationTwo : element.classificationThree)}
-                protein={(element.correctClassification == 1) ? element.protein : ((element.correctClassification == 2) ? element.proteinTwo : element.proteinThree)}
-                carb={(element.correctClassification == 1) ? element.carb : ((element.correctClassification == 2) ? element.carbTwo : element.carbThree)}
-                fat={(element.correctClassification == 1) ? element.fat : ((element.correctClassification == 2) ? element.fatTwo : element.fatThree)}
+                time={element.createdAt}
+                totalCal={(element.correctClassification === 1) ? element.calories : ((element.correctClassification === 2) ? element.caloriesTwo : element.caloriesThree)}
+                foodImg={element.imageUrl}
+                classification={(element.correctClassification === 1) ? element.classification : ((element.correctClassification === 2) ? element.classificationTwo : element.classificationThree)}
+                protein={(element.correctClassification === 1) ? element.protein : ((element.correctClassification === 2) ? element.proteinTwo : element.proteinThree)}
+                carb={(element.correctClassification === 1) ? element.carb : ((element.correctClassification === 2) ? element.carbTwo : element.carbThree)}
+                fat={(element.correctClassification === 1) ? element.fat : ((element.correctClassification === 2) ? element.fatTwo : element.fatThree)}
                 mood={element.mood}
                 username={storedUserName}
+                // eslint-disable-next-line react/jsx-boolean-value
                 historyPage={true}
                 navigation={navigation}
               />
             ))
           )}
-          {history !== null && history.length === 0 && 
-          (
+          {history !== null && history.length === 0
+          && (
             <Text style={styles.secFontBold}>your previous meals will show up here!</Text>
           )}
-          { history === null 
+          { history === null
           && (
             <Text style={styles.secFontBold}>loading your history...</Text>
           )}

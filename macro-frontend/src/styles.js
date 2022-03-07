@@ -11,8 +11,8 @@ const windowHeight = Dimensions.get('window').height;
 const primColor = '#FFC757';
 const secColor = '#DC95FE';
 const neutralColor = '#FFFAF0';
-const gradientPrimColor = '#F956F2';
-const gradientSecColor = '#FECF56';
+// const gradientPrimColor = '#F956F2';
+// const gradientSecColor = '#FECF56';
 
 const styles = StyleSheet.create({
   container: {

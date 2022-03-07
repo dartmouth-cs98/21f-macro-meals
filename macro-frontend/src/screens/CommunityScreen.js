@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -100,19 +101,19 @@ function CommunityScreen({ navigation, storedUserName }) {
       </View>
       <View style={styles.communityTabs}>
         <TouchableOpacity
-          style={[styles.communityTab, { backgroundColor: currTab == 'recent' ? '#DC95FE' : '#e7b3ff' }]}
+          style={[styles.communityTab, { backgroundColor: currTab === 'recent' ? '#DC95FE' : '#e7b3ff' }]}
           onPress={() => { setCurrTab('recent'); }}
         >
           <Text style={styles.cTabText}>recent</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.communityTab, { backgroundColor: currTab == 'top' ? '#DC95FE' : '#e7b3ff' }]}
+          style={[styles.communityTab, { backgroundColor: currTab === 'top' ? '#DC95FE' : '#e7b3ff' }]}
           onPress={() => { setCurrTab('top'); }}
         >
           <Text style={styles.cTabText}>top rated</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.communityTab, { backgroundColor: currTab == 'favorite' ? '#DC95FE' : '#e7b3ff' }]}
+          style={[styles.communityTab, { backgroundColor: currTab === 'favorite' ? '#DC95FE' : '#e7b3ff' }]}
           onPress={() => { setCurrTab('favorite'); }}
         >
           <Text style={styles.cTabText}>favorite</Text>
@@ -131,12 +132,12 @@ function CommunityScreen({ navigation, storedUserName }) {
                 mealName={element.customName}
                 description={element.description}
                 time={element.createdAt}
-                totalCal={(element.correctClassification == 1) ? element.calories : ((element.correctClassification == 2) ? element.caloriesTwo : element.caloriesThree)} 
-                foodImg={element.imageUrl} 
-                classification={(element.correctClassification == 1) ? element.classification : ((element.correctClassification == 2) ? element.classificationTwo : element.classificationThree)}
-                protein={(element.correctClassification == 1) ? element.protein : ((element.correctClassification == 2) ? element.proteinTwo : element.proteinThree)}
-                carb={(element.correctClassification == 1) ? element.carb : ((element.correctClassification == 2) ? element.carbTwo : element.carbThree)}
-                fat={(element.correctClassification == 1) ? element.fat : ((element.correctClassification == 2) ? element.fatTwo : element.fatThree)}
+                totalCal={(element.correctClassification === 1) ? element.calories : ((element.correctClassification === 2) ? element.caloriesTwo : element.caloriesThree)}
+                foodImg={element.imageUrl}
+                classification={(element.correctClassification === 1) ? element.classification : ((element.correctClassification === 2) ? element.classificationTwo : element.classificationThree)}
+                protein={(element.correctClassification === 1) ? element.protein : ((element.correctClassification === 2) ? element.proteinTwo : element.proteinThree)}
+                carb={(element.correctClassification === 1) ? element.carb : ((element.correctClassification === 2) ? element.carbTwo : element.carbThree)}
+                fat={(element.correctClassification === 1) ? element.fat : ((element.correctClassification === 2) ? element.fatTwo : element.fatThree)}
                 mood={element.mood}
                 username={storedUserName}
                 historyPage={false}
@@ -166,12 +167,12 @@ function CommunityScreen({ navigation, storedUserName }) {
                 mealName={element.customName}
                 description={element.description}
                 time={element.createdAt}
-                totalCal={(element.correctClassification == 1) ? element.calories : ((element.correctClassification == 2) ? element.caloriesTwo : element.caloriesThree)} 
-                foodImg={element.imageUrl} 
-                classification={(element.correctClassification == 1) ? element.classification : ((element.correctClassification == 2) ? element.classificationTwo : element.classificationThree)}
-                protein={(element.correctClassification == 1) ? element.protein : ((element.correctClassification == 2) ? element.proteinTwo : element.proteinThree)}
-                carb={(element.correctClassification == 1) ? element.carb : ((element.correctClassification == 2) ? element.carbTwo : element.carbThree)}
-                fat={(element.correctClassification == 1) ? element.fat : ((element.correctClassification == 2) ? element.fatTwo : element.fatThree)}
+                totalCal={(element.correctClassification === 1) ? element.calories : ((element.correctClassification === 2) ? element.caloriesTwo : element.caloriesThree)}
+                foodImg={element.imageUrl}
+                classification={(element.correctClassification === 1) ? element.classification : ((element.correctClassification === 2) ? element.classificationTwo : element.classificationThree)}
+                protein={(element.correctClassification === 1) ? element.protein : ((element.correctClassification === 2) ? element.proteinTwo : element.proteinThree)}
+                carb={(element.correctClassification === 1) ? element.carb : ((element.correctClassification === 2) ? element.carbTwo : element.carbThree)}
+                fat={(element.correctClassification === 1) ? element.fat : ((element.correctClassification === 2) ? element.fatTwo : element.fatThree)}
                 mood={element.mood}
                 username={storedUserName}
                 navigation={navigation}
@@ -200,12 +201,12 @@ function CommunityScreen({ navigation, storedUserName }) {
                 mealName={element.customName}
                 description={element.description}
                 time={element.createdAt}
-                totalCal={(element.correctClassification == 1) ? element.calories : ((element.correctClassification == 2) ? element.caloriesTwo : element.caloriesThree)} 
-                foodImg={element.imageUrl} 
-                classification={(element.correctClassification == 1) ? element.classification : ((element.correctClassification == 2) ? element.classificationTwo : element.classificationThree)}
-                protein={(element.correctClassification == 1) ? element.protein : ((element.correctClassification == 2) ? element.proteinTwo : element.proteinThree)}
-                carb={(element.correctClassification == 1) ? element.carb : ((element.correctClassification == 2) ? element.carbTwo : element.carbThree)}
-                fat={(element.correctClassification == 1) ? element.fat : ((element.correctClassification == 2) ? element.fatTwo : element.fatThree)}
+                totalCal={(element.correctClassification === 1) ? element.calories : ((element.correctClassification === 2) ? element.caloriesTwo : element.caloriesThree)}
+                foodImg={element.imageUrl}
+                classification={(element.correctClassification === 1) ? element.classification : ((element.correctClassification === 2) ? element.classificationTwo : element.classificationThree)}
+                protein={(element.correctClassification === 1) ? element.protein : ((element.correctClassification === 2) ? element.proteinTwo : element.proteinThree)}
+                carb={(element.correctClassification === 1) ? element.carb : ((element.correctClassification === 2) ? element.carbTwo : element.carbThree)}
+                fat={(element.correctClassification === 1) ? element.fat : ((element.correctClassification === 2) ? element.fatTwo : element.fatThree)}
                 mood={element.mood}
                 username={storedUserName}
                 navigation={navigation}
@@ -214,6 +215,7 @@ function CommunityScreen({ navigation, storedUserName }) {
           )}
             {favorite !== null && favorite.length === 0
           && (
+            // eslint-disable-next-line react/no-unescaped-entities
             <Text style={styles.secFontBold}>you don't seem to have any favorites!</Text>
           )}
             { favorite === null
