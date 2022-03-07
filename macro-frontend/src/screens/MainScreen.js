@@ -353,11 +353,11 @@ function MainScreen({ navigation, storedUserName }) {
             <Text style={{ color: 'white', fontSize: 16 }}>banana</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>carrot</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>cucumber</Text>
+            <Text style={{ color: 'white', fontSize: 16 }}>kiwi</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>onion</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>orange</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>pear</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>pepper</Text>
-            <Text style={{ color: 'white', fontSize: 16 }}>qiwi</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>tomato</Text>
             <Text style={{ color: 'white', fontSize: 16 }}>watermelon</Text>
           </View>
