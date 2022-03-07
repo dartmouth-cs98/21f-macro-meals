@@ -21,7 +21,6 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
   const [cirCircumference, setCirCircumference] = useState(2 * Math.PI * 140);
   const [macroDisplay, setMacroDisplay] = useState(null);
   const [manualInput, setManualInput] = useState(false);
-  const [btnText, setBtnText] = useState('next option');
   const [classification, setClassification] = useState('');
   const [protein, setProtein] = useState(0);
   const [carb, setCarb] = useState(0);
@@ -36,6 +35,8 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
     fat: baseFood.fat,
     confidence: baseFood.confidence,
   });
+
+  console.log(baseFood);
 
   const updateClassification = (num) => {
     setClassificationNumber(num);
@@ -96,7 +97,6 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
       };
       setFood(f);
       calcCircle(f);
-      setBtnText('let us know!');
       axios.post('https://macro-cs98.herokuapp.com/api/food/updateClassification', {
         id: baseFood.id,
         correctClassification: 3,
@@ -261,9 +261,9 @@ function BreakdownScreen({ navigation, foodList, storedUserName }) {
           )}
           <Text style={[ styles.secFontBold, { marginBottom: 10, fontSize: 18 } ]}>{food.customName}</Text>
           <View style={styles.centerMeEvenly}>
-            <View style={styles.flexCol}><Text style={styles.secFontBold}>Protein: </Text><Text style={styles.secFont}>{(food.protein).toFixed(1)}g</Text></View>
-            <View style={styles.flexCol}><Text style={styles.secFontBold}>Carbs: </Text><Text style={styles.secFont}>{(food.carb).toFixed(1)}g</Text></View>
-            <View style={styles.flexCol}><Text style={styles.secFontBold}>Fats: </Text><Text style={styles.secFont}>{(food.fat).toFixed(1)}g</Text></View>
+            <View style={styles.flexCol}><Text style={[styles.secFontBold, { padding: 4, borderRadius: 4, backgroundColor: '#F956F2', color: 'white' }]}>Protein: </Text><Text style={styles.secFont}>{(food.protein).toFixed(1)}g</Text></View>
+            <View style={styles.flexCol}><Text style={[styles.secFontBold, { padding: 4, borderRadius: 4, backgroundColor: '#0000ff', color: 'white' }]}>Carbs: </Text><Text style={styles.secFont}>{(food.carb).toFixed(1)}g</Text></View>
+            <View style={styles.flexCol}><Text style={[styles.secFontBold, { padding: 4, borderRadius: 4, backgroundColor: '#ffff00', color: 'black' }]}>Fats: </Text><Text style={styles.secFont}>{(food.fat).toFixed(1)}g</Text></View>
           </View>
           <View style={[styles.centerMeEvenly, {marginTop: 5}]}>
             <View style={styles.flexCol}><Text style={styles.secFontBold}>Classification: </Text><Text style={styles.secFont}>{food.classification}</Text></View>

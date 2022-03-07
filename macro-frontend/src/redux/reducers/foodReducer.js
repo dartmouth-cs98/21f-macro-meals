@@ -33,6 +33,7 @@ const foodReducer = (state = initialState, action) => {
           carbThree: action.payload.carbThree,
           fatThree: action.payload.fatThree,
           confidenceThree: action.payload.confidenceThree,
+          publicFood: action.payload.publicFood,
         }),
       };
     case REMOVE_FOOD:
