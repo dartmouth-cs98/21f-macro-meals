@@ -34,6 +34,8 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 
 ### Back End
 
+**NOTE:** all backend processes are automatically deployed - no setup is required!
+
 **NOTE:** the flask server takes a bit of time to boot up for the first call! If you would like to ensure that the server is up and running before you start the app, just visit [this URL](https://macroclassifier.herokuapp.com/)!
 
 * The [server](https://macro-cs98.herokuapp.com/api) is automatically deployed via Heroku (see the [API Repo](https://github.com/dartmouth-cs98/21f-macro-meals-api)  for details on local development)
