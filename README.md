@@ -12,8 +12,6 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 
 - [Classifier Repo](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) 
 
-- [Images Repo](https://github.com/dartmouth-cs98/21f-macro-meals-images)
-
 - [Figma Board](https://www.figma.com/file/x0tpjcBSMKuImg4e0EvhlY/Initial-Sketches?node-id=0%3A1)
 
 [Initial sketches](https://imgur.com/a/AAC5E6G)
@@ -32,7 +30,7 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 * Clone the [main repo](https://github.com/dartmouth-cs98/21f-macro-meals) to your local machine
 * Navigate to the `macro-frontend` directory
 * Run `yarn install` to install any necessary dependencies
-* Run `yarn start` to start up the app. You can then use Xcode to simulate an iOS device, or connect your own iOS device via LAN or tunneling via the QR code
+* Run `expo start` to start up the app. You can then use Xcode to simulate an iOS device, or connect your own iOS device via LAN or tunneling via the QR code
 
 ### Back End
 
@@ -40,15 +38,19 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 
 * The [server](https://macro-cs98.herokuapp.com/api) is automatically deployed via Heroku
 * The [database](https://cloud.mongodb.com/v2/5f301a43938f013d0af499bc#clusters/detail/Macro) is hosted by MangoDB
-* The [flask server](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) in charge of classification will be deployed on a Heroku webserver
+* The [flask server](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) is automatically deployed via Heroku
 * The [images database](https://s3.console.aws.amazon.com/s3/buckets/macro-meals-images?region=us-east-1&tab=objects) is stored on Amazon S3 
 
 ## Deployment
-
-**NOT YET READY FOR DEPLOYMENT**
 
 ### Front End
 
 * Clone the [main repo](https://github.com/dartmouth-cs98/21f-macro-meals) to your local machine
 * Navigate to the `macro-frontend` directory
-* Run `yarn deploy`
+* Run `yarn install` to install any necessary dependencies
+* Run `expo build:ios` to build the app
+* Download the build file from expo and upload to App Store Connect via the Transporter app
+
+### Back End
+
+* Heroku automatically deploys the API repo whenever `main` receives an update
