@@ -36,9 +36,9 @@ Macro uses a custom computer vision machine learning algorithm to classify foods
 
 **NOTE:** the flask server takes a bit of time to boot up for the first call! If you would like to ensure that the server is up and running before you start the app, just visit [this URL](https://macroclassifier.herokuapp.com/)!
 
-* The [server](https://macro-cs98.herokuapp.com/api) is automatically deployed via Heroku
+* The [server](https://macro-cs98.herokuapp.com/api) is automatically deployed via Heroku (see the [API Repo](https://github.com/dartmouth-cs98/21f-macro-meals-api)  for details on local development)
 * The [database](https://cloud.mongodb.com/v2/5f301a43938f013d0af499bc#clusters/detail/Macro) is hosted by MangoDB
-* The [flask server](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) is automatically deployed via Heroku
+* The [flask server](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) is automatically deployed via Heroku (see the [Classifier Repo](https://github.com/dartmouth-cs98/21f-macro-meals-classifier) for details on local development)
 * The [images database](https://s3.console.aws.amazon.com/s3/buckets/macro-meals-images?region=us-east-1&tab=objects) is stored on Amazon S3 
 
 ## Deployment
